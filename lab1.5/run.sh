@@ -1,0 +1,1 @@
+lex temp.l && gcc lex.yy.c -o scanner -lfl && ./scanner prog
