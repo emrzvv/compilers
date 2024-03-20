@@ -389,8 +389,8 @@ struct yy_trans_info
 	};
 static const flex_int16_t yy_accept[20] =
     {   0,
-        2,    2,    6,    4,    1,    1,    4,    4,    3,    1,
-        2,    0,    0,    3,    0,    0,    2,    0,    0
+        3,    3,    6,    4,    1,    1,    4,    4,    2,    1,
+        3,    0,    0,    2,    0,    0,    3,    0,    0
     } ;
 
 static const YY_CHAR yy_ec[256] =
@@ -482,106 +482,65 @@ char *yytext;
     #define TAG_IDENT 1
     #define TAG_STRING 2
 
-    char *tag_names[] = { "EOF", "IDENT", "STRING" };
+    char *tags[] = { "EOF", "IDENT", "STRING" };
 
     typedef struct Position Position;
     struct Position {
-        int line, pos, index;
+        int line, pos;
     };
 
-    void print_pos(Position *p) {
-        printf("(%d,%d)",p->line,p->pos);
+    void printPosition(Position *p) {
+        printf("(%d,%d)", p->line, p->pos);
     }
 
     struct Fragment {
-        Position starting, following;
+        Position begin, end;
     };
 
     typedef struct Fragment YYLTYPE;
     typedef struct Fragment Fragment;
-    void print_frag(Fragment* f) {
-    	print_pos(&(f->starting));
+    void printFragment(Fragment *f) {
+    	printPosition(&(f->begin));
     	printf("-");
-    	print_pos(&(f->following));
+    	printPosition(&(f->end));
     }
 
     union Token {
         char *string;
         char *ident;
-        int ident_num;
     };
 
     typedef union Token YYSTYPE;
 
-    int continued;
-    struct Position cur;
+    struct Position current;
     #define YY_USER_ACTION {             \
         int i;                           \
-        if (!continued)                  \
-            yylloc->starting = cur;      \
-        continued = 0;                   \
-        for ( i = 0; i < yyleng; i++){   \
-            if ( yytext[i] == '\n'){     \
-                cur.line++;              \
-                cur.pos = 1;             \
+        yylloc->begin = current;      	 \
+        for (i = 0; i < yyleng; i++) {   \
+            if (yytext[i] == '\n') {     \
+                current.line++;          \
+                current.pos = 1;         \
             }                            \
             else                         \
-                cur.pos++;               \
-            cur.index++;                 \
+                current.pos++;           \
         }                                \
-        yylloc->following = cur;         \
+        yylloc->end = current;           \
     } 
 
 
-    void init_scanner (char *program){
-        continued = 0;
-        cur.line = 1;
-        cur.pos = 1;
-        cur.index = 0;
+    void init(char *program) {
+        current.line = 1;
+        current.pos = 1;
         yy_scan_string(program);
     }
 
-    void err (char *msg){
-        printf ("Error");
-        print_pos(&cur);
-        printf(":%s\n",msg);
+    void printError(char *msg) {
+        printf("ERROR");
+        printPosition(&current);
+        printf(": %s\n", msg);
     }
-
-    int lexem_size;
-
-    typedef struct{
-        int size;
-        char** names;
-    } identTabel;
-
-    void create_ident_tabel(identTabel * t){
-        t->size = 0;
-        t->names = NULL;
-    }
-
-    int add_ident(identTabel* tabel, char* name){
-        for (int i = 0; i < tabel->size; i++){
-            if (strcmp(name, tabel->names[i]) == 0){
-                return i;
-            }
-        }
-
-        tabel->size++;
-        if (tabel->size == 1){
-            tabel->names = (char**)malloc(sizeof(char*) * (tabel->size));
-        }
-        else {
-            tabel->names = (char**)realloc(tabel->names, sizeof(char*) * (tabel->size));
-        }
-        tabel->names[tabel->size - 1] = (char*)malloc(sizeof(char)*strlen(name));
-        strcpy(tabel->names[tabel->size - 1], name);
-        return tabel->size-1;
-    }
-
-    identTabel tabel;
-    
-#line 584 "lex.yy.c"
-#line 585 "lex.yy.c"
+#line 543 "lex.yy.c"
+#line 544 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -816,10 +775,10 @@ YY_DECL
 		}
 
 	{
-#line 115 "temp.l"
+#line 74 "temp.l"
 
 
-#line 823 "lex.yy.c"
+#line 782 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -879,41 +838,40 @@ do_action:	/* This label is used only to access EOF actions. */
 case 1:
 /* rule 1 can match eol */
 YY_RULE_SETUP
-#line 117 "temp.l"
+#line 76 "temp.l"
 
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 120 "temp.l"
-{
-			yylval->string = strdup(yytext);
-			return TAG_STRING;
-		      }
+#line 78 "temp.l"
+{ 
+                    yylval->ident = strdup(yytext);
+                    return TAG_IDENT;
+                }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 127 "temp.l"
-{ 
-                        // yylval->ident_num = add_ident(&tabel, yytext);
-                        yylval->ident = strdup(yytext);
-                        return TAG_IDENT;
-                      }
+#line 83 "temp.l"
+{
+                    yylval->string = strdup(yytext);
+                    return TAG_STRING;
+		        }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 133 "temp.l"
-err ("ERROR unknown symbol");
+#line 88 "temp.l"
+printError("unknown symbol");
 	YY_BREAK
 case YY_STATE_EOF(INITIAL):
-#line 135 "temp.l"
+#line 90 "temp.l"
 return 0;
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 138 "temp.l"
+#line 92 "temp.l"
 ECHO;
 	YY_BREAK
-#line 917 "lex.yy.c"
+#line 875 "lex.yy.c"
 
 	case YY_END_OF_BUFFER:
 		{
@@ -1916,72 +1874,119 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 138 "temp.l"
+#line 92 "temp.l"
 
 
-int main(){
-    int tag;
+int getCodeEnd(char *str, int len) {
+    if (str[0] != '#') return -1;
+    for (int i = 1; i < len; ++i) {
+        if (str[i] < '0' || str[i] > '9') {
+            if (i == 1) return -1;
+            else return i;
+        }
+    }
+    return len;
+}
+
+void translate(char *str, int len) {
+    char *temp = (char*)malloc(sizeof(char) * len);
+    int j = 0;
+    for (int i = 0; i < len; ++i) {
+        if (str[i] == '\'') {
+            if (i + 1 < len && str[i + 1] == '\'') {
+                temp[j] = '\'';
+                j++;
+                i++;
+            } // else skip
+        } else if (str[i] == '#') {
+            int codeEnd = getCodeEnd(str + i, len - i);
+            if (codeEnd != -1) {
+                char codeStr[codeEnd];
+                strncpy(codeStr, &str[i + 1], codeEnd - 1);
+                codeStr[codeEnd - 1] = '\0';
+
+                int code = atoi(codeStr);
+
+                if (code >= 0 && code <= 255) { 
+                    temp[j] = (char)code; 
+                    j++;
+                    i += codeEnd; 
+                } else {
+                    temp[j] = str[i]; 
+                    j++;
+                }
+            } else {
+                temp[j] = str[i];
+                j++;
+            }
+        } else {
+            temp[j] = str[i];
+            j++;
+        }
+    }
+    temp[j] = '\0';
+    strcpy(str, temp);
+    free(temp);
+}
+
+int main() {
+    int tagType;
     YYSTYPE value;
     YYLTYPE coords;
-   	FILE *inputfile;
-	long size_str;
+
+   	FILE *input;
+	long size;
 	char *str;
+
 	union Token token;
 	{
-        inputfile = fopen("prog","r");
-        if (inputfile == NULL) {
+        input = fopen("prog", "r");
+        if (input == NULL) {
             fputs("File not found", stderr);
             exit(1);
         }
-        fseek(inputfile, 0,SEEK_END);
-        size_str = ftell(inputfile);
-        rewind(inputfile);
 
-        str=(char*)malloc(sizeof(char)*(size_str+1));
+        fseek(input, 0, SEEK_END);
+        size = ftell(input);
+        rewind(input);
+
+        str = (char*)malloc(sizeof(char) * (size + 1));
         if (str == NULL) {
-            fputs("Memory error",stderr);
+            fputs("Memory allocation error", stderr);
             exit(2);
         }    
-        size_t n = fread(str,sizeof(char),size_str,inputfile);
-        if (n != size_str) {
-            fputs ("Reading error",stderr);
-            exit (3);
+        size_t n = fread(str, sizeof(char), size, input);
+        if (n != size) {
+            fputs("File read error", stderr);
+            exit(3);
         }
     }
 
-    str[size_str] = '\0';
-    fclose (inputfile);
-    init_scanner(str);
-    create_ident_tabel(&tabel);
-    do{
-        tag = yylex(&value,&coords);
-        if (tag == 0)
+    str[size] = '\0';
+    fclose(input);
+    init(str);
+    
+    do {
+        tagType = yylex(&value, &coords);
+        if (tagType == 0)
             break;
 
-        printf("%s ",tag_names[tag]);
-        print_frag(&coords);
+        printf("%s ", tags[tagType]);
+        printFragment(&coords);
         
-        
-        if (tag == TAG_STRING){
+        if (tagType == TAG_IDENT) {
+            printf(": %s", value.ident);
+            free(value.ident);
+        } 
+        else if (tagType == TAG_STRING) {
+            translate(value.string, strlen(value.string));
             printf(": %s", value.string); 
             free(value.string);   
         }
 
-        if (tag == TAG_IDENT){
-            printf(": %s", value.ident);
-            free(value.ident);
-        } 
-
         printf("\n");        
     }
-    while (tag != 0); 
-    
-    printf("\nIDENT TABEL:\n");
-    for (int i = 0; i < tabel.size; i++){
-        printf("    %d -> %s\n", i, tabel.names[i]);
-        free(tabel.names[i]);
-    }
-    free(tabel.names);
+    while (tagType != 0);
 
 	free(str);
     return 0;
