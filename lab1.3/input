@@ -1,0 +1,7 @@
+
+
+(*a*) (*b*) (*c*)
+1 + 2
+33 + 890 / 78 * 09
+abacaba eee // <- error
+(* comment (* nested comment *) *)
