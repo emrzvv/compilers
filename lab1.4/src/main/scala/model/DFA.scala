@@ -1,11 +1,11 @@
 package model
 
-class DFA(currentState: State,
+class DFA(val currentState: State,
           val startState: State,
           val finalStates: Vector[State],
           val table: Map[State, Vector[(Acceptable, State)]]) {
   def next(symbol: Char): (Either[Unit, Boolean], DFA) = {
-    table(currentState).find(_._1.chars.contains(symbol)) match {
+    table.getOrElse(currentState, Vector.empty).find(_._1.chars.contains(symbol)) match {
       case Some(dest) => (Right(finalStates.contains(dest._2)), new DFA(dest._2, startState, finalStates, table))
       case None => (Left(()), this)
     }

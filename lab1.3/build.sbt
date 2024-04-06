@@ -7,4 +7,4 @@ lazy val root = (project in file("."))
     name := "lab1.3"
   )
 
-libraryDependencies += "org.scala-lang" %% "toolkit" % "0.1.7"
+libraryDependencies += "org.scala-lang" %% "toolkit" % "0.2.1"

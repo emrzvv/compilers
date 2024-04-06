@@ -53,3 +53,7 @@ case object E_nd extends State {
 case object En_d extends State {
   override def name: String = "En_d"
 }
+
+case object Trap extends State {
+  override def name: String = "Trap"
+}
