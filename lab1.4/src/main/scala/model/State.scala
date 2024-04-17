@@ -27,7 +27,7 @@ case object String extends State {
   override def name: String = "String"
 }
 case object EscapeRead extends State {
-  override def name: String = "escape"
+  override def name: String = "Escape read"
 }
 case object Escape extends State {
   override def name: String = "Escape"

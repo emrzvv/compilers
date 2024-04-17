@@ -6,6 +6,8 @@ class Lexer(text: String,
             dfa: DFA,
             val currentPosition: Position) {
 
+
+
   private def isNewLineAt(position: Position): Boolean = {
     if (text.charAt(position.index) == '\r' && position.index < text.length)
       text.charAt(position.index + 1) == '\n'
@@ -38,23 +40,25 @@ class Lexer(text: String,
   @tailrec
   private def transit(currentDFA: DFA = dfa, currentPosition: Position, startPosition: Position)
                      (isCompleted: Boolean, completedPosition: Position, completedState: State): Token = {
+    import Lexer.StringOps
+
     val currentChar = text.charAt(currentPosition.index)
-//    println(currentChar)
     val nextPosition = nextPositionFrom(currentPosition)
 
     val (status, updatedDFA) = currentDFA.next(currentChar)
+//    println(s"${currentChar} -- ${currentDFA.currentState} -> ${updatedDFA.currentState}")
     status match {
       case Left(_) =>
         if (isCompleted) {
           CommonToken(
             completedState.name,
             Fragment(startPosition, completedPosition),
-            Some(text.substring(startPosition.index, completedPosition.index + 1)))
+            Some(text.substring(startPosition.index, completedPosition.index + 1).backSlashNewLine))
         } else {
           ErrorToken(
             "Error",
             Fragment(startPosition, currentPosition),
-            Some(text.substring(startPosition.index, currentPosition.index + 1)))
+            Some(text.substring(startPosition.index, currentPosition.index + 1).backSlashNewLine))
         }
       case Right(true) =>
         transit(updatedDFA, nextPosition, startPosition)(isCompleted = true, currentPosition, updatedDFA.currentState) // final
@@ -66,7 +70,7 @@ class Lexer(text: String,
   def nextToken(): NextTokenResult = {
     val startPosition: Position = currentPosition.copy()
 
-    if (isEOLAt(currentPosition)) {
+    if (currentPosition.index == text.length || isEOLAt(currentPosition)) {
       NextTokenResult(EndToken(), this)
     } else {
       val token = transit(DFA.start(), startPosition, startPosition)(isCompleted = false, Position.empty, Trap)
@@ -97,6 +101,10 @@ object Lexer {
     }
 
     loop(lexer)()
+  }
+
+  implicit class StringOps(value: String) {
+    def backSlashNewLine: String = value.replace("\n", "\\n")
   }
 }
 

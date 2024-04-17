@@ -1,0 +1,47 @@
+
+digraph ""
+{
+    fontname="Helvetica,Arial,sans-serif"
+    node [fontname="Helvetica,Arial,sans-serif"]
+    edge [fontname="Helvetica,Arial,sans-serif"]
+    splines=true;
+    overlap = false;
+    rankdir=UD;
+    node [shape = doublecircle]; space, numeric, keyword, KEYWORD, ident, STRING;
+    node [shape = circle];
+
+    start -> ident [label="[a-zA-Z] not b, not e"]
+
+    start -> space [label="[\\s\\t\\n]"]
+    space -> space [label="\\s\\t\\n"]
+
+    start -> numeric [label="[0-9]"]
+    numeric -> numeric [label="[0-9]"]
+    start -> keyword [label="'{' or '}'"]
+
+    start -> b_egin [label="b"]
+    b_egin -> be_gin [label="e"]
+    b_egin -> ident [label="[a-zA-Z] not e"]
+    be_gin -> beg_in [label="g"]
+    be_gin -> ident [label="[a-zA-Z] not g"]
+    beg_in -> begi_n [label="i"]
+    beg_in -> ident [label="[a-zA-Z] not i"]
+    begi_n -> KEYWORD [label="n"]
+    begi_n -> ident [label="[a-zA-Z] not n"]
+
+    start -> e_nd [label="e"]
+    e_nd -> en_d [label="n"]
+    e_nd -> ident [label="[a-zA-Z] not n"]
+    en_d -> KEYWORD [label="d"]
+    en_d -> ident [label="[a-zA-Z] not d"]
+
+    start -> string_read [label="$"]
+    string_read -> string_read [label="any character not \\ not $"]
+    string_read -> escape_read [label="\\"]
+    string_read -> STRING [label="$"]
+    escape_read -> escape [label="any character"]
+    escape -> escape_read [label="\\"]
+    escape -> string_read [label="any character not \\"]
+    escape -> STRING [label="$"]
+}
+

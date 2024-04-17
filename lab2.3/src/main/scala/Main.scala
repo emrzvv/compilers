@@ -1,4 +1,4 @@
-import parser.Parser
+import scala.collection.mutable
 
 object Main {
   def main(args: Array[String]): Unit = {
@@ -8,8 +8,9 @@ object Main {
     println("------------")
     result._2.foreach(println)
 
-    val parser = new Parser(result._1.toVector)
+    val parser = new Parser(result._1)
     val root = parser.parse()
-
+    root.toGraphviz("parsed tree", "./output")
+    val a = mutable.ArrayBuffer(1, 2, 3)
   }
 }

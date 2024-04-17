@@ -48,9 +48,7 @@ class Lexer(file_name: String) {
               i += newIndex
               if (name != "comment")
                 lexemes = lexemes :+ Token(name, Fragment(Position(lineIdx, i - newIndex + 1), Position(lineIdx, i)), result.trim)
-//              println((typ, (lineIdx, i), result.trim))
             case None =>
-//              println("error", (lineIdx, i), currentLine)
               currentLine = currentLine.drop(1)
               errors = errors :+ Fragment(Position(lineIdx, i), Position.empty)
           }

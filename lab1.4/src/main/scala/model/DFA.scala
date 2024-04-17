@@ -15,14 +15,13 @@ class DFA(val currentState: State,
 object DFA {
   def start(): DFA = new DFA(Start, Start, finalStates, table)
 
-  val finalStates: Vector[State] = Vector(Space, Numeric, KeywordBrace, Keyword, Ident, String, Escape)
+  val finalStates: Vector[State] = Vector(Space, Numeric, KeywordBrace, Keyword, Ident, String)
   val table: Map[State, Vector[(Acceptable, State)]] = Map(
     (Start,
       Vector(
         (Acceptable.spaces, Space),
         (Acceptable.digits, Numeric),
         (Acceptable(Set('{', '}')), KeywordBrace),
-        (Acceptable(Set('\\')), EscapeRead),
         (Acceptable(Set('b')), B_egin),
         (Acceptable(Set('e')), E_nd),
         (Acceptable(Set('$')), StringRead),
@@ -39,14 +38,22 @@ object DFA {
         (Acceptable.digits, Numeric)
       )
     ),
+    (StringRead,
+      Vector(
+        (Acceptable.any - '\\' - '$', StringRead),
+        (Acceptable(Set('$')), String),
+        (Acceptable(Set('\\')), EscapeRead)
+      )
+    ),
     (EscapeRead,
       Vector(
         (Acceptable.any, Escape)
       )
     ),
-    (StringRead,
+    (Escape,
       Vector(
-        (Acceptable.any, StringRead),
+        (Acceptable(Set('\\')), EscapeRead),
+        (Acceptable.any - '\\', StringRead),
         (Acceptable(Set('$')), String)
       )
     ),
