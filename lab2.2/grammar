@@ -1,0 +1,75 @@
+Program -> Program Function | Program Procedure | Function | Procedure
+
+Function -> FunctionHeader Statements endfunc
+Procedure -> ProcedureHeader Statements endproc
+FunctionHeader -> func VARNAME (Sections) -> Type
+ProcedureHeader -> proc VARNAME (Sections)
+
+Sections -> Sections; Section | Section
+Section -> Parameters, VARNAME -> Type | VARNAME -> Type
+Parameters -> Parameters, VARNAME | VARNAME
+
+Type -> PrimitiveType | [Type]
+PrimitiveType -> int | char | bool
+
+Statements -> Statements; Statement | Statement
+Statement -> 
+	DeclarationStatement |
+	AssignmentStatement |
+	ArrayAssignmentStatement |
+	FunctionCallStatement |
+	IfStatement | 
+	LoopWithPreconditionStatements | 
+	LoopWithPostconditionStatement |
+	check Expression
+	
+DeclarationStatement -> VarDeclarations, VarDeclaration -> Type | VarDeclaration -> Type
+VarDeclarations ->  VarDeclarations, VarDeclaration | VarDeclaration
+VarDeclaration -> VARNAME | AssignmentStatement
+
+AssignmentStatement -> ExtendedVar = Expression
+ArrayAssignmentStatement -> ArrayCall = Expression
+FunctionCallStatement -> VARNAME(Args)
+Args -> Args, Expression | Expression
+
+ExtendedVar -> VARNAME 
+ArrayCall -> Spec[Expression]
+Spec -> FunctionCallStatement | [Type VARNAME] | [Type INT_CONST] | ExtendedVar | ArrayCall | Const
+
+
+Const -> INT_CONST | CHAR_CONST | STRING_CONST | REF_CONST | TRUE | FALSE
+
+Expression -> 
+	LogicalExpression |
+	Expression || LogicalExpression |
+	Expression ^^ LogicalExpression
+	
+LogicalExpression -> LogicalExpression && CompareExpression | CompareExpression
+CompareExpression -> ArithmeticExpression CompareOperator ArithmeticExpression | ArithmeticExpression
+CompareOperator -> == | != | < | > | <= | >=
+ArithmeticExpression -> PowExpression | ArithmeticExpression AdditiveOperator PowExpression
+AdditiveOperator -> + | -
+PowExpression -> Term | Term ^ PowExpression
+Term -> Factor | Term MultiplicativeOperator Factor
+MultiplicativeOperator -> * | / | %
+Factor -> !Spec | -Spec | Spec
+
+
+IfStatement -> if Expression then Statements ElseBlock endif
+ElseBlock -> else Statements | elseif Expression then Statements ElseBlock
+
+LoopWithPreconditionStatements -> 
+	while Expression do Statements endwhile |
+	ForCycleHead step INT_CONST do Statements endfor |
+	ForCycleHead do Statements endfor
+ForCycleHead -> for ForCycleVarDeclaration to ForCycleTo
+
+
+ForCycleVarDeclaration -> VARNAME = Expression | VARNAME = INT_CONST -> INTEGER | VARNAME = CHAR_CONST -> CHAR
+ForCycleTo = Expression
+
+LoopWithPostconditionStatement -> repeat Statements until Expression
+
+
+
+
