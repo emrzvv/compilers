@@ -1,4 +1,4 @@
-package domain
+package sac.domain
 
 case class Fragment(start: Position, follow: Position) {
   override def toString: String = s"${start.toString}-${follow.toString}"

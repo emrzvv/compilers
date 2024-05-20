@@ -1,3 +1,5 @@
+package sac
+
 import domain.{Fragment, Position, Token}
 
 import scala.io.Source

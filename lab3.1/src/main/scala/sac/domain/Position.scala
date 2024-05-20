@@ -1,4 +1,4 @@
-package domain
+package sac.domain
 
 case class Position(line: Int, pos: Int) {
   override def toString: String = s"($line, $pos)"
