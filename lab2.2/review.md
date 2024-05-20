@@ -15,7 +15,8 @@
 ```
 Program -> (Functions|Procedure)*
 ```
-Функция и процедура состоит из заголовка, тела и ключевого слово endfunc/endproc, завершающего тело функции. Тело функции - последовательность операторов:
+Функция и процедура состоит из заголовка, тела и ключевого слово endfunc/endproc, 
+завершающего тело функции. Тело функции - последовательность операторов:
 ```
 Function -> FunctionHeader Statements endfunc
 Procedure -> ProcedureHeader Statements endproc

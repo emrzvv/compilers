@@ -1,4 +1,3 @@
-
 object Grammar {
 //  S -> K S | .
 //  K -> L arrow R end.

@@ -86,7 +86,7 @@ func main() {
 		if format.Node(os.Stdout, fset, file) != nil {
 			fmt.Printf("Formatter error: %v\n", err)
 		}
-		//ast.Fprint(os.Stdout, fset, file, nil)
+		ast.Fprint(os.Stdout, fset, file, nil)
 	} else {
 		// в противном случае, выводим сообщение об ошибке
 		fmt.Printf("Error: %v", err)

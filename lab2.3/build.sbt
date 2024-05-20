@@ -8,3 +8,4 @@ lazy val root = (project in file("."))
   )
 
 libraryDependencies += "org.scala-lang" %% "toolkit" % "0.2.1"
+libraryDependencies += "com.lihaoyi" %% "pprint" % "0.9.0"

@@ -1,5 +1,7 @@
-
 import scala.collection.mutable
+import pprint._
+
+import java.io.{File, FileOutputStream, PrintWriter}
 
 object Main {
   def main(args: Array[String]): Unit = {
@@ -9,8 +11,9 @@ object Main {
     println("------------")
     result._2.foreach(println)
 
-    val parser = new Parser(result._1, )
+    val parser = new Parser(result._1)
     val root = parser.parse()
+    pprintln(x=root, height = 1000000)
     root.toGraphviz("parsed tree", "./output")
   }
 }
