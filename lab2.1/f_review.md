@@ -20,10 +20,10 @@
 package main
 
 func foo(a int, b int) int {
-	func() int {
-		return 2
-	}()
-	return a + b
+    func() int {
+        return 2
+    }()
+    return a + b
 }
 ```
 
@@ -33,93 +33,94 @@ func foo(a int, b int) int {
 package main
 
 import (
-	"fmt"
-	"go/ast"
-	"go/format"
-	"go/parser"
-	"go/token"
-	"os"
+    "fmt"
+    "go/ast"
+    "go/format"
+    "go/parser"
+    "go/token"
+    "os"
 )
 
 func changeIntFunctions(file *ast.File, fileset *token.FileSet) {
-	ast.Inspect(file, func(node ast.Node) bool {
-		funcDecl, ok := node.(*ast.FuncDecl)
-		if !ok {
-			return true
-		}
-		if len(funcDecl.Type.Results.List) == 1 { // return only value?
-			returnType := funcDecl.Type.Results.List[0].Type
+    ast.Inspect(file, func(node ast.Node) bool {
+        funcDecl, ok := node.(*ast.FuncDecl)
+        if !ok {
+            return true
+        }
+        if len(funcDecl.Type.Results.List) == 1 { // return only value?
+            returnType := funcDecl.Type.Results.List[0].Type
 
-			if ident, ok := returnType.(*ast.Ident); ok && ident.Name == "int" { // return int?
-				printFuncName := &ast.ExprStmt{
-					X: &ast.CallExpr{
-						Fun: &ast.SelectorExpr{
-							X:   &ast.Ident{Name: "fmt"},
-							Sel: &ast.Ident{Name: "Println"},
-						},
-						Args: []ast.Expr{&ast.BasicLit{Kind: token.STRING, Value: "\"" + funcDecl.Name.Name + "\""}},
-					},
-				}
+            if ident, ok := returnType.(*ast.Ident); ok && ident.Name == "int" { // return int?
+                printFuncName := &ast.ExprStmt{
+                    X: &ast.CallExpr{
+                        Fun: &ast.SelectorExpr{
+                            X:   &ast.Ident{Name: "fmt"},
+                            Sel: &ast.Ident{Name: "Println"},
+                        },
+                        Args: []ast.Expr{&ast.BasicLit{Kind: token.STRING, Value: "\"" + funcDecl.Name.Name + 
+"\""}},
+                    },
+                }
 
-				funcDecl.Body.List = append([]ast.Stmt{printFuncName}, funcDecl.Body.List...)
+                funcDecl.Body.List = append([]ast.Stmt{printFuncName}, funcDecl.Body.List...)
 
-				// find return statement
-				for _, stmt := range funcDecl.Body.List {
-					if retStmt, ok := stmt.(*ast.ReturnStmt); ok {
-						printReturn := &ast.ExprStmt{ // and print return statement
-							X: &ast.CallExpr{
-								Fun: &ast.SelectorExpr{
-									X:   &ast.Ident{Name: "fmt"},
-									Sel: &ast.Ident{Name: "Println"},
-								},
-								Args: retStmt.Results,
-							},
-						}
+                // find return statement
+                for _, stmt := range funcDecl.Body.List {
+                    if retStmt, ok := stmt.(*ast.ReturnStmt); ok {
+                        printReturn := &ast.ExprStmt{ // and print return statement
+                            X: &ast.CallExpr{
+                                Fun: &ast.SelectorExpr{
+                                    X:   &ast.Ident{Name: "fmt"},
+                                    Sel: &ast.Ident{Name: "Println"},
+                                },
+                                Args: retStmt.Results,
+                            },
+                        }
 
-						index := indexOf(funcDecl.Body.List, stmt) // insert before return
-						funcDecl.Body.List = append(funcDecl.Body.List[:index], append([]ast.Stmt{printReturn}, funcDecl.Body.Li
-st[index:]...)...)
-						break
-					}
-				}
-			}
-		}
+                        index := indexOf(funcDecl.Body.List, stmt) // insert before return
+                        funcDecl.Body.List = append(funcDecl.Body.List[:index], append([]ast.Stmt{printReturn}
+, funcDecl.Body.List[index:]...)...)
+                        break
+                    }
+                }
+            }
+        }
 
-		return true
-	})
+        return true
+    })
 }
 
 func indexOf(list []ast.Stmt, stmt ast.Stmt) int {
-	for i, s := range list {
-		if s == stmt {
-			return i
-		}
-	}
-	return -1
+    for i, s := range list {
+        if s == stmt {
+            return i
+        }
+    }
+    return -1
 }
 
 func main() {
-	if len(os.Args) != 2 {
-		fmt.Printf("usage: astprint <filename.go>\n")
-		return
-	}
+    if len(os.Args) != 2 {
+        fmt.Printf("usage: astprint <filename.go>\n")
+        return
+    }
 
-	fset := token.NewFileSet()
+    fset := token.NewFileSet()
 
-	if file, err := parser.ParseFile(
-		fset,
-		os.Args[1],
-		nil,
-		parser.ParseComments,
-	); err == nil {
-		changeIntFunctions(file, fset)
-		if format.Node(os.Stdout, fset, file) != nil {
-			fmt.Printf("Formatter error: %v\n", err)
-		}
-		ast.Fprint(os.Stdout, fset, file, nil)
-	} else {
-		fmt.Printf("Error: %v", err)
-	}
+    if file, err := parser.ParseFile(
+        fset,
+        os.Args[1],
+        nil,
+        parser.ParseComments,
+    ); err == nil {
+        changeIntFunctions(file, fset)
+        if format.Node(os.Stdout, fset, file) != nil {
+            fmt.Printf("Formatter error: %v\n", err)
+        }
+        ast.Fprint(os.Stdout, fset, file, nil)
+    } else {
+        fmt.Printf("Error: %v", err)
+    }
 }
 
 ```
@@ -132,12 +133,12 @@ func main() {
 package main
 
 func foo(a int, b int) int {
-	fmt.Println("foo")
-	func() int {
-		return 2
-	}()
-	fmt.Println(a + b)
-	return a + b
+    fmt.Println("foo")
+    func() int {
+        return 2
+    }()
+    fmt.Println(a + b)
+    return a + b
 }
 
 ```
@@ -148,12 +149,12 @@ func foo(a int, b int) int {
 package main
 
 func foo(a int, b int) int {
-	fmt.Println("foo")
-	func() int {
-		return 2
-	}()
-	fmt.Println(a + b)
-	return a + b
+    fmt.Println("foo")
+    func() int {
+        return 2
+    }()
+    fmt.Println(a + b)
+    return a + b
 }
      0  *ast.File {
      1  .  Doc: nil
