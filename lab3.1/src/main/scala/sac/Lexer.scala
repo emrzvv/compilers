@@ -5,7 +5,7 @@ import domain.{Fragment, Position, Token}
 import scala.io.Source
 import scala.util.matching.Regex
 
-class Lexer(file_name: String) {
+class Lexer(file_name: String, variants: List[(String, Regex)]) {
   private val lines: List[String] = Source.fromFile(file_name).getLines.toList
 
   private def skipSpaces(line: String, i: Int): (String, Int) = {
@@ -18,16 +18,6 @@ class Lexer(file_name: String) {
   }
 
   def parse(): (List[Token], List[Fragment]) = {
-    val variants: List[(String, Regex)] = List(
-      ("AXIOM", """^\'axiom""".r),
-      ("EPS", """^\'epsilon""".r),
-      ("END", """^\'end""".r),
-      ("OR", """^\'or""".r),
-      ("NTERM", """^[A-Z][A-Z0-9]*""".r),
-      ("ARROW", """^->""".r),
-      ("STR", """^\"[^\"]\"""".r),
-      ("comment", """^#[^\n]*""".r)
-    )
 
     var lexemes: List[Token] = List()
     var errors: List[Fragment] = List()

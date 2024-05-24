@@ -1,3 +1,4 @@
+package sac
 
 object Grammar {
 //  S -> K S | .

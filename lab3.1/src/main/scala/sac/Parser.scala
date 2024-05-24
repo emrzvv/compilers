@@ -20,30 +20,30 @@ class Parser(val lexemes: List[Token],
     var stop: Boolean = false
 
     while (!stop) {
-      println("--------------")
-      println(s"STACK: ${stack.map(_.value)}")
+//      println("--------------")
+//      println(s"STACK: ${stack.map(_.value)}")
       val currentNode = stack(stack.size - 1)
       stack.remove(stack.size - 1)
       if (currentNode.value == Eof && currentLexeme.name == Eof) {
         stop = true
       } else {
-        println(s"POP ${currentNode.value}")
-        println(s"LEXEMES: ${_lexemes.map(_.value)}")
+//        println(s"POP ${currentNode.value}")
+//        println(s"LEXEMES: ${_lexemes.map(_.value)}")
 
         if (terminalSet.contains(currentNode.value)) {
           if (currentNode.value == currentLexeme.name) {
             currentNode.value = currentLexeme.value
-            println(s"--> READ ${currentLexeme}")
+//            println(s"--> READ ${currentLexeme}")
             currentLexeme = _lexemes.head
             _lexemes.remove(0)
           } else {
-            println(s"ERROR: EXPECTED ${currentNode.value} FOUND ${currentLexeme.name}")
+//            println(s"ERROR: EXPECTED ${currentNode.value} FOUND ${currentLexeme.name}")
             stop = true
           }
         } else if (table.contains((currentNode.value, currentLexeme.name))) {
           val tableValue = table((currentNode.value, currentLexeme.name))
           val newNodes = mutable.ArrayBuffer.from(tableValue.map(v => Node(v)))
-          println(s"PUTTING ${newNodes.reverse} IN STACK")
+//          println(s"PUTTING ${newNodes.reverse} IN STACK")
 //          if (newNodes.isEmpty) {
 //            currentNode.addChild(Node("NOTHING"))
 //          }
@@ -52,9 +52,9 @@ class Parser(val lexemes: List[Token],
             stack += node
           }
         } else {
-          println(s"${currentNode.value}, ${lexemes.head}")
-          println(table.keys)
-          println(s"NO SUCH VALUE IN TABLE: (${currentNode.value}, ${lexemes.head})")
+//          println(s"${currentNode.value}, ${lexemes.head}")
+//          println(table.keys)
+//          println(s"NO SUCH VALUE IN TABLE: (${currentNode.value}, ${lexemes.head})")
           stop = true
         }
       }

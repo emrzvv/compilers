@@ -9,7 +9,7 @@ case class Node(var value: String,
                 var position: Int = -1,
                 uuid: UUID = UUID.randomUUID()) {
   def addChild(child: Node): Unit = {
-    this.children += child
+    this.children.prepend(child)
   }
 
   private def toGraphvizHelper(node: Node): String = {
@@ -46,10 +46,14 @@ case class Node(var value: String,
     val v: Char = value.headOption.getOrElse('@')
     'A' <= v && v <= 'Z'
   }
+
+  def debug(): String = {
+    s"${value}, [ ${uuid} ], ${children.map(_.value)}"
+  }
 }
 
 object Node {
   var index: Int = 1
-  val eps = Node(value = "eps$")
-  val eof = Node(value = "EOF")
+  val eps = "eps$"
+  val eof = "EOF"
 }
