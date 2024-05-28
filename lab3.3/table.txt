@@ -1,0 +1,3350 @@
+State 0
+	0    $accept: . Program
+
+	for terminal 'func': Shift(state=6)
+	for terminal 'proc': Shift(state=7)
+
+	for non-terminal Func: go to state 1
+	for non-terminal FunctionHeader: go to state 2
+	for non-terminal Procedure: go to state 3
+	for non-terminal ProcedureHeader: go to state 4
+	for non-terminal Program: go to state 5
+
+State 1
+	1    Program: Func .
+
+	for terminal 'func': Reduce(rule=1)
+	for terminal 'proc': Reduce(rule=1)
+	for terminal EOF: Reduce(rule=1)
+
+State 2
+	5    Func: FunctionHeader . Statements 'endfunc'
+
+	for terminal INT_CONST: Shift(state=24)
+	for terminal CHAR_CONST: Shift(state=25)
+	for terminal STRING_CONST: Shift(state=26)
+	for terminal ff: Shift(state=27)
+	for terminal tt: Shift(state=28)
+	for terminal '[': Shift(state=29)
+	for terminal 'check': Shift(state=30)
+	for terminal 'if': Shift(state=31)
+	for terminal 'while': Shift(state=32)
+	for terminal 'for': Shift(state=33)
+	for terminal 'repeat': Shift(state=34)
+	for terminal REF_CONST: Shift(state=35)
+	for terminal VARNAME: Shift(state=36)
+
+	for non-terminal AssignmentStatement: go to state 8
+	for non-terminal Const: go to state 9
+	for non-terminal DeclarationStatement: go to state 10
+	for non-terminal ExtendedVar: go to state 11
+	for non-terminal ForCycleHead: go to state 12
+	for non-terminal FunctionCallStatement: go to state 13
+	for non-terminal IfStatement: go to state 14
+	for non-terminal LoopWithPostconditionStatement: go to state 15
+	for non-terminal LoopWithPreconditionStatements: go to state 16
+	for non-terminal NArrayAssignmentStatement: go to state 17
+	for non-terminal NArrayCall: go to state 18
+	for non-terminal Spec: go to state 19
+	for non-terminal Statement: go to state 20
+	for non-terminal Statements: go to state 21
+	for non-terminal VarDeclaration: go to state 22
+	for non-terminal VarDeclarations: go to state 23
+
+State 3
+	2    Program: Procedure .
+
+	for terminal 'func': Reduce(rule=2)
+	for terminal 'proc': Reduce(rule=2)
+	for terminal EOF: Reduce(rule=2)
+
+State 4
+	6    Procedure: ProcedureHeader . Statements 'endproc'
+
+	for terminal INT_CONST: Shift(state=24)
+	for terminal CHAR_CONST: Shift(state=25)
+	for terminal STRING_CONST: Shift(state=26)
+	for terminal ff: Shift(state=27)
+	for terminal tt: Shift(state=28)
+	for terminal '[': Shift(state=29)
+	for terminal 'check': Shift(state=30)
+	for terminal 'if': Shift(state=31)
+	for terminal 'while': Shift(state=32)
+	for terminal 'for': Shift(state=33)
+	for terminal 'repeat': Shift(state=34)
+	for terminal REF_CONST: Shift(state=35)
+	for terminal VARNAME: Shift(state=36)
+
+	for non-terminal AssignmentStatement: go to state 8
+	for non-terminal Const: go to state 9
+	for non-terminal DeclarationStatement: go to state 10
+	for non-terminal ExtendedVar: go to state 11
+	for non-terminal ForCycleHead: go to state 12
+	for non-terminal FunctionCallStatement: go to state 13
+	for non-terminal IfStatement: go to state 14
+	for non-terminal LoopWithPostconditionStatement: go to state 15
+	for non-terminal LoopWithPreconditionStatements: go to state 16
+	for non-terminal NArrayAssignmentStatement: go to state 17
+	for non-terminal NArrayCall: go to state 18
+	for non-terminal Spec: go to state 19
+	for non-terminal Statement: go to state 20
+	for non-terminal Statements: go to state 37
+	for non-terminal VarDeclaration: go to state 22
+	for non-terminal VarDeclarations: go to state 23
+
+State 5
+	0    $accept: Program .
+	3    Program: Program . Func
+	4    Program: Program . Procedure
+
+	for terminal 'func': Shift(state=6)
+	for terminal 'proc': Shift(state=7)
+	for terminal EOF: Accept()
+
+	for non-terminal Func: go to state 38
+	for non-terminal FunctionHeader: go to state 2
+	for non-terminal Procedure: go to state 39
+	for non-terminal ProcedureHeader: go to state 4
+
+State 6
+	7    FunctionHeader: 'func' . VARNAME '(' Sections ')' '->' Type
+
+	for terminal VARNAME: Shift(state=40)
+
+State 7
+	10   ProcedureHeader: 'proc' . VARNAME '(' Sections ')'
+
+	for terminal VARNAME: Shift(state=41)
+
+State 8
+	16   Statement: AssignmentStatement .
+
+	for terminal 'endproc': Reduce(rule=16)
+	for terminal 'endfunc': Reduce(rule=16)
+	for terminal ';': Reduce(rule=16)
+	for terminal 'endif': Reduce(rule=16)
+	for terminal 'else': Reduce(rule=16)
+	for terminal 'elseif': Reduce(rule=16)
+	for terminal 'endwhile': Reduce(rule=16)
+	for terminal 'endfor': Reduce(rule=16)
+	for terminal 'until': Reduce(rule=16)
+
+State 9
+	61   Spec: Const .
+
+	for terminal INT_CONST: Reduce(rule=61)
+	for terminal &&: Reduce(rule=61)
+	for terminal !: Reduce(rule=61)
+	for terminal ||: Reduce(rule=61)
+	for terminal ^^: Reduce(rule=61)
+	for terminal CHAR_CONST: Reduce(rule=61)
+	for terminal STRING_CONST: Reduce(rule=61)
+	for terminal 'endproc': Reduce(rule=61)
+	for terminal ff: Reduce(rule=61)
+	for terminal ')': Reduce(rule=61)
+	for terminal '->': Reduce(rule=61)
+	for terminal 'endfunc': Reduce(rule=61)
+	for terminal tt: Reduce(rule=61)
+	for terminal '[': Reduce(rule=61)
+	for terminal ']': Reduce(rule=61)
+	for terminal ',': Reduce(rule=61)
+	for terminal ';': Reduce(rule=61)
+	for terminal '==': Reduce(rule=61)
+	for terminal '!=': Reduce(rule=61)
+	for terminal '<': Reduce(rule=61)
+	for terminal '>': Reduce(rule=61)
+	for terminal '<=': Reduce(rule=61)
+	for terminal '>=': Reduce(rule=61)
+	for terminal '+': Reduce(rule=61)
+	for terminal '-': Reduce(rule=61)
+	for terminal '/': Reduce(rule=61)
+	for terminal '%': Reduce(rule=61)
+	for terminal '^': Reduce(rule=61)
+	for terminal 'then': Reduce(rule=61)
+	for terminal 'endif': Reduce(rule=61)
+	for terminal 'else': Reduce(rule=61)
+	for terminal 'elseif': Reduce(rule=61)
+	for terminal 'do': Reduce(rule=61)
+	for terminal 'endwhile': Reduce(rule=61)
+	for terminal 'endfor': Reduce(rule=61)
+	for terminal 'to': Reduce(rule=61)
+	for terminal 'step': Reduce(rule=61)
+	for terminal 'until': Reduce(rule=61)
+	for terminal REF_CONST: Reduce(rule=61)
+	for terminal VARNAME: Reduce(rule=61)
+
+State 10
+	15   Statement: DeclarationStatement .
+
+	for terminal 'endproc': Reduce(rule=15)
+	for terminal 'endfunc': Reduce(rule=15)
+	for terminal ';': Reduce(rule=15)
+	for terminal 'endif': Reduce(rule=15)
+	for terminal 'else': Reduce(rule=15)
+	for terminal 'elseif': Reduce(rule=15)
+	for terminal 'endwhile': Reduce(rule=15)
+	for terminal 'endfor': Reduce(rule=15)
+	for terminal 'until': Reduce(rule=15)
+
+State 11
+	59   Spec: ExtendedVar .
+
+	for terminal INT_CONST: Reduce(rule=59)
+	for terminal &&: Reduce(rule=59)
+	for terminal !: Reduce(rule=59)
+	for terminal ||: Reduce(rule=59)
+	for terminal ^^: Reduce(rule=59)
+	for terminal CHAR_CONST: Reduce(rule=59)
+	for terminal STRING_CONST: Reduce(rule=59)
+	for terminal 'endproc': Reduce(rule=59)
+	for terminal ff: Reduce(rule=59)
+	for terminal ')': Reduce(rule=59)
+	for terminal '->': Reduce(rule=59)
+	for terminal 'endfunc': Reduce(rule=59)
+	for terminal tt: Reduce(rule=59)
+	for terminal '[': Reduce(rule=59)
+	for terminal ']': Reduce(rule=59)
+	for terminal ',': Reduce(rule=59)
+	for terminal ';': Reduce(rule=59)
+	for terminal '==': Reduce(rule=59)
+	for terminal '!=': Reduce(rule=59)
+	for terminal '<': Reduce(rule=59)
+	for terminal '>': Reduce(rule=59)
+	for terminal '<=': Reduce(rule=59)
+	for terminal '>=': Reduce(rule=59)
+	for terminal '+': Reduce(rule=59)
+	for terminal '-': Reduce(rule=59)
+	for terminal '/': Reduce(rule=59)
+	for terminal '%': Reduce(rule=59)
+	for terminal '^': Reduce(rule=59)
+	for terminal 'then': Reduce(rule=59)
+	for terminal 'endif': Reduce(rule=59)
+	for terminal 'else': Reduce(rule=59)
+	for terminal 'elseif': Reduce(rule=59)
+	for terminal 'do': Reduce(rule=59)
+	for terminal 'endwhile': Reduce(rule=59)
+	for terminal 'endfor': Reduce(rule=59)
+	for terminal 'to': Reduce(rule=59)
+	for terminal 'step': Reduce(rule=59)
+	for terminal 'until': Reduce(rule=59)
+	for terminal REF_CONST: Reduce(rule=59)
+	for terminal VARNAME: Reduce(rule=59)
+
+State 12
+	36   LoopWithPreconditionStatements: ForCycleHead . 'do' Statements 'endfor'
+
+	for terminal 'do': Shift(state=42)
+
+State 13
+	18   Statement: FunctionCallStatement .
+	56   Spec: FunctionCallStatement .
+
+	for terminal 'endproc': Reduce(rule=18)
+	for terminal 'endfunc': Reduce(rule=18)
+	for terminal '[': Reduce(rule=56)
+	for terminal ';': Reduce(rule=18)
+	for terminal 'endif': Reduce(rule=18)
+	for terminal 'else': Reduce(rule=18)
+	for terminal 'elseif': Reduce(rule=18)
+	for terminal 'endwhile': Reduce(rule=18)
+	for terminal 'endfor': Reduce(rule=18)
+	for terminal 'until': Reduce(rule=18)
+
+State 14
+	19   Statement: IfStatement .
+
+	for terminal 'endproc': Reduce(rule=19)
+	for terminal 'endfunc': Reduce(rule=19)
+	for terminal ';': Reduce(rule=19)
+	for terminal 'endif': Reduce(rule=19)
+	for terminal 'else': Reduce(rule=19)
+	for terminal 'elseif': Reduce(rule=19)
+	for terminal 'endwhile': Reduce(rule=19)
+	for terminal 'endfor': Reduce(rule=19)
+	for terminal 'until': Reduce(rule=19)
+
+State 15
+	21   Statement: LoopWithPostconditionStatement .
+
+	for terminal 'endproc': Reduce(rule=21)
+	for terminal 'endfunc': Reduce(rule=21)
+	for terminal ';': Reduce(rule=21)
+	for terminal 'endif': Reduce(rule=21)
+	for terminal 'else': Reduce(rule=21)
+	for terminal 'elseif': Reduce(rule=21)
+	for terminal 'endwhile': Reduce(rule=21)
+	for terminal 'endfor': Reduce(rule=21)
+	for terminal 'until': Reduce(rule=21)
+
+State 16
+	20   Statement: LoopWithPreconditionStatements .
+
+	for terminal 'endproc': Reduce(rule=20)
+	for terminal 'endfunc': Reduce(rule=20)
+	for terminal ';': Reduce(rule=20)
+	for terminal 'endif': Reduce(rule=20)
+	for terminal 'else': Reduce(rule=20)
+	for terminal 'elseif': Reduce(rule=20)
+	for terminal 'endwhile': Reduce(rule=20)
+	for terminal 'endfor': Reduce(rule=20)
+	for terminal 'until': Reduce(rule=20)
+
+State 17
+	17   Statement: NArrayAssignmentStatement .
+
+	for terminal 'endproc': Reduce(rule=17)
+	for terminal 'endfunc': Reduce(rule=17)
+	for terminal ';': Reduce(rule=17)
+	for terminal 'endif': Reduce(rule=17)
+	for terminal 'else': Reduce(rule=17)
+	for terminal 'elseif': Reduce(rule=17)
+	for terminal 'endwhile': Reduce(rule=17)
+	for terminal 'endfor': Reduce(rule=17)
+	for terminal 'until': Reduce(rule=17)
+
+State 18
+	31   NArrayAssignmentStatement: NArrayCall . '=' Expression
+	60   Spec: NArrayCall .
+
+	for terminal '[': Reduce(rule=60)
+	for terminal '=': Shift(state=43)
+
+State 19
+	47   NArrayCall: Spec . '[' Expression ']'
+
+	for terminal '[': Shift(state=44)
+
+State 20
+	8    Statements: Statement .
+
+	for terminal 'endproc': Reduce(rule=8)
+	for terminal 'endfunc': Reduce(rule=8)
+	for terminal ';': Reduce(rule=8)
+	for terminal 'endif': Reduce(rule=8)
+	for terminal 'else': Reduce(rule=8)
+	for terminal 'elseif': Reduce(rule=8)
+	for terminal 'endwhile': Reduce(rule=8)
+	for terminal 'endfor': Reduce(rule=8)
+	for terminal 'until': Reduce(rule=8)
+
+State 21
+	5    Func: FunctionHeader Statements . 'endfunc'
+	9    Statements: Statements . ';' Statement
+
+	for terminal 'endfunc': Shift(state=45)
+	for terminal ';': Shift(state=46)
+
+State 22
+	28   DeclarationStatement: VarDeclaration . '->' Type
+	45   VarDeclarations: VarDeclaration .
+
+	for terminal '->': Shift(state=47)
+	for terminal ',': Reduce(rule=45)
+
+State 23
+	29   DeclarationStatement: VarDeclarations . ',' VarDeclaration '->' Type
+	46   VarDeclarations: VarDeclarations . ',' VarDeclaration
+
+	for terminal ',': Shift(state=48)
+
+State 24
+	69   Const: INT_CONST .
+
+	for terminal INT_CONST: Reduce(rule=69)
+	for terminal &&: Reduce(rule=69)
+	for terminal !: Reduce(rule=69)
+	for terminal ||: Reduce(rule=69)
+	for terminal ^^: Reduce(rule=69)
+	for terminal CHAR_CONST: Reduce(rule=69)
+	for terminal STRING_CONST: Reduce(rule=69)
+	for terminal 'endproc': Reduce(rule=69)
+	for terminal ff: Reduce(rule=69)
+	for terminal ')': Reduce(rule=69)
+	for terminal '->': Reduce(rule=69)
+	for terminal 'endfunc': Reduce(rule=69)
+	for terminal tt: Reduce(rule=69)
+	for terminal '[': Reduce(rule=69)
+	for terminal ']': Reduce(rule=69)
+	for terminal ',': Reduce(rule=69)
+	for terminal ';': Reduce(rule=69)
+	for terminal '==': Reduce(rule=69)
+	for terminal '!=': Reduce(rule=69)
+	for terminal '<': Reduce(rule=69)
+	for terminal '>': Reduce(rule=69)
+	for terminal '<=': Reduce(rule=69)
+	for terminal '>=': Reduce(rule=69)
+	for terminal '+': Reduce(rule=69)
+	for terminal '-': Reduce(rule=69)
+	for terminal '/': Reduce(rule=69)
+	for terminal '%': Reduce(rule=69)
+	for terminal '^': Reduce(rule=69)
+	for terminal 'then': Reduce(rule=69)
+	for terminal 'endif': Reduce(rule=69)
+	for terminal 'else': Reduce(rule=69)
+	for terminal 'elseif': Reduce(rule=69)
+	for terminal 'do': Reduce(rule=69)
+	for terminal 'endwhile': Reduce(rule=69)
+	for terminal 'endfor': Reduce(rule=69)
+	for terminal 'to': Reduce(rule=69)
+	for terminal 'step': Reduce(rule=69)
+	for terminal 'until': Reduce(rule=69)
+	for terminal REF_CONST: Reduce(rule=69)
+	for terminal VARNAME: Reduce(rule=69)
+
+State 25
+	70   Const: CHAR_CONST .
+
+	for terminal INT_CONST: Reduce(rule=70)
+	for terminal &&: Reduce(rule=70)
+	for terminal !: Reduce(rule=70)
+	for terminal ||: Reduce(rule=70)
+	for terminal ^^: Reduce(rule=70)
+	for terminal CHAR_CONST: Reduce(rule=70)
+	for terminal STRING_CONST: Reduce(rule=70)
+	for terminal 'endproc': Reduce(rule=70)
+	for terminal ff: Reduce(rule=70)
+	for terminal ')': Reduce(rule=70)
+	for terminal '->': Reduce(rule=70)
+	for terminal 'endfunc': Reduce(rule=70)
+	for terminal tt: Reduce(rule=70)
+	for terminal '[': Reduce(rule=70)
+	for terminal ']': Reduce(rule=70)
+	for terminal ',': Reduce(rule=70)
+	for terminal ';': Reduce(rule=70)
+	for terminal '==': Reduce(rule=70)
+	for terminal '!=': Reduce(rule=70)
+	for terminal '<': Reduce(rule=70)
+	for terminal '>': Reduce(rule=70)
+	for terminal '<=': Reduce(rule=70)
+	for terminal '>=': Reduce(rule=70)
+	for terminal '+': Reduce(rule=70)
+	for terminal '-': Reduce(rule=70)
+	for terminal '/': Reduce(rule=70)
+	for terminal '%': Reduce(rule=70)
+	for terminal '^': Reduce(rule=70)
+	for terminal 'then': Reduce(rule=70)
+	for terminal 'endif': Reduce(rule=70)
+	for terminal 'else': Reduce(rule=70)
+	for terminal 'elseif': Reduce(rule=70)
+	for terminal 'do': Reduce(rule=70)
+	for terminal 'endwhile': Reduce(rule=70)
+	for terminal 'endfor': Reduce(rule=70)
+	for terminal 'to': Reduce(rule=70)
+	for terminal 'step': Reduce(rule=70)
+	for terminal 'until': Reduce(rule=70)
+	for terminal REF_CONST: Reduce(rule=70)
+	for terminal VARNAME: Reduce(rule=70)
+
+State 26
+	71   Const: STRING_CONST .
+
+	for terminal INT_CONST: Reduce(rule=71)
+	for terminal &&: Reduce(rule=71)
+	for terminal !: Reduce(rule=71)
+	for terminal ||: Reduce(rule=71)
+	for terminal ^^: Reduce(rule=71)
+	for terminal CHAR_CONST: Reduce(rule=71)
+	for terminal STRING_CONST: Reduce(rule=71)
+	for terminal 'endproc': Reduce(rule=71)
+	for terminal ff: Reduce(rule=71)
+	for terminal ')': Reduce(rule=71)
+	for terminal '->': Reduce(rule=71)
+	for terminal 'endfunc': Reduce(rule=71)
+	for terminal tt: Reduce(rule=71)
+	for terminal '[': Reduce(rule=71)
+	for terminal ']': Reduce(rule=71)
+	for terminal ',': Reduce(rule=71)
+	for terminal ';': Reduce(rule=71)
+	for terminal '==': Reduce(rule=71)
+	for terminal '!=': Reduce(rule=71)
+	for terminal '<': Reduce(rule=71)
+	for terminal '>': Reduce(rule=71)
+	for terminal '<=': Reduce(rule=71)
+	for terminal '>=': Reduce(rule=71)
+	for terminal '+': Reduce(rule=71)
+	for terminal '-': Reduce(rule=71)
+	for terminal '/': Reduce(rule=71)
+	for terminal '%': Reduce(rule=71)
+	for terminal '^': Reduce(rule=71)
+	for terminal 'then': Reduce(rule=71)
+	for terminal 'endif': Reduce(rule=71)
+	for terminal 'else': Reduce(rule=71)
+	for terminal 'elseif': Reduce(rule=71)
+	for terminal 'do': Reduce(rule=71)
+	for terminal 'endwhile': Reduce(rule=71)
+	for terminal 'endfor': Reduce(rule=71)
+	for terminal 'to': Reduce(rule=71)
+	for terminal 'step': Reduce(rule=71)
+	for terminal 'until': Reduce(rule=71)
+	for terminal REF_CONST: Reduce(rule=71)
+	for terminal VARNAME: Reduce(rule=71)
+
+State 27
+	74   Const: ff .
+
+	for terminal INT_CONST: Reduce(rule=74)
+	for terminal &&: Reduce(rule=74)
+	for terminal !: Reduce(rule=74)
+	for terminal ||: Reduce(rule=74)
+	for terminal ^^: Reduce(rule=74)
+	for terminal CHAR_CONST: Reduce(rule=74)
+	for terminal STRING_CONST: Reduce(rule=74)
+	for terminal 'endproc': Reduce(rule=74)
+	for terminal ff: Reduce(rule=74)
+	for terminal ')': Reduce(rule=74)
+	for terminal '->': Reduce(rule=74)
+	for terminal 'endfunc': Reduce(rule=74)
+	for terminal tt: Reduce(rule=74)
+	for terminal '[': Reduce(rule=74)
+	for terminal ']': Reduce(rule=74)
+	for terminal ',': Reduce(rule=74)
+	for terminal ';': Reduce(rule=74)
+	for terminal '==': Reduce(rule=74)
+	for terminal '!=': Reduce(rule=74)
+	for terminal '<': Reduce(rule=74)
+	for terminal '>': Reduce(rule=74)
+	for terminal '<=': Reduce(rule=74)
+	for terminal '>=': Reduce(rule=74)
+	for terminal '+': Reduce(rule=74)
+	for terminal '-': Reduce(rule=74)
+	for terminal '/': Reduce(rule=74)
+	for terminal '%': Reduce(rule=74)
+	for terminal '^': Reduce(rule=74)
+	for terminal 'then': Reduce(rule=74)
+	for terminal 'endif': Reduce(rule=74)
+	for terminal 'else': Reduce(rule=74)
+	for terminal 'elseif': Reduce(rule=74)
+	for terminal 'do': Reduce(rule=74)
+	for terminal 'endwhile': Reduce(rule=74)
+	for terminal 'endfor': Reduce(rule=74)
+	for terminal 'to': Reduce(rule=74)
+	for terminal 'step': Reduce(rule=74)
+	for terminal 'until': Reduce(rule=74)
+	for terminal REF_CONST: Reduce(rule=74)
+	for terminal VARNAME: Reduce(rule=74)
+
+State 28
+	73   Const: tt .
+
+	for terminal INT_CONST: Reduce(rule=73)
+	for terminal &&: Reduce(rule=73)
+	for terminal !: Reduce(rule=73)
+	for terminal ||: Reduce(rule=73)
+	for terminal ^^: Reduce(rule=73)
+	for terminal CHAR_CONST: Reduce(rule=73)
+	for terminal STRING_CONST: Reduce(rule=73)
+	for terminal 'endproc': Reduce(rule=73)
+	for terminal ff: Reduce(rule=73)
+	for terminal ')': Reduce(rule=73)
+	for terminal '->': Reduce(rule=73)
+	for terminal 'endfunc': Reduce(rule=73)
+	for terminal tt: Reduce(rule=73)
+	for terminal '[': Reduce(rule=73)
+	for terminal ']': Reduce(rule=73)
+	for terminal ',': Reduce(rule=73)
+	for terminal ';': Reduce(rule=73)
+	for terminal '==': Reduce(rule=73)
+	for terminal '!=': Reduce(rule=73)
+	for terminal '<': Reduce(rule=73)
+	for terminal '>': Reduce(rule=73)
+	for terminal '<=': Reduce(rule=73)
+	for terminal '>=': Reduce(rule=73)
+	for terminal '+': Reduce(rule=73)
+	for terminal '-': Reduce(rule=73)
+	for terminal '/': Reduce(rule=73)
+	for terminal '%': Reduce(rule=73)
+	for terminal '^': Reduce(rule=73)
+	for terminal 'then': Reduce(rule=73)
+	for terminal 'endif': Reduce(rule=73)
+	for terminal 'else': Reduce(rule=73)
+	for terminal 'elseif': Reduce(rule=73)
+	for terminal 'do': Reduce(rule=73)
+	for terminal 'endwhile': Reduce(rule=73)
+	for terminal 'endfor': Reduce(rule=73)
+	for terminal 'to': Reduce(rule=73)
+	for terminal 'step': Reduce(rule=73)
+	for terminal 'until': Reduce(rule=73)
+	for terminal REF_CONST: Reduce(rule=73)
+	for terminal VARNAME: Reduce(rule=73)
+
+State 29
+	57   Spec: '[' . Type VARNAME ']'
+	58   Spec: '[' . Type INT_CONST ']'
+
+	for terminal char: Shift(state=51)
+	for terminal bool: Shift(state=52)
+	for terminal int: Shift(state=53)
+	for terminal '[': Shift(state=54)
+
+	for non-terminal PrimitiveType: go to state 49
+	for non-terminal Type: go to state 50
+
+State 30
+	22   Statement: 'check' . Expression
+
+	for terminal INT_CONST: Shift(state=24)
+	for terminal !: Shift(state=65)
+	for terminal CHAR_CONST: Shift(state=25)
+	for terminal STRING_CONST: Shift(state=26)
+	for terminal ff: Shift(state=27)
+	for terminal tt: Shift(state=28)
+	for terminal '[': Shift(state=29)
+	for terminal '-': Shift(state=66)
+	for terminal REF_CONST: Shift(state=35)
+	for terminal VARNAME: Shift(state=67)
+
+	for non-terminal ArithmeticExpression: go to state 55
+	for non-terminal CompareExpression: go to state 56
+	for non-terminal Const: go to state 9
+	for non-terminal Expression: go to state 57
+	for non-terminal ExtendedVar: go to state 11
+	for non-terminal Factor: go to state 58
+	for non-terminal FunctionCallStatement: go to state 59
+	for non-terminal LogicalExpression: go to state 60
+	for non-terminal MultiplicativeExpression: go to state 61
+	for non-terminal NArrayCall: go to state 62
+	for non-terminal Spec: go to state 63
+	for non-terminal Term: go to state 64
+
+State 31
+	33   IfStatement: 'if' . Expression 'then' Statements 'endif'
+	34   IfStatement: 'if' . Expression 'then' Statements ElseBlock 'endif'
+
+	for terminal INT_CONST: Shift(state=24)
+	for terminal !: Shift(state=65)
+	for terminal CHAR_CONST: Shift(state=25)
+	for terminal STRING_CONST: Shift(state=26)
+	for terminal ff: Shift(state=27)
+	for terminal tt: Shift(state=28)
+	for terminal '[': Shift(state=29)
+	for terminal '-': Shift(state=66)
+	for terminal REF_CONST: Shift(state=35)
+	for terminal VARNAME: Shift(state=67)
+
+	for non-terminal ArithmeticExpression: go to state 55
+	for non-terminal CompareExpression: go to state 56
+	for non-terminal Const: go to state 9
+	for non-terminal Expression: go to state 68
+	for non-terminal ExtendedVar: go to state 11
+	for non-terminal Factor: go to state 58
+	for non-terminal FunctionCallStatement: go to state 59
+	for non-terminal LogicalExpression: go to state 60
+	for non-terminal MultiplicativeExpression: go to state 61
+	for non-terminal NArrayCall: go to state 62
+	for non-terminal Spec: go to state 63
+	for non-terminal Term: go to state 64
+
+State 32
+	35   LoopWithPreconditionStatements: 'while' . Expression 'do' Statements 'endwhile'
+
+	for terminal INT_CONST: Shift(state=24)
+	for terminal !: Shift(state=65)
+	for terminal CHAR_CONST: Shift(state=25)
+	for terminal STRING_CONST: Shift(state=26)
+	for terminal ff: Shift(state=27)
+	for terminal tt: Shift(state=28)
+	for terminal '[': Shift(state=29)
+	for terminal '-': Shift(state=66)
+	for terminal REF_CONST: Shift(state=35)
+	for terminal VARNAME: Shift(state=67)
+
+	for non-terminal ArithmeticExpression: go to state 55
+	for non-terminal CompareExpression: go to state 56
+	for non-terminal Const: go to state 9
+	for non-terminal Expression: go to state 69
+	for non-terminal ExtendedVar: go to state 11
+	for non-terminal Factor: go to state 58
+	for non-terminal FunctionCallStatement: go to state 59
+	for non-terminal LogicalExpression: go to state 60
+	for non-terminal MultiplicativeExpression: go to state 61
+	for non-terminal NArrayCall: go to state 62
+	for non-terminal Spec: go to state 63
+	for non-terminal Term: go to state 64
+
+State 33
+	52   ForCycleHead: 'for' . ForCycleVarDeclaration 'to' ForCycleTo
+	53   ForCycleHead: 'for' . ForCycleVarDeclaration 'to' ForCycleTo 'step' INT_CONST
+
+	for terminal VARNAME: Shift(state=71)
+
+	for non-terminal ForCycleVarDeclaration: go to state 70
+
+State 34
+	37   LoopWithPostconditionStatement: 'repeat' . Statements 'until' Expression
+
+	for terminal INT_CONST: Shift(state=24)
+	for terminal CHAR_CONST: Shift(state=25)
+	for terminal STRING_CONST: Shift(state=26)
+	for terminal ff: Shift(state=27)
+	for terminal tt: Shift(state=28)
+	for terminal '[': Shift(state=29)
+	for terminal 'check': Shift(state=30)
+	for terminal 'if': Shift(state=31)
+	for terminal 'while': Shift(state=32)
+	for terminal 'for': Shift(state=33)
+	for terminal 'repeat': Shift(state=34)
+	for terminal REF_CONST: Shift(state=35)
+	for terminal VARNAME: Shift(state=36)
+
+	for non-terminal AssignmentStatement: go to state 8
+	for non-terminal Const: go to state 9
+	for non-terminal DeclarationStatement: go to state 10
+	for non-terminal ExtendedVar: go to state 11
+	for non-terminal ForCycleHead: go to state 12
+	for non-terminal FunctionCallStatement: go to state 13
+	for non-terminal IfStatement: go to state 14
+	for non-terminal LoopWithPostconditionStatement: go to state 15
+	for non-terminal LoopWithPreconditionStatements: go to state 16
+	for non-terminal NArrayAssignmentStatement: go to state 17
+	for non-terminal NArrayCall: go to state 18
+	for non-terminal Spec: go to state 19
+	for non-terminal Statement: go to state 20
+	for non-terminal Statements: go to state 72
+	for non-terminal VarDeclaration: go to state 22
+	for non-terminal VarDeclarations: go to state 23
+
+State 35
+	72   Const: REF_CONST .
+
+	for terminal INT_CONST: Reduce(rule=72)
+	for terminal &&: Reduce(rule=72)
+	for terminal !: Reduce(rule=72)
+	for terminal ||: Reduce(rule=72)
+	for terminal ^^: Reduce(rule=72)
+	for terminal CHAR_CONST: Reduce(rule=72)
+	for terminal STRING_CONST: Reduce(rule=72)
+	for terminal 'endproc': Reduce(rule=72)
+	for terminal ff: Reduce(rule=72)
+	for terminal ')': Reduce(rule=72)
+	for terminal '->': Reduce(rule=72)
+	for terminal 'endfunc': Reduce(rule=72)
+	for terminal tt: Reduce(rule=72)
+	for terminal '[': Reduce(rule=72)
+	for terminal ']': Reduce(rule=72)
+	for terminal ',': Reduce(rule=72)
+	for terminal ';': Reduce(rule=72)
+	for terminal '==': Reduce(rule=72)
+	for terminal '!=': Reduce(rule=72)
+	for terminal '<': Reduce(rule=72)
+	for terminal '>': Reduce(rule=72)
+	for terminal '<=': Reduce(rule=72)
+	for terminal '>=': Reduce(rule=72)
+	for terminal '+': Reduce(rule=72)
+	for terminal '-': Reduce(rule=72)
+	for terminal '/': Reduce(rule=72)
+	for terminal '%': Reduce(rule=72)
+	for terminal '^': Reduce(rule=72)
+	for terminal 'then': Reduce(rule=72)
+	for terminal 'endif': Reduce(rule=72)
+	for terminal 'else': Reduce(rule=72)
+	for terminal 'elseif': Reduce(rule=72)
+	for terminal 'do': Reduce(rule=72)
+	for terminal 'endwhile': Reduce(rule=72)
+	for terminal 'endfor': Reduce(rule=72)
+	for terminal 'to': Reduce(rule=72)
+	for terminal 'step': Reduce(rule=72)
+	for terminal 'until': Reduce(rule=72)
+	for terminal REF_CONST: Reduce(rule=72)
+	for terminal VARNAME: Reduce(rule=72)
+
+State 36
+	30   AssignmentStatement: VARNAME . '=' Expression
+	32   FunctionCallStatement: VARNAME . '(' Args ')'
+	43   VarDeclaration: VARNAME .
+	44   VarDeclaration: VARNAME . '=' Expression
+	68   ExtendedVar: VARNAME .
+
+	for terminal '(': Shift(state=73)
+	for terminal '->': Reduce(rule=43)
+	for terminal '[': Reduce(rule=68)
+	for terminal ',': Reduce(rule=43)
+	for terminal '=': Shift(state=74)
+
+State 37
+	6    Procedure: ProcedureHeader Statements . 'endproc'
+	9    Statements: Statements . ';' Statement
+
+	for terminal 'endproc': Shift(state=75)
+	for terminal ';': Shift(state=46)
+
+State 38
+	3    Program: Program Func .
+
+	for terminal 'func': Reduce(rule=3)
+	for terminal 'proc': Reduce(rule=3)
+	for terminal EOF: Reduce(rule=3)
+
+State 39
+	4    Program: Program Procedure .
+
+	for terminal 'func': Reduce(rule=4)
+	for terminal 'proc': Reduce(rule=4)
+	for terminal EOF: Reduce(rule=4)
+
+State 40
+	7    FunctionHeader: 'func' VARNAME . '(' Sections ')' '->' Type
+
+	for terminal '(': Shift(state=76)
+
+State 41
+	10   ProcedureHeader: 'proc' VARNAME . '(' Sections ')'
+
+	for terminal '(': Shift(state=77)
+
+State 42
+	36   LoopWithPreconditionStatements: ForCycleHead 'do' . Statements 'endfor'
+
+	for terminal INT_CONST: Shift(state=24)
+	for terminal CHAR_CONST: Shift(state=25)
+	for terminal STRING_CONST: Shift(state=26)
+	for terminal ff: Shift(state=27)
+	for terminal tt: Shift(state=28)
+	for terminal '[': Shift(state=29)
+	for terminal 'check': Shift(state=30)
+	for terminal 'if': Shift(state=31)
+	for terminal 'while': Shift(state=32)
+	for terminal 'for': Shift(state=33)
+	for terminal 'repeat': Shift(state=34)
+	for terminal REF_CONST: Shift(state=35)
+	for terminal VARNAME: Shift(state=36)
+
+	for non-terminal AssignmentStatement: go to state 8
+	for non-terminal Const: go to state 9
+	for non-terminal DeclarationStatement: go to state 10
+	for non-terminal ExtendedVar: go to state 11
+	for non-terminal ForCycleHead: go to state 12
+	for non-terminal FunctionCallStatement: go to state 13
+	for non-terminal IfStatement: go to state 14
+	for non-terminal LoopWithPostconditionStatement: go to state 15
+	for non-terminal LoopWithPreconditionStatements: go to state 16
+	for non-terminal NArrayAssignmentStatement: go to state 17
+	for non-terminal NArrayCall: go to state 18
+	for non-terminal Spec: go to state 19
+	for non-terminal Statement: go to state 20
+	for non-terminal Statements: go to state 78
+	for non-terminal VarDeclaration: go to state 22
+	for non-terminal VarDeclarations: go to state 23
+
+State 43
+	31   NArrayAssignmentStatement: NArrayCall '=' . Expression
+
+	for terminal INT_CONST: Shift(state=24)
+	for terminal !: Shift(state=65)
+	for terminal CHAR_CONST: Shift(state=25)
+	for terminal STRING_CONST: Shift(state=26)
+	for terminal ff: Shift(state=27)
+	for terminal tt: Shift(state=28)
+	for terminal '[': Shift(state=29)
+	for terminal '-': Shift(state=66)
+	for terminal REF_CONST: Shift(state=35)
+	for terminal VARNAME: Shift(state=67)
+
+	for non-terminal ArithmeticExpression: go to state 55
+	for non-terminal CompareExpression: go to state 56
+	for non-terminal Const: go to state 9
+	for non-terminal Expression: go to state 79
+	for non-terminal ExtendedVar: go to state 11
+	for non-terminal Factor: go to state 58
+	for non-terminal FunctionCallStatement: go to state 59
+	for non-terminal LogicalExpression: go to state 60
+	for non-terminal MultiplicativeExpression: go to state 61
+	for non-terminal NArrayCall: go to state 62
+	for non-terminal Spec: go to state 63
+	for non-terminal Term: go to state 64
+
+State 44
+	47   NArrayCall: Spec '[' . Expression ']'
+
+	for terminal INT_CONST: Shift(state=24)
+	for terminal !: Shift(state=65)
+	for terminal CHAR_CONST: Shift(state=25)
+	for terminal STRING_CONST: Shift(state=26)
+	for terminal ff: Shift(state=27)
+	for terminal tt: Shift(state=28)
+	for terminal '[': Shift(state=29)
+	for terminal '-': Shift(state=66)
+	for terminal REF_CONST: Shift(state=35)
+	for terminal VARNAME: Shift(state=67)
+
+	for non-terminal ArithmeticExpression: go to state 55
+	for non-terminal CompareExpression: go to state 56
+	for non-terminal Const: go to state 9
+	for non-terminal Expression: go to state 80
+	for non-terminal ExtendedVar: go to state 11
+	for non-terminal Factor: go to state 58
+	for non-terminal FunctionCallStatement: go to state 59
+	for non-terminal LogicalExpression: go to state 60
+	for non-terminal MultiplicativeExpression: go to state 61
+	for non-terminal NArrayCall: go to state 62
+	for non-terminal Spec: go to state 63
+	for non-terminal Term: go to state 64
+
+State 45
+	5    Func: FunctionHeader Statements 'endfunc' .
+
+	for terminal 'func': Reduce(rule=5)
+	for terminal 'proc': Reduce(rule=5)
+	for terminal EOF: Reduce(rule=5)
+
+State 46
+	9    Statements: Statements ';' . Statement
+
+	for terminal INT_CONST: Shift(state=24)
+	for terminal CHAR_CONST: Shift(state=25)
+	for terminal STRING_CONST: Shift(state=26)
+	for terminal ff: Shift(state=27)
+	for terminal tt: Shift(state=28)
+	for terminal '[': Shift(state=29)
+	for terminal 'check': Shift(state=30)
+	for terminal 'if': Shift(state=31)
+	for terminal 'while': Shift(state=32)
+	for terminal 'for': Shift(state=33)
+	for terminal 'repeat': Shift(state=34)
+	for terminal REF_CONST: Shift(state=35)
+	for terminal VARNAME: Shift(state=36)
+
+	for non-terminal AssignmentStatement: go to state 8
+	for non-terminal Const: go to state 9
+	for non-terminal DeclarationStatement: go to state 10
+	for non-terminal ExtendedVar: go to state 11
+	for non-terminal ForCycleHead: go to state 12
+	for non-terminal FunctionCallStatement: go to state 13
+	for non-terminal IfStatement: go to state 14
+	for non-terminal LoopWithPostconditionStatement: go to state 15
+	for non-terminal LoopWithPreconditionStatements: go to state 16
+	for non-terminal NArrayAssignmentStatement: go to state 17
+	for non-terminal NArrayCall: go to state 18
+	for non-terminal Spec: go to state 19
+	for non-terminal Statement: go to state 81
+	for non-terminal VarDeclaration: go to state 22
+	for non-terminal VarDeclarations: go to state 23
+
+State 47
+	28   DeclarationStatement: VarDeclaration '->' . Type
+
+	for terminal char: Shift(state=51)
+	for terminal bool: Shift(state=52)
+	for terminal int: Shift(state=53)
+	for terminal '[': Shift(state=54)
+
+	for non-terminal PrimitiveType: go to state 49
+	for non-terminal Type: go to state 82
+
+State 48
+	29   DeclarationStatement: VarDeclarations ',' . VarDeclaration '->' Type
+	46   VarDeclarations: VarDeclarations ',' . VarDeclaration
+
+	for terminal VARNAME: Shift(state=84)
+
+	for non-terminal VarDeclaration: go to state 83
+
+State 49
+	13   Type: PrimitiveType .
+
+	for terminal INT_CONST: Reduce(rule=13)
+	for terminal CHAR_CONST: Reduce(rule=13)
+	for terminal STRING_CONST: Reduce(rule=13)
+	for terminal 'endproc': Reduce(rule=13)
+	for terminal ff: Reduce(rule=13)
+	for terminal ')': Reduce(rule=13)
+	for terminal 'endfunc': Reduce(rule=13)
+	for terminal tt: Reduce(rule=13)
+	for terminal '[': Reduce(rule=13)
+	for terminal ']': Reduce(rule=13)
+	for terminal ';': Reduce(rule=13)
+	for terminal 'check': Reduce(rule=13)
+	for terminal 'if': Reduce(rule=13)
+	for terminal 'endif': Reduce(rule=13)
+	for terminal 'else': Reduce(rule=13)
+	for terminal 'elseif': Reduce(rule=13)
+	for terminal 'while': Reduce(rule=13)
+	for terminal 'endwhile': Reduce(rule=13)
+	for terminal 'endfor': Reduce(rule=13)
+	for terminal 'for': Reduce(rule=13)
+	for terminal 'repeat': Reduce(rule=13)
+	for terminal 'until': Reduce(rule=13)
+	for terminal REF_CONST: Reduce(rule=13)
+	for terminal VARNAME: Reduce(rule=13)
+
+State 50
+	57   Spec: '[' Type . VARNAME ']'
+	58   Spec: '[' Type . INT_CONST ']'
+
+	for terminal INT_CONST: Shift(state=85)
+	for terminal VARNAME: Shift(state=86)
+
+State 51
+	26   PrimitiveType: char .
+
+	for terminal INT_CONST: Reduce(rule=26)
+	for terminal CHAR_CONST: Reduce(rule=26)
+	for terminal STRING_CONST: Reduce(rule=26)
+	for terminal 'endproc': Reduce(rule=26)
+	for terminal ff: Reduce(rule=26)
+	for terminal ')': Reduce(rule=26)
+	for terminal 'endfunc': Reduce(rule=26)
+	for terminal tt: Reduce(rule=26)
+	for terminal '[': Reduce(rule=26)
+	for terminal ']': Reduce(rule=26)
+	for terminal ';': Reduce(rule=26)
+	for terminal 'check': Reduce(rule=26)
+	for terminal 'if': Reduce(rule=26)
+	for terminal 'endif': Reduce(rule=26)
+	for terminal 'else': Reduce(rule=26)
+	for terminal 'elseif': Reduce(rule=26)
+	for terminal 'while': Reduce(rule=26)
+	for terminal 'endwhile': Reduce(rule=26)
+	for terminal 'endfor': Reduce(rule=26)
+	for terminal 'for': Reduce(rule=26)
+	for terminal 'repeat': Reduce(rule=26)
+	for terminal 'until': Reduce(rule=26)
+	for terminal REF_CONST: Reduce(rule=26)
+	for terminal VARNAME: Reduce(rule=26)
+
+State 52
+	27   PrimitiveType: bool .
+
+	for terminal INT_CONST: Reduce(rule=27)
+	for terminal CHAR_CONST: Reduce(rule=27)
+	for terminal STRING_CONST: Reduce(rule=27)
+	for terminal 'endproc': Reduce(rule=27)
+	for terminal ff: Reduce(rule=27)
+	for terminal ')': Reduce(rule=27)
+	for terminal 'endfunc': Reduce(rule=27)
+	for terminal tt: Reduce(rule=27)
+	for terminal '[': Reduce(rule=27)
+	for terminal ']': Reduce(rule=27)
+	for terminal ';': Reduce(rule=27)
+	for terminal 'check': Reduce(rule=27)
+	for terminal 'if': Reduce(rule=27)
+	for terminal 'endif': Reduce(rule=27)
+	for terminal 'else': Reduce(rule=27)
+	for terminal 'elseif': Reduce(rule=27)
+	for terminal 'while': Reduce(rule=27)
+	for terminal 'endwhile': Reduce(rule=27)
+	for terminal 'endfor': Reduce(rule=27)
+	for terminal 'for': Reduce(rule=27)
+	for terminal 'repeat': Reduce(rule=27)
+	for terminal 'until': Reduce(rule=27)
+	for terminal REF_CONST: Reduce(rule=27)
+	for terminal VARNAME: Reduce(rule=27)
+
+State 53
+	25   PrimitiveType: int .
+
+	for terminal INT_CONST: Reduce(rule=25)
+	for terminal CHAR_CONST: Reduce(rule=25)
+	for terminal STRING_CONST: Reduce(rule=25)
+	for terminal 'endproc': Reduce(rule=25)
+	for terminal ff: Reduce(rule=25)
+	for terminal ')': Reduce(rule=25)
+	for terminal 'endfunc': Reduce(rule=25)
+	for terminal tt: Reduce(rule=25)
+	for terminal '[': Reduce(rule=25)
+	for terminal ']': Reduce(rule=25)
+	for terminal ';': Reduce(rule=25)
+	for terminal 'check': Reduce(rule=25)
+	for terminal 'if': Reduce(rule=25)
+	for terminal 'endif': Reduce(rule=25)
+	for terminal 'else': Reduce(rule=25)
+	for terminal 'elseif': Reduce(rule=25)
+	for terminal 'while': Reduce(rule=25)
+	for terminal 'endwhile': Reduce(rule=25)
+	for terminal 'endfor': Reduce(rule=25)
+	for terminal 'for': Reduce(rule=25)
+	for terminal 'repeat': Reduce(rule=25)
+	for terminal 'until': Reduce(rule=25)
+	for terminal REF_CONST: Reduce(rule=25)
+	for terminal VARNAME: Reduce(rule=25)
+
+State 54
+	14   Type: '[' . Type ']'
+
+	for terminal char: Shift(state=51)
+	for terminal bool: Shift(state=52)
+	for terminal int: Shift(state=53)
+	for terminal '[': Shift(state=54)
+
+	for non-terminal PrimitiveType: go to state 49
+	for non-terminal Type: go to state 87
+
+State 55
+	66   CompareExpression: ArithmeticExpression .
+
+	for terminal &&: Reduce(rule=66)
+	for terminal ||: Reduce(rule=66)
+	for terminal ^^: Reduce(rule=66)
+	for terminal 'endproc': Reduce(rule=66)
+	for terminal ')': Reduce(rule=66)
+	for terminal '->': Reduce(rule=66)
+	for terminal 'endfunc': Reduce(rule=66)
+	for terminal ']': Reduce(rule=66)
+	for terminal ',': Reduce(rule=66)
+	for terminal ';': Reduce(rule=66)
+	for terminal '==': Reduce(rule=66)
+	for terminal '!=': Reduce(rule=66)
+	for terminal '<': Reduce(rule=66)
+	for terminal '>': Reduce(rule=66)
+	for terminal '<=': Reduce(rule=66)
+	for terminal '>=': Reduce(rule=66)
+	for terminal 'then': Reduce(rule=66)
+	for terminal 'endif': Reduce(rule=66)
+	for terminal 'else': Reduce(rule=66)
+	for terminal 'elseif': Reduce(rule=66)
+	for terminal 'do': Reduce(rule=66)
+	for terminal 'endwhile': Reduce(rule=66)
+	for terminal 'endfor': Reduce(rule=66)
+	for terminal 'to': Reduce(rule=66)
+	for terminal 'step': Reduce(rule=66)
+	for terminal 'until': Reduce(rule=66)
+
+State 56
+	54   LogicalExpression: CompareExpression .
+	67   CompareExpression: CompareExpression . NCompareOperator ArithmeticExpression
+
+	for terminal &&: Reduce(rule=54)
+	for terminal ||: Reduce(rule=54)
+	for terminal ^^: Reduce(rule=54)
+	for terminal 'endproc': Reduce(rule=54)
+	for terminal ')': Reduce(rule=54)
+	for terminal '->': Reduce(rule=54)
+	for terminal 'endfunc': Reduce(rule=54)
+	for terminal ']': Reduce(rule=54)
+	for terminal ',': Reduce(rule=54)
+	for terminal ';': Reduce(rule=54)
+	for terminal '==': Shift(state=89)
+	for terminal '!=': Shift(state=90)
+	for terminal '<': Shift(state=91)
+	for terminal '>': Shift(state=92)
+	for terminal '<=': Shift(state=93)
+	for terminal '>=': Shift(state=94)
+	for terminal 'then': Reduce(rule=54)
+	for terminal 'endif': Reduce(rule=54)
+	for terminal 'else': Reduce(rule=54)
+	for terminal 'elseif': Reduce(rule=54)
+	for terminal 'do': Reduce(rule=54)
+	for terminal 'endwhile': Reduce(rule=54)
+	for terminal 'endfor': Reduce(rule=54)
+	for terminal 'to': Reduce(rule=54)
+	for terminal 'step': Reduce(rule=54)
+	for terminal 'until': Reduce(rule=54)
+
+	for non-terminal NCompareOperator: go to state 88
+
+State 57
+	22   Statement: 'check' Expression .
+	39   Expression: Expression . || LogicalExpression
+	40   Expression: Expression . ^^ LogicalExpression
+
+	for terminal ||: Shift(state=95)
+	for terminal ^^: Shift(state=96)
+	for terminal 'endproc': Reduce(rule=22)
+	for terminal 'endfunc': Reduce(rule=22)
+	for terminal ';': Reduce(rule=22)
+	for terminal 'endif': Reduce(rule=22)
+	for terminal 'else': Reduce(rule=22)
+	for terminal 'elseif': Reduce(rule=22)
+	for terminal 'endwhile': Reduce(rule=22)
+	for terminal 'endfor': Reduce(rule=22)
+	for terminal 'until': Reduce(rule=22)
+
+State 58
+	87   Term: Factor .
+	88   Term: Factor . '^' Term
+
+	for terminal INT_CONST: Reduce(rule=87)
+	for terminal &&: Reduce(rule=87)
+	for terminal !: Reduce(rule=87)
+	for terminal ||: Reduce(rule=87)
+	for terminal ^^: Reduce(rule=87)
+	for terminal CHAR_CONST: Reduce(rule=87)
+	for terminal STRING_CONST: Reduce(rule=87)
+	for terminal 'endproc': Reduce(rule=87)
+	for terminal ff: Reduce(rule=87)
+	for terminal ')': Reduce(rule=87)
+	for terminal '->': Reduce(rule=87)
+	for terminal 'endfunc': Reduce(rule=87)
+	for terminal tt: Reduce(rule=87)
+	for terminal '[': Reduce(rule=87)
+	for terminal ']': Reduce(rule=87)
+	for terminal ',': Reduce(rule=87)
+	for terminal ';': Reduce(rule=87)
+	for terminal '==': Reduce(rule=87)
+	for terminal '!=': Reduce(rule=87)
+	for terminal '<': Reduce(rule=87)
+	for terminal '>': Reduce(rule=87)
+	for terminal '<=': Reduce(rule=87)
+	for terminal '>=': Reduce(rule=87)
+	for terminal '+': Reduce(rule=87)
+	for terminal '-': Reduce(rule=87)
+	for terminal '/': Reduce(rule=87)
+	for terminal '%': Reduce(rule=87)
+	for terminal '^': Shift(state=97)
+	for terminal 'then': Reduce(rule=87)
+	for terminal 'endif': Reduce(rule=87)
+	for terminal 'else': Reduce(rule=87)
+	for terminal 'elseif': Reduce(rule=87)
+	for terminal 'do': Reduce(rule=87)
+	for terminal 'endwhile': Reduce(rule=87)
+	for terminal 'endfor': Reduce(rule=87)
+	for terminal 'to': Reduce(rule=87)
+	for terminal 'step': Reduce(rule=87)
+	for terminal 'until': Reduce(rule=87)
+	for terminal REF_CONST: Reduce(rule=87)
+	for terminal VARNAME: Reduce(rule=87)
+
+State 59
+	56   Spec: FunctionCallStatement .
+
+	for terminal INT_CONST: Reduce(rule=56)
+	for terminal &&: Reduce(rule=56)
+	for terminal !: Reduce(rule=56)
+	for terminal ||: Reduce(rule=56)
+	for terminal ^^: Reduce(rule=56)
+	for terminal CHAR_CONST: Reduce(rule=56)
+	for terminal STRING_CONST: Reduce(rule=56)
+	for terminal 'endproc': Reduce(rule=56)
+	for terminal ff: Reduce(rule=56)
+	for terminal ')': Reduce(rule=56)
+	for terminal '->': Reduce(rule=56)
+	for terminal 'endfunc': Reduce(rule=56)
+	for terminal tt: Reduce(rule=56)
+	for terminal '[': Reduce(rule=56)
+	for terminal ']': Reduce(rule=56)
+	for terminal ',': Reduce(rule=56)
+	for terminal ';': Reduce(rule=56)
+	for terminal '==': Reduce(rule=56)
+	for terminal '!=': Reduce(rule=56)
+	for terminal '<': Reduce(rule=56)
+	for terminal '>': Reduce(rule=56)
+	for terminal '<=': Reduce(rule=56)
+	for terminal '>=': Reduce(rule=56)
+	for terminal '+': Reduce(rule=56)
+	for terminal '-': Reduce(rule=56)
+	for terminal '/': Reduce(rule=56)
+	for terminal '%': Reduce(rule=56)
+	for terminal '^': Reduce(rule=56)
+	for terminal 'then': Reduce(rule=56)
+	for terminal 'endif': Reduce(rule=56)
+	for terminal 'else': Reduce(rule=56)
+	for terminal 'elseif': Reduce(rule=56)
+	for terminal 'do': Reduce(rule=56)
+	for terminal 'endwhile': Reduce(rule=56)
+	for terminal 'endfor': Reduce(rule=56)
+	for terminal 'to': Reduce(rule=56)
+	for terminal 'step': Reduce(rule=56)
+	for terminal 'until': Reduce(rule=56)
+	for terminal REF_CONST: Reduce(rule=56)
+	for terminal VARNAME: Reduce(rule=56)
+
+State 60
+	38   Expression: LogicalExpression .
+	55   LogicalExpression: LogicalExpression . && CompareExpression
+
+	for terminal &&: Shift(state=98)
+	for terminal ||: Reduce(rule=38)
+	for terminal ^^: Reduce(rule=38)
+	for terminal 'endproc': Reduce(rule=38)
+	for terminal ')': Reduce(rule=38)
+	for terminal '->': Reduce(rule=38)
+	for terminal 'endfunc': Reduce(rule=38)
+	for terminal ']': Reduce(rule=38)
+	for terminal ',': Reduce(rule=38)
+	for terminal ';': Reduce(rule=38)
+	for terminal 'then': Reduce(rule=38)
+	for terminal 'endif': Reduce(rule=38)
+	for terminal 'else': Reduce(rule=38)
+	for terminal 'elseif': Reduce(rule=38)
+	for terminal 'do': Reduce(rule=38)
+	for terminal 'endwhile': Reduce(rule=38)
+	for terminal 'endfor': Reduce(rule=38)
+	for terminal 'to': Reduce(rule=38)
+	for terminal 'step': Reduce(rule=38)
+	for terminal 'until': Reduce(rule=38)
+
+State 61
+	75   ArithmeticExpression: MultiplicativeExpression .
+	76   ArithmeticExpression: MultiplicativeExpression . AdditiveOperator MultiplicativeExpression
+	84   MultiplicativeExpression: MultiplicativeExpression . MultiplicativeOperator Term
+
+	for terminal INT_CONST: Reduce(rule=89)
+	for terminal &&: Reduce(rule=75)
+	for terminal !: Reduce(rule=89)
+	for terminal ||: Reduce(rule=75)
+	for terminal ^^: Reduce(rule=75)
+	for terminal CHAR_CONST: Reduce(rule=89)
+	for terminal STRING_CONST: Reduce(rule=89)
+	for terminal 'endproc': Reduce(rule=75)
+	for terminal ff: Reduce(rule=89)
+	for terminal ')': Reduce(rule=75)
+	for terminal '->': Reduce(rule=75)
+	for terminal 'endfunc': Reduce(rule=75)
+	for terminal tt: Reduce(rule=89)
+	for terminal '[': Reduce(rule=89)
+	for terminal ']': Reduce(rule=75)
+	for terminal ',': Reduce(rule=75)
+	for terminal ';': Reduce(rule=75)
+	for terminal '==': Reduce(rule=75)
+	for terminal '!=': Reduce(rule=75)
+	for terminal '<': Reduce(rule=75)
+	for terminal '>': Reduce(rule=75)
+	for terminal '<=': Reduce(rule=75)
+	for terminal '>=': Reduce(rule=75)
+	for terminal '+': Shift(state=101)
+	for terminal '-': Shift(state=102), Reduce(rule=89)
+	for terminal '/': Shift(state=103)
+	for terminal '%': Shift(state=104)
+	for terminal 'then': Reduce(rule=75)
+	for terminal 'endif': Reduce(rule=75)
+	for terminal 'else': Reduce(rule=75)
+	for terminal 'elseif': Reduce(rule=75)
+	for terminal 'do': Reduce(rule=75)
+	for terminal 'endwhile': Reduce(rule=75)
+	for terminal 'endfor': Reduce(rule=75)
+	for terminal 'to': Reduce(rule=75)
+	for terminal 'step': Reduce(rule=75)
+	for terminal 'until': Reduce(rule=75)
+	for terminal REF_CONST: Reduce(rule=89)
+	for terminal VARNAME: Reduce(rule=89)
+
+	for non-terminal AdditiveOperator: go to state 99
+	for non-terminal MultiplicativeOperator: go to state 100
+
+State 62
+	60   Spec: NArrayCall .
+
+	for terminal INT_CONST: Reduce(rule=60)
+	for terminal &&: Reduce(rule=60)
+	for terminal !: Reduce(rule=60)
+	for terminal ||: Reduce(rule=60)
+	for terminal ^^: Reduce(rule=60)
+	for terminal CHAR_CONST: Reduce(rule=60)
+	for terminal STRING_CONST: Reduce(rule=60)
+	for terminal 'endproc': Reduce(rule=60)
+	for terminal ff: Reduce(rule=60)
+	for terminal ')': Reduce(rule=60)
+	for terminal '->': Reduce(rule=60)
+	for terminal 'endfunc': Reduce(rule=60)
+	for terminal tt: Reduce(rule=60)
+	for terminal '[': Reduce(rule=60)
+	for terminal ']': Reduce(rule=60)
+	for terminal ',': Reduce(rule=60)
+	for terminal ';': Reduce(rule=60)
+	for terminal '==': Reduce(rule=60)
+	for terminal '!=': Reduce(rule=60)
+	for terminal '<': Reduce(rule=60)
+	for terminal '>': Reduce(rule=60)
+	for terminal '<=': Reduce(rule=60)
+	for terminal '>=': Reduce(rule=60)
+	for terminal '+': Reduce(rule=60)
+	for terminal '-': Reduce(rule=60)
+	for terminal '/': Reduce(rule=60)
+	for terminal '%': Reduce(rule=60)
+	for terminal '^': Reduce(rule=60)
+	for terminal 'then': Reduce(rule=60)
+	for terminal 'endif': Reduce(rule=60)
+	for terminal 'else': Reduce(rule=60)
+	for terminal 'elseif': Reduce(rule=60)
+	for terminal 'do': Reduce(rule=60)
+	for terminal 'endwhile': Reduce(rule=60)
+	for terminal 'endfor': Reduce(rule=60)
+	for terminal 'to': Reduce(rule=60)
+	for terminal 'step': Reduce(rule=60)
+	for terminal 'until': Reduce(rule=60)
+	for terminal REF_CONST: Reduce(rule=60)
+	for terminal VARNAME: Reduce(rule=60)
+
+State 63
+	47   NArrayCall: Spec . '[' Expression ']'
+	94   Factor: Spec .
+
+	for terminal INT_CONST: Reduce(rule=94)
+	for terminal &&: Reduce(rule=94)
+	for terminal !: Reduce(rule=94)
+	for terminal ||: Reduce(rule=94)
+	for terminal ^^: Reduce(rule=94)
+	for terminal CHAR_CONST: Reduce(rule=94)
+	for terminal STRING_CONST: Reduce(rule=94)
+	for terminal 'endproc': Reduce(rule=94)
+	for terminal ff: Reduce(rule=94)
+	for terminal ')': Reduce(rule=94)
+	for terminal '->': Reduce(rule=94)
+	for terminal 'endfunc': Reduce(rule=94)
+	for terminal tt: Reduce(rule=94)
+	for terminal '[': Reduce(rule=94), Shift(state=44)
+	for terminal ']': Reduce(rule=94)
+	for terminal ',': Reduce(rule=94)
+	for terminal ';': Reduce(rule=94)
+	for terminal '==': Reduce(rule=94)
+	for terminal '!=': Reduce(rule=94)
+	for terminal '<': Reduce(rule=94)
+	for terminal '>': Reduce(rule=94)
+	for terminal '<=': Reduce(rule=94)
+	for terminal '>=': Reduce(rule=94)
+	for terminal '+': Reduce(rule=94)
+	for terminal '-': Reduce(rule=94)
+	for terminal '/': Reduce(rule=94)
+	for terminal '%': Reduce(rule=94)
+	for terminal '^': Reduce(rule=94)
+	for terminal 'then': Reduce(rule=94)
+	for terminal 'endif': Reduce(rule=94)
+	for terminal 'else': Reduce(rule=94)
+	for terminal 'elseif': Reduce(rule=94)
+	for terminal 'do': Reduce(rule=94)
+	for terminal 'endwhile': Reduce(rule=94)
+	for terminal 'endfor': Reduce(rule=94)
+	for terminal 'to': Reduce(rule=94)
+	for terminal 'step': Reduce(rule=94)
+	for terminal 'until': Reduce(rule=94)
+	for terminal REF_CONST: Reduce(rule=94)
+	for terminal VARNAME: Reduce(rule=94)
+
+State 64
+	83   MultiplicativeExpression: Term .
+
+	for terminal INT_CONST: Reduce(rule=83)
+	for terminal &&: Reduce(rule=83)
+	for terminal !: Reduce(rule=83)
+	for terminal ||: Reduce(rule=83)
+	for terminal ^^: Reduce(rule=83)
+	for terminal CHAR_CONST: Reduce(rule=83)
+	for terminal STRING_CONST: Reduce(rule=83)
+	for terminal 'endproc': Reduce(rule=83)
+	for terminal ff: Reduce(rule=83)
+	for terminal ')': Reduce(rule=83)
+	for terminal '->': Reduce(rule=83)
+	for terminal 'endfunc': Reduce(rule=83)
+	for terminal tt: Reduce(rule=83)
+	for terminal '[': Reduce(rule=83)
+	for terminal ']': Reduce(rule=83)
+	for terminal ',': Reduce(rule=83)
+	for terminal ';': Reduce(rule=83)
+	for terminal '==': Reduce(rule=83)
+	for terminal '!=': Reduce(rule=83)
+	for terminal '<': Reduce(rule=83)
+	for terminal '>': Reduce(rule=83)
+	for terminal '<=': Reduce(rule=83)
+	for terminal '>=': Reduce(rule=83)
+	for terminal '+': Reduce(rule=83)
+	for terminal '-': Reduce(rule=83)
+	for terminal '/': Reduce(rule=83)
+	for terminal '%': Reduce(rule=83)
+	for terminal 'then': Reduce(rule=83)
+	for terminal 'endif': Reduce(rule=83)
+	for terminal 'else': Reduce(rule=83)
+	for terminal 'elseif': Reduce(rule=83)
+	for terminal 'do': Reduce(rule=83)
+	for terminal 'endwhile': Reduce(rule=83)
+	for terminal 'endfor': Reduce(rule=83)
+	for terminal 'to': Reduce(rule=83)
+	for terminal 'step': Reduce(rule=83)
+	for terminal 'until': Reduce(rule=83)
+	for terminal REF_CONST: Reduce(rule=83)
+	for terminal VARNAME: Reduce(rule=83)
+
+State 65
+	92   Factor: ! . Spec
+
+	for terminal INT_CONST: Shift(state=24)
+	for terminal CHAR_CONST: Shift(state=25)
+	for terminal STRING_CONST: Shift(state=26)
+	for terminal ff: Shift(state=27)
+	for terminal tt: Shift(state=28)
+	for terminal '[': Shift(state=29)
+	for terminal REF_CONST: Shift(state=35)
+	for terminal VARNAME: Shift(state=67)
+
+	for non-terminal Const: go to state 9
+	for non-terminal ExtendedVar: go to state 11
+	for non-terminal FunctionCallStatement: go to state 59
+	for non-terminal NArrayCall: go to state 62
+	for non-terminal Spec: go to state 105
+
+State 66
+	93   Factor: '-' . Spec
+
+	for terminal INT_CONST: Shift(state=24)
+	for terminal CHAR_CONST: Shift(state=25)
+	for terminal STRING_CONST: Shift(state=26)
+	for terminal ff: Shift(state=27)
+	for terminal tt: Shift(state=28)
+	for terminal '[': Shift(state=29)
+	for terminal REF_CONST: Shift(state=35)
+	for terminal VARNAME: Shift(state=67)
+
+	for non-terminal Const: go to state 9
+	for non-terminal ExtendedVar: go to state 11
+	for non-terminal FunctionCallStatement: go to state 59
+	for non-terminal NArrayCall: go to state 62
+	for non-terminal Spec: go to state 106
+
+State 67
+	32   FunctionCallStatement: VARNAME . '(' Args ')'
+	68   ExtendedVar: VARNAME .
+
+	for terminal INT_CONST: Reduce(rule=68)
+	for terminal &&: Reduce(rule=68)
+	for terminal !: Reduce(rule=68)
+	for terminal ||: Reduce(rule=68)
+	for terminal ^^: Reduce(rule=68)
+	for terminal CHAR_CONST: Reduce(rule=68)
+	for terminal STRING_CONST: Reduce(rule=68)
+	for terminal 'endproc': Reduce(rule=68)
+	for terminal ff: Reduce(rule=68)
+	for terminal '(': Shift(state=73)
+	for terminal ')': Reduce(rule=68)
+	for terminal '->': Reduce(rule=68)
+	for terminal 'endfunc': Reduce(rule=68)
+	for terminal tt: Reduce(rule=68)
+	for terminal '[': Reduce(rule=68)
+	for terminal ']': Reduce(rule=68)
+	for terminal ',': Reduce(rule=68)
+	for terminal ';': Reduce(rule=68)
+	for terminal '==': Reduce(rule=68)
+	for terminal '!=': Reduce(rule=68)
+	for terminal '<': Reduce(rule=68)
+	for terminal '>': Reduce(rule=68)
+	for terminal '<=': Reduce(rule=68)
+	for terminal '>=': Reduce(rule=68)
+	for terminal '+': Reduce(rule=68)
+	for terminal '-': Reduce(rule=68)
+	for terminal '/': Reduce(rule=68)
+	for terminal '%': Reduce(rule=68)
+	for terminal '^': Reduce(rule=68)
+	for terminal 'then': Reduce(rule=68)
+	for terminal 'endif': Reduce(rule=68)
+	for terminal 'else': Reduce(rule=68)
+	for terminal 'elseif': Reduce(rule=68)
+	for terminal 'do': Reduce(rule=68)
+	for terminal 'endwhile': Reduce(rule=68)
+	for terminal 'endfor': Reduce(rule=68)
+	for terminal 'to': Reduce(rule=68)
+	for terminal 'step': Reduce(rule=68)
+	for terminal 'until': Reduce(rule=68)
+	for terminal REF_CONST: Reduce(rule=68)
+	for terminal VARNAME: Reduce(rule=68)
+
+State 68
+	33   IfStatement: 'if' Expression . 'then' Statements 'endif'
+	34   IfStatement: 'if' Expression . 'then' Statements ElseBlock 'endif'
+	39   Expression: Expression . || LogicalExpression
+	40   Expression: Expression . ^^ LogicalExpression
+
+	for terminal ||: Shift(state=95)
+	for terminal ^^: Shift(state=96)
+	for terminal 'then': Shift(state=107)
+
+State 69
+	35   LoopWithPreconditionStatements: 'while' Expression . 'do' Statements 'endwhile'
+	39   Expression: Expression . || LogicalExpression
+	40   Expression: Expression . ^^ LogicalExpression
+
+	for terminal ||: Shift(state=95)
+	for terminal ^^: Shift(state=96)
+	for terminal 'do': Shift(state=108)
+
+State 70
+	52   ForCycleHead: 'for' ForCycleVarDeclaration . 'to' ForCycleTo
+	53   ForCycleHead: 'for' ForCycleVarDeclaration . 'to' ForCycleTo 'step' INT_CONST
+
+	for terminal 'to': Shift(state=109)
+
+State 71
+	62   ForCycleVarDeclaration: VARNAME . '=' INT_CONST '->' int
+	63   ForCycleVarDeclaration: VARNAME . '=' CHAR_CONST '->' char
+	64   ForCycleVarDeclaration: VARNAME . '=' Expression
+
+	for terminal '=': Shift(state=110)
+
+State 72
+	9    Statements: Statements . ';' Statement
+	37   LoopWithPostconditionStatement: 'repeat' Statements . 'until' Expression
+
+	for terminal ';': Shift(state=46)
+	for terminal 'until': Shift(state=111)
+
+State 73
+	32   FunctionCallStatement: VARNAME '(' . Args ')'
+
+	for terminal INT_CONST: Shift(state=24)
+	for terminal !: Shift(state=65)
+	for terminal CHAR_CONST: Shift(state=25)
+	for terminal STRING_CONST: Shift(state=26)
+	for terminal ff: Shift(state=27)
+	for terminal tt: Shift(state=28)
+	for terminal '[': Shift(state=29)
+	for terminal '-': Shift(state=66)
+	for terminal REF_CONST: Shift(state=35)
+	for terminal VARNAME: Shift(state=67)
+
+	for non-terminal Args: go to state 112
+	for non-terminal ArithmeticExpression: go to state 55
+	for non-terminal CompareExpression: go to state 56
+	for non-terminal Const: go to state 9
+	for non-terminal Expression: go to state 113
+	for non-terminal ExtendedVar: go to state 11
+	for non-terminal Factor: go to state 58
+	for non-terminal FunctionCallStatement: go to state 59
+	for non-terminal LogicalExpression: go to state 60
+	for non-terminal MultiplicativeExpression: go to state 61
+	for non-terminal NArrayCall: go to state 62
+	for non-terminal Spec: go to state 63
+	for non-terminal Term: go to state 64
+
+State 74
+	30   AssignmentStatement: VARNAME '=' . Expression
+	44   VarDeclaration: VARNAME '=' . Expression
+
+	for terminal INT_CONST: Shift(state=24)
+	for terminal !: Shift(state=65)
+	for terminal CHAR_CONST: Shift(state=25)
+	for terminal STRING_CONST: Shift(state=26)
+	for terminal ff: Shift(state=27)
+	for terminal tt: Shift(state=28)
+	for terminal '[': Shift(state=29)
+	for terminal '-': Shift(state=66)
+	for terminal REF_CONST: Shift(state=35)
+	for terminal VARNAME: Shift(state=67)
+
+	for non-terminal ArithmeticExpression: go to state 55
+	for non-terminal CompareExpression: go to state 56
+	for non-terminal Const: go to state 9
+	for non-terminal Expression: go to state 114
+	for non-terminal ExtendedVar: go to state 11
+	for non-terminal Factor: go to state 58
+	for non-terminal FunctionCallStatement: go to state 59
+	for non-terminal LogicalExpression: go to state 60
+	for non-terminal MultiplicativeExpression: go to state 61
+	for non-terminal NArrayCall: go to state 62
+	for non-terminal Spec: go to state 63
+	for non-terminal Term: go to state 64
+
+State 75
+	6    Procedure: ProcedureHeader Statements 'endproc' .
+
+	for terminal 'func': Reduce(rule=6)
+	for terminal 'proc': Reduce(rule=6)
+	for terminal EOF: Reduce(rule=6)
+
+State 76
+	7    FunctionHeader: 'func' VARNAME '(' . Sections ')' '->' Type
+
+	for terminal VARNAME: Shift(state=118)
+
+	for non-terminal Parameters: go to state 115
+	for non-terminal Section: go to state 116
+	for non-terminal Sections: go to state 117
+
+State 77
+	10   ProcedureHeader: 'proc' VARNAME '(' . Sections ')'
+
+	for terminal VARNAME: Shift(state=118)
+
+	for non-terminal Parameters: go to state 115
+	for non-terminal Section: go to state 116
+	for non-terminal Sections: go to state 119
+
+State 78
+	9    Statements: Statements . ';' Statement
+	36   LoopWithPreconditionStatements: ForCycleHead 'do' Statements . 'endfor'
+
+	for terminal ';': Shift(state=46)
+	for terminal 'endfor': Shift(state=120)
+
+State 79
+	31   NArrayAssignmentStatement: NArrayCall '=' Expression .
+	39   Expression: Expression . || LogicalExpression
+	40   Expression: Expression . ^^ LogicalExpression
+
+	for terminal ||: Shift(state=95)
+	for terminal ^^: Shift(state=96)
+	for terminal 'endproc': Reduce(rule=31)
+	for terminal 'endfunc': Reduce(rule=31)
+	for terminal ';': Reduce(rule=31)
+	for terminal 'endif': Reduce(rule=31)
+	for terminal 'else': Reduce(rule=31)
+	for terminal 'elseif': Reduce(rule=31)
+	for terminal 'endwhile': Reduce(rule=31)
+	for terminal 'endfor': Reduce(rule=31)
+	for terminal 'until': Reduce(rule=31)
+
+State 80
+	39   Expression: Expression . || LogicalExpression
+	40   Expression: Expression . ^^ LogicalExpression
+	47   NArrayCall: Spec '[' Expression . ']'
+
+	for terminal ||: Shift(state=95)
+	for terminal ^^: Shift(state=96)
+	for terminal ']': Shift(state=121)
+
+State 81
+	9    Statements: Statements ';' Statement .
+
+	for terminal 'endproc': Reduce(rule=9)
+	for terminal 'endfunc': Reduce(rule=9)
+	for terminal ';': Reduce(rule=9)
+	for terminal 'endif': Reduce(rule=9)
+	for terminal 'else': Reduce(rule=9)
+	for terminal 'elseif': Reduce(rule=9)
+	for terminal 'endwhile': Reduce(rule=9)
+	for terminal 'endfor': Reduce(rule=9)
+	for terminal 'until': Reduce(rule=9)
+
+State 82
+	28   DeclarationStatement: VarDeclaration '->' Type .
+
+	for terminal 'endproc': Reduce(rule=28)
+	for terminal 'endfunc': Reduce(rule=28)
+	for terminal ';': Reduce(rule=28)
+	for terminal 'endif': Reduce(rule=28)
+	for terminal 'else': Reduce(rule=28)
+	for terminal 'elseif': Reduce(rule=28)
+	for terminal 'endwhile': Reduce(rule=28)
+	for terminal 'endfor': Reduce(rule=28)
+	for terminal 'until': Reduce(rule=28)
+
+State 83
+	29   DeclarationStatement: VarDeclarations ',' VarDeclaration . '->' Type
+	46   VarDeclarations: VarDeclarations ',' VarDeclaration .
+
+	for terminal '->': Shift(state=122)
+	for terminal ',': Reduce(rule=46)
+
+State 84
+	43   VarDeclaration: VARNAME .
+	44   VarDeclaration: VARNAME . '=' Expression
+
+	for terminal '->': Reduce(rule=43)
+	for terminal ',': Reduce(rule=43)
+	for terminal '=': Shift(state=123)
+
+State 85
+	58   Spec: '[' Type INT_CONST . ']'
+
+	for terminal ']': Shift(state=124)
+
+State 86
+	57   Spec: '[' Type VARNAME . ']'
+
+	for terminal ']': Shift(state=125)
+
+State 87
+	14   Type: '[' Type . ']'
+
+	for terminal ']': Shift(state=126)
+
+State 88
+	67   CompareExpression: CompareExpression NCompareOperator . ArithmeticExpression
+
+	for terminal INT_CONST: Shift(state=24)
+	for terminal !: Shift(state=65)
+	for terminal CHAR_CONST: Shift(state=25)
+	for terminal STRING_CONST: Shift(state=26)
+	for terminal ff: Shift(state=27)
+	for terminal tt: Shift(state=28)
+	for terminal '[': Shift(state=29)
+	for terminal '-': Shift(state=66)
+	for terminal REF_CONST: Shift(state=35)
+	for terminal VARNAME: Shift(state=67)
+
+	for non-terminal ArithmeticExpression: go to state 127
+	for non-terminal Const: go to state 9
+	for non-terminal ExtendedVar: go to state 11
+	for non-terminal Factor: go to state 58
+	for non-terminal FunctionCallStatement: go to state 59
+	for non-terminal MultiplicativeExpression: go to state 61
+	for non-terminal NArrayCall: go to state 62
+	for non-terminal Spec: go to state 63
+	for non-terminal Term: go to state 64
+
+State 89
+	77   NCompareOperator: '==' .
+
+	for terminal INT_CONST: Reduce(rule=77)
+	for terminal !: Reduce(rule=77)
+	for terminal CHAR_CONST: Reduce(rule=77)
+	for terminal STRING_CONST: Reduce(rule=77)
+	for terminal ff: Reduce(rule=77)
+	for terminal tt: Reduce(rule=77)
+	for terminal '[': Reduce(rule=77)
+	for terminal '-': Reduce(rule=77)
+	for terminal REF_CONST: Reduce(rule=77)
+	for terminal VARNAME: Reduce(rule=77)
+
+State 90
+	78   NCompareOperator: '!=' .
+
+	for terminal INT_CONST: Reduce(rule=78)
+	for terminal !: Reduce(rule=78)
+	for terminal CHAR_CONST: Reduce(rule=78)
+	for terminal STRING_CONST: Reduce(rule=78)
+	for terminal ff: Reduce(rule=78)
+	for terminal tt: Reduce(rule=78)
+	for terminal '[': Reduce(rule=78)
+	for terminal '-': Reduce(rule=78)
+	for terminal REF_CONST: Reduce(rule=78)
+	for terminal VARNAME: Reduce(rule=78)
+
+State 91
+	79   NCompareOperator: '<' .
+
+	for terminal INT_CONST: Reduce(rule=79)
+	for terminal !: Reduce(rule=79)
+	for terminal CHAR_CONST: Reduce(rule=79)
+	for terminal STRING_CONST: Reduce(rule=79)
+	for terminal ff: Reduce(rule=79)
+	for terminal tt: Reduce(rule=79)
+	for terminal '[': Reduce(rule=79)
+	for terminal '-': Reduce(rule=79)
+	for terminal REF_CONST: Reduce(rule=79)
+	for terminal VARNAME: Reduce(rule=79)
+
+State 92
+	80   NCompareOperator: '>' .
+
+	for terminal INT_CONST: Reduce(rule=80)
+	for terminal !: Reduce(rule=80)
+	for terminal CHAR_CONST: Reduce(rule=80)
+	for terminal STRING_CONST: Reduce(rule=80)
+	for terminal ff: Reduce(rule=80)
+	for terminal tt: Reduce(rule=80)
+	for terminal '[': Reduce(rule=80)
+	for terminal '-': Reduce(rule=80)
+	for terminal REF_CONST: Reduce(rule=80)
+	for terminal VARNAME: Reduce(rule=80)
+
+State 93
+	81   NCompareOperator: '<=' .
+
+	for terminal INT_CONST: Reduce(rule=81)
+	for terminal !: Reduce(rule=81)
+	for terminal CHAR_CONST: Reduce(rule=81)
+	for terminal STRING_CONST: Reduce(rule=81)
+	for terminal ff: Reduce(rule=81)
+	for terminal tt: Reduce(rule=81)
+	for terminal '[': Reduce(rule=81)
+	for terminal '-': Reduce(rule=81)
+	for terminal REF_CONST: Reduce(rule=81)
+	for terminal VARNAME: Reduce(rule=81)
+
+State 94
+	82   NCompareOperator: '>=' .
+
+	for terminal INT_CONST: Reduce(rule=82)
+	for terminal !: Reduce(rule=82)
+	for terminal CHAR_CONST: Reduce(rule=82)
+	for terminal STRING_CONST: Reduce(rule=82)
+	for terminal ff: Reduce(rule=82)
+	for terminal tt: Reduce(rule=82)
+	for terminal '[': Reduce(rule=82)
+	for terminal '-': Reduce(rule=82)
+	for terminal REF_CONST: Reduce(rule=82)
+	for terminal VARNAME: Reduce(rule=82)
+
+State 95
+	39   Expression: Expression || . LogicalExpression
+
+	for terminal INT_CONST: Shift(state=24)
+	for terminal !: Shift(state=65)
+	for terminal CHAR_CONST: Shift(state=25)
+	for terminal STRING_CONST: Shift(state=26)
+	for terminal ff: Shift(state=27)
+	for terminal tt: Shift(state=28)
+	for terminal '[': Shift(state=29)
+	for terminal '-': Shift(state=66)
+	for terminal REF_CONST: Shift(state=35)
+	for terminal VARNAME: Shift(state=67)
+
+	for non-terminal ArithmeticExpression: go to state 55
+	for non-terminal CompareExpression: go to state 56
+	for non-terminal Const: go to state 9
+	for non-terminal ExtendedVar: go to state 11
+	for non-terminal Factor: go to state 58
+	for non-terminal FunctionCallStatement: go to state 59
+	for non-terminal LogicalExpression: go to state 128
+	for non-terminal MultiplicativeExpression: go to state 61
+	for non-terminal NArrayCall: go to state 62
+	for non-terminal Spec: go to state 63
+	for non-terminal Term: go to state 64
+
+State 96
+	40   Expression: Expression ^^ . LogicalExpression
+
+	for terminal INT_CONST: Shift(state=24)
+	for terminal !: Shift(state=65)
+	for terminal CHAR_CONST: Shift(state=25)
+	for terminal STRING_CONST: Shift(state=26)
+	for terminal ff: Shift(state=27)
+	for terminal tt: Shift(state=28)
+	for terminal '[': Shift(state=29)
+	for terminal '-': Shift(state=66)
+	for terminal REF_CONST: Shift(state=35)
+	for terminal VARNAME: Shift(state=67)
+
+	for non-terminal ArithmeticExpression: go to state 55
+	for non-terminal CompareExpression: go to state 56
+	for non-terminal Const: go to state 9
+	for non-terminal ExtendedVar: go to state 11
+	for non-terminal Factor: go to state 58
+	for non-terminal FunctionCallStatement: go to state 59
+	for non-terminal LogicalExpression: go to state 129
+	for non-terminal MultiplicativeExpression: go to state 61
+	for non-terminal NArrayCall: go to state 62
+	for non-terminal Spec: go to state 63
+	for non-terminal Term: go to state 64
+
+State 97
+	88   Term: Factor '^' . Term
+
+	for terminal INT_CONST: Shift(state=24)
+	for terminal !: Shift(state=65)
+	for terminal CHAR_CONST: Shift(state=25)
+	for terminal STRING_CONST: Shift(state=26)
+	for terminal ff: Shift(state=27)
+	for terminal tt: Shift(state=28)
+	for terminal '[': Shift(state=29)
+	for terminal '-': Shift(state=66)
+	for terminal REF_CONST: Shift(state=35)
+	for terminal VARNAME: Shift(state=67)
+
+	for non-terminal Const: go to state 9
+	for non-terminal ExtendedVar: go to state 11
+	for non-terminal Factor: go to state 58
+	for non-terminal FunctionCallStatement: go to state 59
+	for non-terminal NArrayCall: go to state 62
+	for non-terminal Spec: go to state 63
+	for non-terminal Term: go to state 130
+
+State 98
+	55   LogicalExpression: LogicalExpression && . CompareExpression
+
+	for terminal INT_CONST: Shift(state=24)
+	for terminal !: Shift(state=65)
+	for terminal CHAR_CONST: Shift(state=25)
+	for terminal STRING_CONST: Shift(state=26)
+	for terminal ff: Shift(state=27)
+	for terminal tt: Shift(state=28)
+	for terminal '[': Shift(state=29)
+	for terminal '-': Shift(state=66)
+	for terminal REF_CONST: Shift(state=35)
+	for terminal VARNAME: Shift(state=67)
+
+	for non-terminal ArithmeticExpression: go to state 55
+	for non-terminal CompareExpression: go to state 131
+	for non-terminal Const: go to state 9
+	for non-terminal ExtendedVar: go to state 11
+	for non-terminal Factor: go to state 58
+	for non-terminal FunctionCallStatement: go to state 59
+	for non-terminal MultiplicativeExpression: go to state 61
+	for non-terminal NArrayCall: go to state 62
+	for non-terminal Spec: go to state 63
+	for non-terminal Term: go to state 64
+
+State 99
+	76   ArithmeticExpression: MultiplicativeExpression AdditiveOperator . MultiplicativeExpression
+
+	for terminal INT_CONST: Shift(state=24)
+	for terminal !: Shift(state=65)
+	for terminal CHAR_CONST: Shift(state=25)
+	for terminal STRING_CONST: Shift(state=26)
+	for terminal ff: Shift(state=27)
+	for terminal tt: Shift(state=28)
+	for terminal '[': Shift(state=29)
+	for terminal '-': Shift(state=66)
+	for terminal REF_CONST: Shift(state=35)
+	for terminal VARNAME: Shift(state=67)
+
+	for non-terminal Const: go to state 9
+	for non-terminal ExtendedVar: go to state 11
+	for non-terminal Factor: go to state 58
+	for non-terminal FunctionCallStatement: go to state 59
+	for non-terminal MultiplicativeExpression: go to state 132
+	for non-terminal NArrayCall: go to state 62
+	for non-terminal Spec: go to state 63
+	for non-terminal Term: go to state 64
+
+State 100
+	84   MultiplicativeExpression: MultiplicativeExpression MultiplicativeOperator . Term
+
+	for terminal INT_CONST: Shift(state=24)
+	for terminal !: Shift(state=65)
+	for terminal CHAR_CONST: Shift(state=25)
+	for terminal STRING_CONST: Shift(state=26)
+	for terminal ff: Shift(state=27)
+	for terminal tt: Shift(state=28)
+	for terminal '[': Shift(state=29)
+	for terminal '-': Shift(state=66)
+	for terminal REF_CONST: Shift(state=35)
+	for terminal VARNAME: Shift(state=67)
+
+	for non-terminal Const: go to state 9
+	for non-terminal ExtendedVar: go to state 11
+	for non-terminal Factor: go to state 58
+	for non-terminal FunctionCallStatement: go to state 59
+	for non-terminal NArrayCall: go to state 62
+	for non-terminal Spec: go to state 63
+	for non-terminal Term: go to state 133
+
+State 101
+	85   AdditiveOperator: '+' .
+
+	for terminal INT_CONST: Reduce(rule=85)
+	for terminal !: Reduce(rule=85)
+	for terminal CHAR_CONST: Reduce(rule=85)
+	for terminal STRING_CONST: Reduce(rule=85)
+	for terminal ff: Reduce(rule=85)
+	for terminal tt: Reduce(rule=85)
+	for terminal '[': Reduce(rule=85)
+	for terminal '-': Reduce(rule=85)
+	for terminal REF_CONST: Reduce(rule=85)
+	for terminal VARNAME: Reduce(rule=85)
+
+State 102
+	86   AdditiveOperator: '-' .
+
+	for terminal INT_CONST: Reduce(rule=86)
+	for terminal !: Reduce(rule=86)
+	for terminal CHAR_CONST: Reduce(rule=86)
+	for terminal STRING_CONST: Reduce(rule=86)
+	for terminal ff: Reduce(rule=86)
+	for terminal tt: Reduce(rule=86)
+	for terminal '[': Reduce(rule=86)
+	for terminal '-': Reduce(rule=86)
+	for terminal REF_CONST: Reduce(rule=86)
+	for terminal VARNAME: Reduce(rule=86)
+
+State 103
+	90   MultiplicativeOperator: '/' .
+
+	for terminal INT_CONST: Reduce(rule=90)
+	for terminal !: Reduce(rule=90)
+	for terminal CHAR_CONST: Reduce(rule=90)
+	for terminal STRING_CONST: Reduce(rule=90)
+	for terminal ff: Reduce(rule=90)
+	for terminal tt: Reduce(rule=90)
+	for terminal '[': Reduce(rule=90)
+	for terminal '-': Reduce(rule=90)
+	for terminal REF_CONST: Reduce(rule=90)
+	for terminal VARNAME: Reduce(rule=90)
+
+State 104
+	91   MultiplicativeOperator: '%' .
+
+	for terminal INT_CONST: Reduce(rule=91)
+	for terminal !: Reduce(rule=91)
+	for terminal CHAR_CONST: Reduce(rule=91)
+	for terminal STRING_CONST: Reduce(rule=91)
+	for terminal ff: Reduce(rule=91)
+	for terminal tt: Reduce(rule=91)
+	for terminal '[': Reduce(rule=91)
+	for terminal '-': Reduce(rule=91)
+	for terminal REF_CONST: Reduce(rule=91)
+	for terminal VARNAME: Reduce(rule=91)
+
+State 105
+	47   NArrayCall: Spec . '[' Expression ']'
+	92   Factor: ! Spec .
+
+	for terminal INT_CONST: Reduce(rule=92)
+	for terminal &&: Reduce(rule=92)
+	for terminal !: Reduce(rule=92)
+	for terminal ||: Reduce(rule=92)
+	for terminal ^^: Reduce(rule=92)
+	for terminal CHAR_CONST: Reduce(rule=92)
+	for terminal STRING_CONST: Reduce(rule=92)
+	for terminal 'endproc': Reduce(rule=92)
+	for terminal ff: Reduce(rule=92)
+	for terminal ')': Reduce(rule=92)
+	for terminal '->': Reduce(rule=92)
+	for terminal 'endfunc': Reduce(rule=92)
+	for terminal tt: Reduce(rule=92)
+	for terminal '[': Reduce(rule=92), Shift(state=44)
+	for terminal ']': Reduce(rule=92)
+	for terminal ',': Reduce(rule=92)
+	for terminal ';': Reduce(rule=92)
+	for terminal '==': Reduce(rule=92)
+	for terminal '!=': Reduce(rule=92)
+	for terminal '<': Reduce(rule=92)
+	for terminal '>': Reduce(rule=92)
+	for terminal '<=': Reduce(rule=92)
+	for terminal '>=': Reduce(rule=92)
+	for terminal '+': Reduce(rule=92)
+	for terminal '-': Reduce(rule=92)
+	for terminal '/': Reduce(rule=92)
+	for terminal '%': Reduce(rule=92)
+	for terminal '^': Reduce(rule=92)
+	for terminal 'then': Reduce(rule=92)
+	for terminal 'endif': Reduce(rule=92)
+	for terminal 'else': Reduce(rule=92)
+	for terminal 'elseif': Reduce(rule=92)
+	for terminal 'do': Reduce(rule=92)
+	for terminal 'endwhile': Reduce(rule=92)
+	for terminal 'endfor': Reduce(rule=92)
+	for terminal 'to': Reduce(rule=92)
+	for terminal 'step': Reduce(rule=92)
+	for terminal 'until': Reduce(rule=92)
+	for terminal REF_CONST: Reduce(rule=92)
+	for terminal VARNAME: Reduce(rule=92)
+
+State 106
+	47   NArrayCall: Spec . '[' Expression ']'
+	93   Factor: '-' Spec .
+
+	for terminal INT_CONST: Reduce(rule=93)
+	for terminal &&: Reduce(rule=93)
+	for terminal !: Reduce(rule=93)
+	for terminal ||: Reduce(rule=93)
+	for terminal ^^: Reduce(rule=93)
+	for terminal CHAR_CONST: Reduce(rule=93)
+	for terminal STRING_CONST: Reduce(rule=93)
+	for terminal 'endproc': Reduce(rule=93)
+	for terminal ff: Reduce(rule=93)
+	for terminal ')': Reduce(rule=93)
+	for terminal '->': Reduce(rule=93)
+	for terminal 'endfunc': Reduce(rule=93)
+	for terminal tt: Reduce(rule=93)
+	for terminal '[': Reduce(rule=93), Shift(state=44)
+	for terminal ']': Reduce(rule=93)
+	for terminal ',': Reduce(rule=93)
+	for terminal ';': Reduce(rule=93)
+	for terminal '==': Reduce(rule=93)
+	for terminal '!=': Reduce(rule=93)
+	for terminal '<': Reduce(rule=93)
+	for terminal '>': Reduce(rule=93)
+	for terminal '<=': Reduce(rule=93)
+	for terminal '>=': Reduce(rule=93)
+	for terminal '+': Reduce(rule=93)
+	for terminal '-': Reduce(rule=93)
+	for terminal '/': Reduce(rule=93)
+	for terminal '%': Reduce(rule=93)
+	for terminal '^': Reduce(rule=93)
+	for terminal 'then': Reduce(rule=93)
+	for terminal 'endif': Reduce(rule=93)
+	for terminal 'else': Reduce(rule=93)
+	for terminal 'elseif': Reduce(rule=93)
+	for terminal 'do': Reduce(rule=93)
+	for terminal 'endwhile': Reduce(rule=93)
+	for terminal 'endfor': Reduce(rule=93)
+	for terminal 'to': Reduce(rule=93)
+	for terminal 'step': Reduce(rule=93)
+	for terminal 'until': Reduce(rule=93)
+	for terminal REF_CONST: Reduce(rule=93)
+	for terminal VARNAME: Reduce(rule=93)
+
+State 107
+	33   IfStatement: 'if' Expression 'then' . Statements 'endif'
+	34   IfStatement: 'if' Expression 'then' . Statements ElseBlock 'endif'
+
+	for terminal INT_CONST: Shift(state=24)
+	for terminal CHAR_CONST: Shift(state=25)
+	for terminal STRING_CONST: Shift(state=26)
+	for terminal ff: Shift(state=27)
+	for terminal tt: Shift(state=28)
+	for terminal '[': Shift(state=29)
+	for terminal 'check': Shift(state=30)
+	for terminal 'if': Shift(state=31)
+	for terminal 'while': Shift(state=32)
+	for terminal 'for': Shift(state=33)
+	for terminal 'repeat': Shift(state=34)
+	for terminal REF_CONST: Shift(state=35)
+	for terminal VARNAME: Shift(state=36)
+
+	for non-terminal AssignmentStatement: go to state 8
+	for non-terminal Const: go to state 9
+	for non-terminal DeclarationStatement: go to state 10
+	for non-terminal ExtendedVar: go to state 11
+	for non-terminal ForCycleHead: go to state 12
+	for non-terminal FunctionCallStatement: go to state 13
+	for non-terminal IfStatement: go to state 14
+	for non-terminal LoopWithPostconditionStatement: go to state 15
+	for non-terminal LoopWithPreconditionStatements: go to state 16
+	for non-terminal NArrayAssignmentStatement: go to state 17
+	for non-terminal NArrayCall: go to state 18
+	for non-terminal Spec: go to state 19
+	for non-terminal Statement: go to state 20
+	for non-terminal Statements: go to state 134
+	for non-terminal VarDeclaration: go to state 22
+	for non-terminal VarDeclarations: go to state 23
+
+State 108
+	35   LoopWithPreconditionStatements: 'while' Expression 'do' . Statements 'endwhile'
+
+	for terminal INT_CONST: Shift(state=24)
+	for terminal CHAR_CONST: Shift(state=25)
+	for terminal STRING_CONST: Shift(state=26)
+	for terminal ff: Shift(state=27)
+	for terminal tt: Shift(state=28)
+	for terminal '[': Shift(state=29)
+	for terminal 'check': Shift(state=30)
+	for terminal 'if': Shift(state=31)
+	for terminal 'while': Shift(state=32)
+	for terminal 'for': Shift(state=33)
+	for terminal 'repeat': Shift(state=34)
+	for terminal REF_CONST: Shift(state=35)
+	for terminal VARNAME: Shift(state=36)
+
+	for non-terminal AssignmentStatement: go to state 8
+	for non-terminal Const: go to state 9
+	for non-terminal DeclarationStatement: go to state 10
+	for non-terminal ExtendedVar: go to state 11
+	for non-terminal ForCycleHead: go to state 12
+	for non-terminal FunctionCallStatement: go to state 13
+	for non-terminal IfStatement: go to state 14
+	for non-terminal LoopWithPostconditionStatement: go to state 15
+	for non-terminal LoopWithPreconditionStatements: go to state 16
+	for non-terminal NArrayAssignmentStatement: go to state 17
+	for non-terminal NArrayCall: go to state 18
+	for non-terminal Spec: go to state 19
+	for non-terminal Statement: go to state 20
+	for non-terminal Statements: go to state 135
+	for non-terminal VarDeclaration: go to state 22
+	for non-terminal VarDeclarations: go to state 23
+
+State 109
+	52   ForCycleHead: 'for' ForCycleVarDeclaration 'to' . ForCycleTo
+	53   ForCycleHead: 'for' ForCycleVarDeclaration 'to' . ForCycleTo 'step' INT_CONST
+
+	for terminal INT_CONST: Shift(state=24)
+	for terminal !: Shift(state=65)
+	for terminal CHAR_CONST: Shift(state=25)
+	for terminal STRING_CONST: Shift(state=26)
+	for terminal ff: Shift(state=27)
+	for terminal tt: Shift(state=28)
+	for terminal '[': Shift(state=29)
+	for terminal '-': Shift(state=66)
+	for terminal REF_CONST: Shift(state=35)
+	for terminal VARNAME: Shift(state=67)
+
+	for non-terminal ArithmeticExpression: go to state 55
+	for non-terminal CompareExpression: go to state 56
+	for non-terminal Const: go to state 9
+	for non-terminal Expression: go to state 136
+	for non-terminal ExtendedVar: go to state 11
+	for non-terminal Factor: go to state 58
+	for non-terminal ForCycleTo: go to state 137
+	for non-terminal FunctionCallStatement: go to state 59
+	for non-terminal LogicalExpression: go to state 60
+	for non-terminal MultiplicativeExpression: go to state 61
+	for non-terminal NArrayCall: go to state 62
+	for non-terminal Spec: go to state 63
+	for non-terminal Term: go to state 64
+
+State 110
+	62   ForCycleVarDeclaration: VARNAME '=' . INT_CONST '->' int
+	63   ForCycleVarDeclaration: VARNAME '=' . CHAR_CONST '->' char
+	64   ForCycleVarDeclaration: VARNAME '=' . Expression
+
+	for terminal INT_CONST: Shift(state=139)
+	for terminal !: Shift(state=65)
+	for terminal CHAR_CONST: Shift(state=140)
+	for terminal STRING_CONST: Shift(state=26)
+	for terminal ff: Shift(state=27)
+	for terminal tt: Shift(state=28)
+	for terminal '[': Shift(state=29)
+	for terminal '-': Shift(state=66)
+	for terminal REF_CONST: Shift(state=35)
+	for terminal VARNAME: Shift(state=67)
+
+	for non-terminal ArithmeticExpression: go to state 55
+	for non-terminal CompareExpression: go to state 56
+	for non-terminal Const: go to state 9
+	for non-terminal Expression: go to state 138
+	for non-terminal ExtendedVar: go to state 11
+	for non-terminal Factor: go to state 58
+	for non-terminal FunctionCallStatement: go to state 59
+	for non-terminal LogicalExpression: go to state 60
+	for non-terminal MultiplicativeExpression: go to state 61
+	for non-terminal NArrayCall: go to state 62
+	for non-terminal Spec: go to state 63
+	for non-terminal Term: go to state 64
+
+State 111
+	37   LoopWithPostconditionStatement: 'repeat' Statements 'until' . Expression
+
+	for terminal INT_CONST: Shift(state=24)
+	for terminal !: Shift(state=65)
+	for terminal CHAR_CONST: Shift(state=25)
+	for terminal STRING_CONST: Shift(state=26)
+	for terminal ff: Shift(state=27)
+	for terminal tt: Shift(state=28)
+	for terminal '[': Shift(state=29)
+	for terminal '-': Shift(state=66)
+	for terminal REF_CONST: Shift(state=35)
+	for terminal VARNAME: Shift(state=67)
+
+	for non-terminal ArithmeticExpression: go to state 55
+	for non-terminal CompareExpression: go to state 56
+	for non-terminal Const: go to state 9
+	for non-terminal Expression: go to state 141
+	for non-terminal ExtendedVar: go to state 11
+	for non-terminal Factor: go to state 58
+	for non-terminal FunctionCallStatement: go to state 59
+	for non-terminal LogicalExpression: go to state 60
+	for non-terminal MultiplicativeExpression: go to state 61
+	for non-terminal NArrayCall: go to state 62
+	for non-terminal Spec: go to state 63
+	for non-terminal Term: go to state 64
+
+State 112
+	32   FunctionCallStatement: VARNAME '(' Args . ')'
+	49   Args: Args . ',' Expression
+
+	for terminal ')': Shift(state=142)
+	for terminal ',': Shift(state=143)
+
+State 113
+	39   Expression: Expression . || LogicalExpression
+	40   Expression: Expression . ^^ LogicalExpression
+	48   Args: Expression .
+
+	for terminal ||: Shift(state=95)
+	for terminal ^^: Shift(state=96)
+	for terminal ')': Reduce(rule=48)
+	for terminal ',': Reduce(rule=48)
+
+State 114
+	30   AssignmentStatement: VARNAME '=' Expression .
+	39   Expression: Expression . || LogicalExpression
+	40   Expression: Expression . ^^ LogicalExpression
+	44   VarDeclaration: VARNAME '=' Expression .
+
+	for terminal ||: Shift(state=95)
+	for terminal ^^: Shift(state=96)
+	for terminal 'endproc': Reduce(rule=30)
+	for terminal '->': Reduce(rule=44)
+	for terminal 'endfunc': Reduce(rule=30)
+	for terminal ',': Reduce(rule=44)
+	for terminal ';': Reduce(rule=30)
+	for terminal 'endif': Reduce(rule=30)
+	for terminal 'else': Reduce(rule=30)
+	for terminal 'elseif': Reduce(rule=30)
+	for terminal 'endwhile': Reduce(rule=30)
+	for terminal 'endfor': Reduce(rule=30)
+	for terminal 'until': Reduce(rule=30)
+
+State 115
+	24   Section: Parameters . ',' VARNAME '->' Type
+	42   Parameters: Parameters . ',' VARNAME
+
+	for terminal ',': Shift(state=144)
+
+State 116
+	11   Sections: Section .
+
+	for terminal ')': Reduce(rule=11)
+	for terminal ';': Reduce(rule=11)
+
+State 117
+	7    FunctionHeader: 'func' VARNAME '(' Sections . ')' '->' Type
+	12   Sections: Sections . ';' Section
+
+	for terminal ')': Shift(state=145)
+	for terminal ';': Shift(state=146)
+
+State 118
+	23   Section: VARNAME . '->' Type
+	41   Parameters: VARNAME .
+
+	for terminal '->': Shift(state=147)
+	for terminal ',': Reduce(rule=41)
+
+State 119
+	10   ProcedureHeader: 'proc' VARNAME '(' Sections . ')'
+	12   Sections: Sections . ';' Section
+
+	for terminal ')': Shift(state=148)
+	for terminal ';': Shift(state=146)
+
+State 120
+	36   LoopWithPreconditionStatements: ForCycleHead 'do' Statements 'endfor' .
+
+	for terminal 'endproc': Reduce(rule=36)
+	for terminal 'endfunc': Reduce(rule=36)
+	for terminal ';': Reduce(rule=36)
+	for terminal 'endif': Reduce(rule=36)
+	for terminal 'else': Reduce(rule=36)
+	for terminal 'elseif': Reduce(rule=36)
+	for terminal 'endwhile': Reduce(rule=36)
+	for terminal 'endfor': Reduce(rule=36)
+	for terminal 'until': Reduce(rule=36)
+
+State 121
+	47   NArrayCall: Spec '[' Expression ']' .
+
+	for terminal INT_CONST: Reduce(rule=47)
+	for terminal &&: Reduce(rule=47)
+	for terminal !: Reduce(rule=47)
+	for terminal ||: Reduce(rule=47)
+	for terminal ^^: Reduce(rule=47)
+	for terminal CHAR_CONST: Reduce(rule=47)
+	for terminal STRING_CONST: Reduce(rule=47)
+	for terminal 'endproc': Reduce(rule=47)
+	for terminal ff: Reduce(rule=47)
+	for terminal ')': Reduce(rule=47)
+	for terminal '->': Reduce(rule=47)
+	for terminal 'endfunc': Reduce(rule=47)
+	for terminal tt: Reduce(rule=47)
+	for terminal '[': Reduce(rule=47)
+	for terminal ']': Reduce(rule=47)
+	for terminal ',': Reduce(rule=47)
+	for terminal ';': Reduce(rule=47)
+	for terminal '=': Reduce(rule=47)
+	for terminal '==': Reduce(rule=47)
+	for terminal '!=': Reduce(rule=47)
+	for terminal '<': Reduce(rule=47)
+	for terminal '>': Reduce(rule=47)
+	for terminal '<=': Reduce(rule=47)
+	for terminal '>=': Reduce(rule=47)
+	for terminal '+': Reduce(rule=47)
+	for terminal '-': Reduce(rule=47)
+	for terminal '/': Reduce(rule=47)
+	for terminal '%': Reduce(rule=47)
+	for terminal '^': Reduce(rule=47)
+	for terminal 'then': Reduce(rule=47)
+	for terminal 'endif': Reduce(rule=47)
+	for terminal 'else': Reduce(rule=47)
+	for terminal 'elseif': Reduce(rule=47)
+	for terminal 'do': Reduce(rule=47)
+	for terminal 'endwhile': Reduce(rule=47)
+	for terminal 'endfor': Reduce(rule=47)
+	for terminal 'to': Reduce(rule=47)
+	for terminal 'step': Reduce(rule=47)
+	for terminal 'until': Reduce(rule=47)
+	for terminal REF_CONST: Reduce(rule=47)
+	for terminal VARNAME: Reduce(rule=47)
+
+State 122
+	29   DeclarationStatement: VarDeclarations ',' VarDeclaration '->' . Type
+
+	for terminal char: Shift(state=51)
+	for terminal bool: Shift(state=52)
+	for terminal int: Shift(state=53)
+	for terminal '[': Shift(state=54)
+
+	for non-terminal PrimitiveType: go to state 49
+	for non-terminal Type: go to state 149
+
+State 123
+	44   VarDeclaration: VARNAME '=' . Expression
+
+	for terminal INT_CONST: Shift(state=24)
+	for terminal !: Shift(state=65)
+	for terminal CHAR_CONST: Shift(state=25)
+	for terminal STRING_CONST: Shift(state=26)
+	for terminal ff: Shift(state=27)
+	for terminal tt: Shift(state=28)
+	for terminal '[': Shift(state=29)
+	for terminal '-': Shift(state=66)
+	for terminal REF_CONST: Shift(state=35)
+	for terminal VARNAME: Shift(state=67)
+
+	for non-terminal ArithmeticExpression: go to state 55
+	for non-terminal CompareExpression: go to state 56
+	for non-terminal Const: go to state 9
+	for non-terminal Expression: go to state 150
+	for non-terminal ExtendedVar: go to state 11
+	for non-terminal Factor: go to state 58
+	for non-terminal FunctionCallStatement: go to state 59
+	for non-terminal LogicalExpression: go to state 60
+	for non-terminal MultiplicativeExpression: go to state 61
+	for non-terminal NArrayCall: go to state 62
+	for non-terminal Spec: go to state 63
+	for non-terminal Term: go to state 64
+
+State 124
+	58   Spec: '[' Type INT_CONST ']' .
+
+	for terminal INT_CONST: Reduce(rule=58)
+	for terminal &&: Reduce(rule=58)
+	for terminal !: Reduce(rule=58)
+	for terminal ||: Reduce(rule=58)
+	for terminal ^^: Reduce(rule=58)
+	for terminal CHAR_CONST: Reduce(rule=58)
+	for terminal STRING_CONST: Reduce(rule=58)
+	for terminal 'endproc': Reduce(rule=58)
+	for terminal ff: Reduce(rule=58)
+	for terminal ')': Reduce(rule=58)
+	for terminal '->': Reduce(rule=58)
+	for terminal 'endfunc': Reduce(rule=58)
+	for terminal tt: Reduce(rule=58)
+	for terminal '[': Reduce(rule=58)
+	for terminal ']': Reduce(rule=58)
+	for terminal ',': Reduce(rule=58)
+	for terminal ';': Reduce(rule=58)
+	for terminal '==': Reduce(rule=58)
+	for terminal '!=': Reduce(rule=58)
+	for terminal '<': Reduce(rule=58)
+	for terminal '>': Reduce(rule=58)
+	for terminal '<=': Reduce(rule=58)
+	for terminal '>=': Reduce(rule=58)
+	for terminal '+': Reduce(rule=58)
+	for terminal '-': Reduce(rule=58)
+	for terminal '/': Reduce(rule=58)
+	for terminal '%': Reduce(rule=58)
+	for terminal '^': Reduce(rule=58)
+	for terminal 'then': Reduce(rule=58)
+	for terminal 'endif': Reduce(rule=58)
+	for terminal 'else': Reduce(rule=58)
+	for terminal 'elseif': Reduce(rule=58)
+	for terminal 'do': Reduce(rule=58)
+	for terminal 'endwhile': Reduce(rule=58)
+	for terminal 'endfor': Reduce(rule=58)
+	for terminal 'to': Reduce(rule=58)
+	for terminal 'step': Reduce(rule=58)
+	for terminal 'until': Reduce(rule=58)
+	for terminal REF_CONST: Reduce(rule=58)
+	for terminal VARNAME: Reduce(rule=58)
+
+State 125
+	57   Spec: '[' Type VARNAME ']' .
+
+	for terminal INT_CONST: Reduce(rule=57)
+	for terminal &&: Reduce(rule=57)
+	for terminal !: Reduce(rule=57)
+	for terminal ||: Reduce(rule=57)
+	for terminal ^^: Reduce(rule=57)
+	for terminal CHAR_CONST: Reduce(rule=57)
+	for terminal STRING_CONST: Reduce(rule=57)
+	for terminal 'endproc': Reduce(rule=57)
+	for terminal ff: Reduce(rule=57)
+	for terminal ')': Reduce(rule=57)
+	for terminal '->': Reduce(rule=57)
+	for terminal 'endfunc': Reduce(rule=57)
+	for terminal tt: Reduce(rule=57)
+	for terminal '[': Reduce(rule=57)
+	for terminal ']': Reduce(rule=57)
+	for terminal ',': Reduce(rule=57)
+	for terminal ';': Reduce(rule=57)
+	for terminal '==': Reduce(rule=57)
+	for terminal '!=': Reduce(rule=57)
+	for terminal '<': Reduce(rule=57)
+	for terminal '>': Reduce(rule=57)
+	for terminal '<=': Reduce(rule=57)
+	for terminal '>=': Reduce(rule=57)
+	for terminal '+': Reduce(rule=57)
+	for terminal '-': Reduce(rule=57)
+	for terminal '/': Reduce(rule=57)
+	for terminal '%': Reduce(rule=57)
+	for terminal '^': Reduce(rule=57)
+	for terminal 'then': Reduce(rule=57)
+	for terminal 'endif': Reduce(rule=57)
+	for terminal 'else': Reduce(rule=57)
+	for terminal 'elseif': Reduce(rule=57)
+	for terminal 'do': Reduce(rule=57)
+	for terminal 'endwhile': Reduce(rule=57)
+	for terminal 'endfor': Reduce(rule=57)
+	for terminal 'to': Reduce(rule=57)
+	for terminal 'step': Reduce(rule=57)
+	for terminal 'until': Reduce(rule=57)
+	for terminal REF_CONST: Reduce(rule=57)
+	for terminal VARNAME: Reduce(rule=57)
+
+State 126
+	14   Type: '[' Type ']' .
+
+	for terminal INT_CONST: Reduce(rule=14)
+	for terminal CHAR_CONST: Reduce(rule=14)
+	for terminal STRING_CONST: Reduce(rule=14)
+	for terminal 'endproc': Reduce(rule=14)
+	for terminal ff: Reduce(rule=14)
+	for terminal ')': Reduce(rule=14)
+	for terminal 'endfunc': Reduce(rule=14)
+	for terminal tt: Reduce(rule=14)
+	for terminal '[': Reduce(rule=14)
+	for terminal ']': Reduce(rule=14)
+	for terminal ';': Reduce(rule=14)
+	for terminal 'check': Reduce(rule=14)
+	for terminal 'if': Reduce(rule=14)
+	for terminal 'endif': Reduce(rule=14)
+	for terminal 'else': Reduce(rule=14)
+	for terminal 'elseif': Reduce(rule=14)
+	for terminal 'while': Reduce(rule=14)
+	for terminal 'endwhile': Reduce(rule=14)
+	for terminal 'endfor': Reduce(rule=14)
+	for terminal 'for': Reduce(rule=14)
+	for terminal 'repeat': Reduce(rule=14)
+	for terminal 'until': Reduce(rule=14)
+	for terminal REF_CONST: Reduce(rule=14)
+	for terminal VARNAME: Reduce(rule=14)
+
+State 127
+	67   CompareExpression: CompareExpression NCompareOperator ArithmeticExpression .
+
+	for terminal &&: Reduce(rule=67)
+	for terminal ||: Reduce(rule=67)
+	for terminal ^^: Reduce(rule=67)
+	for terminal 'endproc': Reduce(rule=67)
+	for terminal ')': Reduce(rule=67)
+	for terminal '->': Reduce(rule=67)
+	for terminal 'endfunc': Reduce(rule=67)
+	for terminal ']': Reduce(rule=67)
+	for terminal ',': Reduce(rule=67)
+	for terminal ';': Reduce(rule=67)
+	for terminal '==': Reduce(rule=67)
+	for terminal '!=': Reduce(rule=67)
+	for terminal '<': Reduce(rule=67)
+	for terminal '>': Reduce(rule=67)
+	for terminal '<=': Reduce(rule=67)
+	for terminal '>=': Reduce(rule=67)
+	for terminal 'then': Reduce(rule=67)
+	for terminal 'endif': Reduce(rule=67)
+	for terminal 'else': Reduce(rule=67)
+	for terminal 'elseif': Reduce(rule=67)
+	for terminal 'do': Reduce(rule=67)
+	for terminal 'endwhile': Reduce(rule=67)
+	for terminal 'endfor': Reduce(rule=67)
+	for terminal 'to': Reduce(rule=67)
+	for terminal 'step': Reduce(rule=67)
+	for terminal 'until': Reduce(rule=67)
+
+State 128
+	39   Expression: Expression || LogicalExpression .
+	55   LogicalExpression: LogicalExpression . && CompareExpression
+
+	for terminal &&: Shift(state=98)
+	for terminal ||: Reduce(rule=39)
+	for terminal ^^: Reduce(rule=39)
+	for terminal 'endproc': Reduce(rule=39)
+	for terminal ')': Reduce(rule=39)
+	for terminal '->': Reduce(rule=39)
+	for terminal 'endfunc': Reduce(rule=39)
+	for terminal ']': Reduce(rule=39)
+	for terminal ',': Reduce(rule=39)
+	for terminal ';': Reduce(rule=39)
+	for terminal 'then': Reduce(rule=39)
+	for terminal 'endif': Reduce(rule=39)
+	for terminal 'else': Reduce(rule=39)
+	for terminal 'elseif': Reduce(rule=39)
+	for terminal 'do': Reduce(rule=39)
+	for terminal 'endwhile': Reduce(rule=39)
+	for terminal 'endfor': Reduce(rule=39)
+	for terminal 'to': Reduce(rule=39)
+	for terminal 'step': Reduce(rule=39)
+	for terminal 'until': Reduce(rule=39)
+
+State 129
+	40   Expression: Expression ^^ LogicalExpression .
+	55   LogicalExpression: LogicalExpression . && CompareExpression
+
+	for terminal &&: Shift(state=98)
+	for terminal ||: Reduce(rule=40)
+	for terminal ^^: Reduce(rule=40)
+	for terminal 'endproc': Reduce(rule=40)
+	for terminal ')': Reduce(rule=40)
+	for terminal '->': Reduce(rule=40)
+	for terminal 'endfunc': Reduce(rule=40)
+	for terminal ']': Reduce(rule=40)
+	for terminal ',': Reduce(rule=40)
+	for terminal ';': Reduce(rule=40)
+	for terminal 'then': Reduce(rule=40)
+	for terminal 'endif': Reduce(rule=40)
+	for terminal 'else': Reduce(rule=40)
+	for terminal 'elseif': Reduce(rule=40)
+	for terminal 'do': Reduce(rule=40)
+	for terminal 'endwhile': Reduce(rule=40)
+	for terminal 'endfor': Reduce(rule=40)
+	for terminal 'to': Reduce(rule=40)
+	for terminal 'step': Reduce(rule=40)
+	for terminal 'until': Reduce(rule=40)
+
+State 130
+	88   Term: Factor '^' Term .
+
+	for terminal INT_CONST: Reduce(rule=88)
+	for terminal &&: Reduce(rule=88)
+	for terminal !: Reduce(rule=88)
+	for terminal ||: Reduce(rule=88)
+	for terminal ^^: Reduce(rule=88)
+	for terminal CHAR_CONST: Reduce(rule=88)
+	for terminal STRING_CONST: Reduce(rule=88)
+	for terminal 'endproc': Reduce(rule=88)
+	for terminal ff: Reduce(rule=88)
+	for terminal ')': Reduce(rule=88)
+	for terminal '->': Reduce(rule=88)
+	for terminal 'endfunc': Reduce(rule=88)
+	for terminal tt: Reduce(rule=88)
+	for terminal '[': Reduce(rule=88)
+	for terminal ']': Reduce(rule=88)
+	for terminal ',': Reduce(rule=88)
+	for terminal ';': Reduce(rule=88)
+	for terminal '==': Reduce(rule=88)
+	for terminal '!=': Reduce(rule=88)
+	for terminal '<': Reduce(rule=88)
+	for terminal '>': Reduce(rule=88)
+	for terminal '<=': Reduce(rule=88)
+	for terminal '>=': Reduce(rule=88)
+	for terminal '+': Reduce(rule=88)
+	for terminal '-': Reduce(rule=88)
+	for terminal '/': Reduce(rule=88)
+	for terminal '%': Reduce(rule=88)
+	for terminal 'then': Reduce(rule=88)
+	for terminal 'endif': Reduce(rule=88)
+	for terminal 'else': Reduce(rule=88)
+	for terminal 'elseif': Reduce(rule=88)
+	for terminal 'do': Reduce(rule=88)
+	for terminal 'endwhile': Reduce(rule=88)
+	for terminal 'endfor': Reduce(rule=88)
+	for terminal 'to': Reduce(rule=88)
+	for terminal 'step': Reduce(rule=88)
+	for terminal 'until': Reduce(rule=88)
+	for terminal REF_CONST: Reduce(rule=88)
+	for terminal VARNAME: Reduce(rule=88)
+
+State 131
+	55   LogicalExpression: LogicalExpression && CompareExpression .
+	67   CompareExpression: CompareExpression . NCompareOperator ArithmeticExpression
+
+	for terminal &&: Reduce(rule=55)
+	for terminal ||: Reduce(rule=55)
+	for terminal ^^: Reduce(rule=55)
+	for terminal 'endproc': Reduce(rule=55)
+	for terminal ')': Reduce(rule=55)
+	for terminal '->': Reduce(rule=55)
+	for terminal 'endfunc': Reduce(rule=55)
+	for terminal ']': Reduce(rule=55)
+	for terminal ',': Reduce(rule=55)
+	for terminal ';': Reduce(rule=55)
+	for terminal '==': Shift(state=89)
+	for terminal '!=': Shift(state=90)
+	for terminal '<': Shift(state=91)
+	for terminal '>': Shift(state=92)
+	for terminal '<=': Shift(state=93)
+	for terminal '>=': Shift(state=94)
+	for terminal 'then': Reduce(rule=55)
+	for terminal 'endif': Reduce(rule=55)
+	for terminal 'else': Reduce(rule=55)
+	for terminal 'elseif': Reduce(rule=55)
+	for terminal 'do': Reduce(rule=55)
+	for terminal 'endwhile': Reduce(rule=55)
+	for terminal 'endfor': Reduce(rule=55)
+	for terminal 'to': Reduce(rule=55)
+	for terminal 'step': Reduce(rule=55)
+	for terminal 'until': Reduce(rule=55)
+
+	for non-terminal NCompareOperator: go to state 88
+
+State 132
+	76   ArithmeticExpression: MultiplicativeExpression AdditiveOperator MultiplicativeExpression .
+	84   MultiplicativeExpression: MultiplicativeExpression . MultiplicativeOperator Term
+
+	for terminal INT_CONST: Reduce(rule=89)
+	for terminal &&: Reduce(rule=76)
+	for terminal !: Reduce(rule=89)
+	for terminal ||: Reduce(rule=76)
+	for terminal ^^: Reduce(rule=76)
+	for terminal CHAR_CONST: Reduce(rule=89)
+	for terminal STRING_CONST: Reduce(rule=89)
+	for terminal 'endproc': Reduce(rule=76)
+	for terminal ff: Reduce(rule=89)
+	for terminal ')': Reduce(rule=76)
+	for terminal '->': Reduce(rule=76)
+	for terminal 'endfunc': Reduce(rule=76)
+	for terminal tt: Reduce(rule=89)
+	for terminal '[': Reduce(rule=89)
+	for terminal ']': Reduce(rule=76)
+	for terminal ',': Reduce(rule=76)
+	for terminal ';': Reduce(rule=76)
+	for terminal '==': Reduce(rule=76)
+	for terminal '!=': Reduce(rule=76)
+	for terminal '<': Reduce(rule=76)
+	for terminal '>': Reduce(rule=76)
+	for terminal '<=': Reduce(rule=76)
+	for terminal '>=': Reduce(rule=76)
+	for terminal '-': Reduce(rule=89)
+	for terminal '/': Shift(state=103)
+	for terminal '%': Shift(state=104)
+	for terminal 'then': Reduce(rule=76)
+	for terminal 'endif': Reduce(rule=76)
+	for terminal 'else': Reduce(rule=76)
+	for terminal 'elseif': Reduce(rule=76)
+	for terminal 'do': Reduce(rule=76)
+	for terminal 'endwhile': Reduce(rule=76)
+	for terminal 'endfor': Reduce(rule=76)
+	for terminal 'to': Reduce(rule=76)
+	for terminal 'step': Reduce(rule=76)
+	for terminal 'until': Reduce(rule=76)
+	for terminal REF_CONST: Reduce(rule=89)
+	for terminal VARNAME: Reduce(rule=89)
+
+	for non-terminal MultiplicativeOperator: go to state 100
+
+State 133
+	84   MultiplicativeExpression: MultiplicativeExpression MultiplicativeOperator Term .
+
+	for terminal INT_CONST: Reduce(rule=84)
+	for terminal &&: Reduce(rule=84)
+	for terminal !: Reduce(rule=84)
+	for terminal ||: Reduce(rule=84)
+	for terminal ^^: Reduce(rule=84)
+	for terminal CHAR_CONST: Reduce(rule=84)
+	for terminal STRING_CONST: Reduce(rule=84)
+	for terminal 'endproc': Reduce(rule=84)
+	for terminal ff: Reduce(rule=84)
+	for terminal ')': Reduce(rule=84)
+	for terminal '->': Reduce(rule=84)
+	for terminal 'endfunc': Reduce(rule=84)
+	for terminal tt: Reduce(rule=84)
+	for terminal '[': Reduce(rule=84)
+	for terminal ']': Reduce(rule=84)
+	for terminal ',': Reduce(rule=84)
+	for terminal ';': Reduce(rule=84)
+	for terminal '==': Reduce(rule=84)
+	for terminal '!=': Reduce(rule=84)
+	for terminal '<': Reduce(rule=84)
+	for terminal '>': Reduce(rule=84)
+	for terminal '<=': Reduce(rule=84)
+	for terminal '>=': Reduce(rule=84)
+	for terminal '+': Reduce(rule=84)
+	for terminal '-': Reduce(rule=84)
+	for terminal '/': Reduce(rule=84)
+	for terminal '%': Reduce(rule=84)
+	for terminal 'then': Reduce(rule=84)
+	for terminal 'endif': Reduce(rule=84)
+	for terminal 'else': Reduce(rule=84)
+	for terminal 'elseif': Reduce(rule=84)
+	for terminal 'do': Reduce(rule=84)
+	for terminal 'endwhile': Reduce(rule=84)
+	for terminal 'endfor': Reduce(rule=84)
+	for terminal 'to': Reduce(rule=84)
+	for terminal 'step': Reduce(rule=84)
+	for terminal 'until': Reduce(rule=84)
+	for terminal REF_CONST: Reduce(rule=84)
+	for terminal VARNAME: Reduce(rule=84)
+
+State 134
+	9    Statements: Statements . ';' Statement
+	33   IfStatement: 'if' Expression 'then' Statements . 'endif'
+	34   IfStatement: 'if' Expression 'then' Statements . ElseBlock 'endif'
+
+	for terminal ';': Shift(state=46)
+	for terminal 'endif': Shift(state=152)
+	for terminal 'else': Shift(state=153)
+	for terminal 'elseif': Shift(state=154)
+
+	for non-terminal ElseBlock: go to state 151
+
+State 135
+	9    Statements: Statements . ';' Statement
+	35   LoopWithPreconditionStatements: 'while' Expression 'do' Statements . 'endwhile'
+
+	for terminal ';': Shift(state=46)
+	for terminal 'endwhile': Shift(state=155)
+
+State 136
+	39   Expression: Expression . || LogicalExpression
+	40   Expression: Expression . ^^ LogicalExpression
+	65   ForCycleTo: Expression .
+
+	for terminal ||: Shift(state=95)
+	for terminal ^^: Shift(state=96)
+	for terminal 'do': Reduce(rule=65)
+	for terminal 'step': Reduce(rule=65)
+
+State 137
+	52   ForCycleHead: 'for' ForCycleVarDeclaration 'to' ForCycleTo .
+	53   ForCycleHead: 'for' ForCycleVarDeclaration 'to' ForCycleTo . 'step' INT_CONST
+
+	for terminal 'do': Reduce(rule=52)
+	for terminal 'step': Shift(state=156)
+
+State 138
+	39   Expression: Expression . || LogicalExpression
+	40   Expression: Expression . ^^ LogicalExpression
+	64   ForCycleVarDeclaration: VARNAME '=' Expression .
+
+	for terminal ||: Shift(state=95)
+	for terminal ^^: Shift(state=96)
+	for terminal 'to': Reduce(rule=64)
+
+State 139
+	62   ForCycleVarDeclaration: VARNAME '=' INT_CONST . '->' int
+	69   Const: INT_CONST .
+
+	for terminal INT_CONST: Reduce(rule=69)
+	for terminal &&: Reduce(rule=69)
+	for terminal !: Reduce(rule=69)
+	for terminal ||: Reduce(rule=69)
+	for terminal ^^: Reduce(rule=69)
+	for terminal CHAR_CONST: Reduce(rule=69)
+	for terminal STRING_CONST: Reduce(rule=69)
+	for terminal ff: Reduce(rule=69)
+	for terminal '->': Shift(state=157)
+	for terminal tt: Reduce(rule=69)
+	for terminal '[': Reduce(rule=69)
+	for terminal '==': Reduce(rule=69)
+	for terminal '!=': Reduce(rule=69)
+	for terminal '<': Reduce(rule=69)
+	for terminal '>': Reduce(rule=69)
+	for terminal '<=': Reduce(rule=69)
+	for terminal '>=': Reduce(rule=69)
+	for terminal '+': Reduce(rule=69)
+	for terminal '-': Reduce(rule=69)
+	for terminal '/': Reduce(rule=69)
+	for terminal '%': Reduce(rule=69)
+	for terminal '^': Reduce(rule=69)
+	for terminal 'to': Reduce(rule=69)
+	for terminal REF_CONST: Reduce(rule=69)
+	for terminal VARNAME: Reduce(rule=69)
+
+State 140
+	63   ForCycleVarDeclaration: VARNAME '=' CHAR_CONST . '->' char
+	70   Const: CHAR_CONST .
+
+	for terminal INT_CONST: Reduce(rule=70)
+	for terminal &&: Reduce(rule=70)
+	for terminal !: Reduce(rule=70)
+	for terminal ||: Reduce(rule=70)
+	for terminal ^^: Reduce(rule=70)
+	for terminal CHAR_CONST: Reduce(rule=70)
+	for terminal STRING_CONST: Reduce(rule=70)
+	for terminal ff: Reduce(rule=70)
+	for terminal '->': Shift(state=158)
+	for terminal tt: Reduce(rule=70)
+	for terminal '[': Reduce(rule=70)
+	for terminal '==': Reduce(rule=70)
+	for terminal '!=': Reduce(rule=70)
+	for terminal '<': Reduce(rule=70)
+	for terminal '>': Reduce(rule=70)
+	for terminal '<=': Reduce(rule=70)
+	for terminal '>=': Reduce(rule=70)
+	for terminal '+': Reduce(rule=70)
+	for terminal '-': Reduce(rule=70)
+	for terminal '/': Reduce(rule=70)
+	for terminal '%': Reduce(rule=70)
+	for terminal '^': Reduce(rule=70)
+	for terminal 'to': Reduce(rule=70)
+	for terminal REF_CONST: Reduce(rule=70)
+	for terminal VARNAME: Reduce(rule=70)
+
+State 141
+	37   LoopWithPostconditionStatement: 'repeat' Statements 'until' Expression .
+	39   Expression: Expression . || LogicalExpression
+	40   Expression: Expression . ^^ LogicalExpression
+
+	for terminal ||: Shift(state=95)
+	for terminal ^^: Shift(state=96)
+	for terminal 'endproc': Reduce(rule=37)
+	for terminal 'endfunc': Reduce(rule=37)
+	for terminal ';': Reduce(rule=37)
+	for terminal 'endif': Reduce(rule=37)
+	for terminal 'else': Reduce(rule=37)
+	for terminal 'elseif': Reduce(rule=37)
+	for terminal 'endwhile': Reduce(rule=37)
+	for terminal 'endfor': Reduce(rule=37)
+	for terminal 'until': Reduce(rule=37)
+
+State 142
+	32   FunctionCallStatement: VARNAME '(' Args ')' .
+
+	for terminal INT_CONST: Reduce(rule=32)
+	for terminal &&: Reduce(rule=32)
+	for terminal !: Reduce(rule=32)
+	for terminal ||: Reduce(rule=32)
+	for terminal ^^: Reduce(rule=32)
+	for terminal CHAR_CONST: Reduce(rule=32)
+	for terminal STRING_CONST: Reduce(rule=32)
+	for terminal 'endproc': Reduce(rule=32)
+	for terminal ff: Reduce(rule=32)
+	for terminal ')': Reduce(rule=32)
+	for terminal '->': Reduce(rule=32)
+	for terminal 'endfunc': Reduce(rule=32)
+	for terminal tt: Reduce(rule=32)
+	for terminal '[': Reduce(rule=32)
+	for terminal ']': Reduce(rule=32)
+	for terminal ',': Reduce(rule=32)
+	for terminal ';': Reduce(rule=32)
+	for terminal '==': Reduce(rule=32)
+	for terminal '!=': Reduce(rule=32)
+	for terminal '<': Reduce(rule=32)
+	for terminal '>': Reduce(rule=32)
+	for terminal '<=': Reduce(rule=32)
+	for terminal '>=': Reduce(rule=32)
+	for terminal '+': Reduce(rule=32)
+	for terminal '-': Reduce(rule=32)
+	for terminal '/': Reduce(rule=32)
+	for terminal '%': Reduce(rule=32)
+	for terminal '^': Reduce(rule=32)
+	for terminal 'then': Reduce(rule=32)
+	for terminal 'endif': Reduce(rule=32)
+	for terminal 'else': Reduce(rule=32)
+	for terminal 'elseif': Reduce(rule=32)
+	for terminal 'do': Reduce(rule=32)
+	for terminal 'endwhile': Reduce(rule=32)
+	for terminal 'endfor': Reduce(rule=32)
+	for terminal 'to': Reduce(rule=32)
+	for terminal 'step': Reduce(rule=32)
+	for terminal 'until': Reduce(rule=32)
+	for terminal REF_CONST: Reduce(rule=32)
+	for terminal VARNAME: Reduce(rule=32)
+
+State 143
+	49   Args: Args ',' . Expression
+
+	for terminal INT_CONST: Shift(state=24)
+	for terminal !: Shift(state=65)
+	for terminal CHAR_CONST: Shift(state=25)
+	for terminal STRING_CONST: Shift(state=26)
+	for terminal ff: Shift(state=27)
+	for terminal tt: Shift(state=28)
+	for terminal '[': Shift(state=29)
+	for terminal '-': Shift(state=66)
+	for terminal REF_CONST: Shift(state=35)
+	for terminal VARNAME: Shift(state=67)
+
+	for non-terminal ArithmeticExpression: go to state 55
+	for non-terminal CompareExpression: go to state 56
+	for non-terminal Const: go to state 9
+	for non-terminal Expression: go to state 159
+	for non-terminal ExtendedVar: go to state 11
+	for non-terminal Factor: go to state 58
+	for non-terminal FunctionCallStatement: go to state 59
+	for non-terminal LogicalExpression: go to state 60
+	for non-terminal MultiplicativeExpression: go to state 61
+	for non-terminal NArrayCall: go to state 62
+	for non-terminal Spec: go to state 63
+	for non-terminal Term: go to state 64
+
+State 144
+	24   Section: Parameters ',' . VARNAME '->' Type
+	42   Parameters: Parameters ',' . VARNAME
+
+	for terminal VARNAME: Shift(state=160)
+
+State 145
+	7    FunctionHeader: 'func' VARNAME '(' Sections ')' . '->' Type
+
+	for terminal '->': Shift(state=161)
+
+State 146
+	12   Sections: Sections ';' . Section
+
+	for terminal VARNAME: Shift(state=118)
+
+	for non-terminal Parameters: go to state 115
+	for non-terminal Section: go to state 162
+
+State 147
+	23   Section: VARNAME '->' . Type
+
+	for terminal char: Shift(state=51)
+	for terminal bool: Shift(state=52)
+	for terminal int: Shift(state=53)
+	for terminal '[': Shift(state=54)
+
+	for non-terminal PrimitiveType: go to state 49
+	for non-terminal Type: go to state 163
+
+State 148
+	10   ProcedureHeader: 'proc' VARNAME '(' Sections ')' .
+
+	for terminal INT_CONST: Reduce(rule=10)
+	for terminal CHAR_CONST: Reduce(rule=10)
+	for terminal STRING_CONST: Reduce(rule=10)
+	for terminal ff: Reduce(rule=10)
+	for terminal tt: Reduce(rule=10)
+	for terminal '[': Reduce(rule=10)
+	for terminal 'check': Reduce(rule=10)
+	for terminal 'if': Reduce(rule=10)
+	for terminal 'while': Reduce(rule=10)
+	for terminal 'for': Reduce(rule=10)
+	for terminal 'repeat': Reduce(rule=10)
+	for terminal REF_CONST: Reduce(rule=10)
+	for terminal VARNAME: Reduce(rule=10)
+
+State 149
+	29   DeclarationStatement: VarDeclarations ',' VarDeclaration '->' Type .
+
+	for terminal 'endproc': Reduce(rule=29)
+	for terminal 'endfunc': Reduce(rule=29)
+	for terminal ';': Reduce(rule=29)
+	for terminal 'endif': Reduce(rule=29)
+	for terminal 'else': Reduce(rule=29)
+	for terminal 'elseif': Reduce(rule=29)
+	for terminal 'endwhile': Reduce(rule=29)
+	for terminal 'endfor': Reduce(rule=29)
+	for terminal 'until': Reduce(rule=29)
+
+State 150
+	39   Expression: Expression . || LogicalExpression
+	40   Expression: Expression . ^^ LogicalExpression
+	44   VarDeclaration: VARNAME '=' Expression .
+
+	for terminal ||: Shift(state=95)
+	for terminal ^^: Shift(state=96)
+	for terminal '->': Reduce(rule=44)
+	for terminal ',': Reduce(rule=44)
+
+State 151
+	34   IfStatement: 'if' Expression 'then' Statements ElseBlock . 'endif'
+
+	for terminal 'endif': Shift(state=164)
+
+State 152
+	33   IfStatement: 'if' Expression 'then' Statements 'endif' .
+
+	for terminal 'endproc': Reduce(rule=33)
+	for terminal 'endfunc': Reduce(rule=33)
+	for terminal ';': Reduce(rule=33)
+	for terminal 'endif': Reduce(rule=33)
+	for terminal 'else': Reduce(rule=33)
+	for terminal 'elseif': Reduce(rule=33)
+	for terminal 'endwhile': Reduce(rule=33)
+	for terminal 'endfor': Reduce(rule=33)
+	for terminal 'until': Reduce(rule=33)
+
+State 153
+	50   ElseBlock: 'else' . Statements
+
+	for terminal INT_CONST: Shift(state=24)
+	for terminal CHAR_CONST: Shift(state=25)
+	for terminal STRING_CONST: Shift(state=26)
+	for terminal ff: Shift(state=27)
+	for terminal tt: Shift(state=28)
+	for terminal '[': Shift(state=29)
+	for terminal 'check': Shift(state=30)
+	for terminal 'if': Shift(state=31)
+	for terminal 'while': Shift(state=32)
+	for terminal 'for': Shift(state=33)
+	for terminal 'repeat': Shift(state=34)
+	for terminal REF_CONST: Shift(state=35)
+	for terminal VARNAME: Shift(state=36)
+
+	for non-terminal AssignmentStatement: go to state 8
+	for non-terminal Const: go to state 9
+	for non-terminal DeclarationStatement: go to state 10
+	for non-terminal ExtendedVar: go to state 11
+	for non-terminal ForCycleHead: go to state 12
+	for non-terminal FunctionCallStatement: go to state 13
+	for non-terminal IfStatement: go to state 14
+	for non-terminal LoopWithPostconditionStatement: go to state 15
+	for non-terminal LoopWithPreconditionStatements: go to state 16
+	for non-terminal NArrayAssignmentStatement: go to state 17
+	for non-terminal NArrayCall: go to state 18
+	for non-terminal Spec: go to state 19
+	for non-terminal Statement: go to state 20
+	for non-terminal Statements: go to state 165
+	for non-terminal VarDeclaration: go to state 22
+	for non-terminal VarDeclarations: go to state 23
+
+State 154
+	51   ElseBlock: 'elseif' . Expression 'then' Statements ElseBlock
+
+	for terminal INT_CONST: Shift(state=24)
+	for terminal !: Shift(state=65)
+	for terminal CHAR_CONST: Shift(state=25)
+	for terminal STRING_CONST: Shift(state=26)
+	for terminal ff: Shift(state=27)
+	for terminal tt: Shift(state=28)
+	for terminal '[': Shift(state=29)
+	for terminal '-': Shift(state=66)
+	for terminal REF_CONST: Shift(state=35)
+	for terminal VARNAME: Shift(state=67)
+
+	for non-terminal ArithmeticExpression: go to state 55
+	for non-terminal CompareExpression: go to state 56
+	for non-terminal Const: go to state 9
+	for non-terminal Expression: go to state 166
+	for non-terminal ExtendedVar: go to state 11
+	for non-terminal Factor: go to state 58
+	for non-terminal FunctionCallStatement: go to state 59
+	for non-terminal LogicalExpression: go to state 60
+	for non-terminal MultiplicativeExpression: go to state 61
+	for non-terminal NArrayCall: go to state 62
+	for non-terminal Spec: go to state 63
+	for non-terminal Term: go to state 64
+
+State 155
+	35   LoopWithPreconditionStatements: 'while' Expression 'do' Statements 'endwhile' .
+
+	for terminal 'endproc': Reduce(rule=35)
+	for terminal 'endfunc': Reduce(rule=35)
+	for terminal ';': Reduce(rule=35)
+	for terminal 'endif': Reduce(rule=35)
+	for terminal 'else': Reduce(rule=35)
+	for terminal 'elseif': Reduce(rule=35)
+	for terminal 'endwhile': Reduce(rule=35)
+	for terminal 'endfor': Reduce(rule=35)
+	for terminal 'until': Reduce(rule=35)
+
+State 156
+	53   ForCycleHead: 'for' ForCycleVarDeclaration 'to' ForCycleTo 'step' . INT_CONST
+
+	for terminal INT_CONST: Shift(state=167)
+
+State 157
+	62   ForCycleVarDeclaration: VARNAME '=' INT_CONST '->' . int
+
+	for terminal int: Shift(state=168)
+
+State 158
+	63   ForCycleVarDeclaration: VARNAME '=' CHAR_CONST '->' . char
+
+	for terminal char: Shift(state=169)
+
+State 159
+	39   Expression: Expression . || LogicalExpression
+	40   Expression: Expression . ^^ LogicalExpression
+	49   Args: Args ',' Expression .
+
+	for terminal ||: Shift(state=95)
+	for terminal ^^: Shift(state=96)
+	for terminal ')': Reduce(rule=49)
+	for terminal ',': Reduce(rule=49)
+
+State 160
+	24   Section: Parameters ',' VARNAME . '->' Type
+	42   Parameters: Parameters ',' VARNAME .
+
+	for terminal '->': Shift(state=170)
+	for terminal ',': Reduce(rule=42)
+
+State 161
+	7    FunctionHeader: 'func' VARNAME '(' Sections ')' '->' . Type
+
+	for terminal char: Shift(state=51)
+	for terminal bool: Shift(state=52)
+	for terminal int: Shift(state=53)
+	for terminal '[': Shift(state=54)
+
+	for non-terminal PrimitiveType: go to state 49
+	for non-terminal Type: go to state 171
+
+State 162
+	12   Sections: Sections ';' Section .
+
+	for terminal ')': Reduce(rule=12)
+	for terminal ';': Reduce(rule=12)
+
+State 163
+	23   Section: VARNAME '->' Type .
+
+	for terminal ')': Reduce(rule=23)
+	for terminal ';': Reduce(rule=23)
+
+State 164
+	34   IfStatement: 'if' Expression 'then' Statements ElseBlock 'endif' .
+
+	for terminal 'endproc': Reduce(rule=34)
+	for terminal 'endfunc': Reduce(rule=34)
+	for terminal ';': Reduce(rule=34)
+	for terminal 'endif': Reduce(rule=34)
+	for terminal 'else': Reduce(rule=34)
+	for terminal 'elseif': Reduce(rule=34)
+	for terminal 'endwhile': Reduce(rule=34)
+	for terminal 'endfor': Reduce(rule=34)
+	for terminal 'until': Reduce(rule=34)
+
+State 165
+	9    Statements: Statements . ';' Statement
+	50   ElseBlock: 'else' Statements .
+
+	for terminal ';': Shift(state=46)
+	for terminal 'endif': Reduce(rule=50)
+
+State 166
+	39   Expression: Expression . || LogicalExpression
+	40   Expression: Expression . ^^ LogicalExpression
+	51   ElseBlock: 'elseif' Expression . 'then' Statements ElseBlock
+
+	for terminal ||: Shift(state=95)
+	for terminal ^^: Shift(state=96)
+	for terminal 'then': Shift(state=172)
+
+State 167
+	53   ForCycleHead: 'for' ForCycleVarDeclaration 'to' ForCycleTo 'step' INT_CONST .
+
+	for terminal 'do': Reduce(rule=53)
+
+State 168
+	62   ForCycleVarDeclaration: VARNAME '=' INT_CONST '->' int .
+
+	for terminal 'to': Reduce(rule=62)
+
+State 169
+	63   ForCycleVarDeclaration: VARNAME '=' CHAR_CONST '->' char .
+
+	for terminal 'to': Reduce(rule=63)
+
+State 170
+	24   Section: Parameters ',' VARNAME '->' . Type
+
+	for terminal char: Shift(state=51)
+	for terminal bool: Shift(state=52)
+	for terminal int: Shift(state=53)
+	for terminal '[': Shift(state=54)
+
+	for non-terminal PrimitiveType: go to state 49
+	for non-terminal Type: go to state 173
+
+State 171
+	7    FunctionHeader: 'func' VARNAME '(' Sections ')' '->' Type .
+
+	for terminal INT_CONST: Reduce(rule=7)
+	for terminal CHAR_CONST: Reduce(rule=7)
+	for terminal STRING_CONST: Reduce(rule=7)
+	for terminal ff: Reduce(rule=7)
+	for terminal tt: Reduce(rule=7)
+	for terminal '[': Reduce(rule=7)
+	for terminal 'check': Reduce(rule=7)
+	for terminal 'if': Reduce(rule=7)
+	for terminal 'while': Reduce(rule=7)
+	for terminal 'for': Reduce(rule=7)
+	for terminal 'repeat': Reduce(rule=7)
+	for terminal REF_CONST: Reduce(rule=7)
+	for terminal VARNAME: Reduce(rule=7)
+
+State 172
+	51   ElseBlock: 'elseif' Expression 'then' . Statements ElseBlock
+
+	for terminal INT_CONST: Shift(state=24)
+	for terminal CHAR_CONST: Shift(state=25)
+	for terminal STRING_CONST: Shift(state=26)
+	for terminal ff: Shift(state=27)
+	for terminal tt: Shift(state=28)
+	for terminal '[': Shift(state=29)
+	for terminal 'check': Shift(state=30)
+	for terminal 'if': Shift(state=31)
+	for terminal 'while': Shift(state=32)
+	for terminal 'for': Shift(state=33)
+	for terminal 'repeat': Shift(state=34)
+	for terminal REF_CONST: Shift(state=35)
+	for terminal VARNAME: Shift(state=36)
+
+	for non-terminal AssignmentStatement: go to state 8
+	for non-terminal Const: go to state 9
+	for non-terminal DeclarationStatement: go to state 10
+	for non-terminal ExtendedVar: go to state 11
+	for non-terminal ForCycleHead: go to state 12
+	for non-terminal FunctionCallStatement: go to state 13
+	for non-terminal IfStatement: go to state 14
+	for non-terminal LoopWithPostconditionStatement: go to state 15
+	for non-terminal LoopWithPreconditionStatements: go to state 16
+	for non-terminal NArrayAssignmentStatement: go to state 17
+	for non-terminal NArrayCall: go to state 18
+	for non-terminal Spec: go to state 19
+	for non-terminal Statement: go to state 20
+	for non-terminal Statements: go to state 174
+	for non-terminal VarDeclaration: go to state 22
+	for non-terminal VarDeclarations: go to state 23
+
+State 173
+	24   Section: Parameters ',' VARNAME '->' Type .
+
+	for terminal ')': Reduce(rule=24)
+	for terminal ';': Reduce(rule=24)
+
+State 174
+	9    Statements: Statements . ';' Statement
+	51   ElseBlock: 'elseif' Expression 'then' Statements . ElseBlock
+
+	for terminal ';': Shift(state=46)
+	for terminal 'else': Shift(state=153)
+	for terminal 'elseif': Shift(state=154)
+
+	for non-terminal ElseBlock: go to state 175
+
+State 175
+	51   ElseBlock: 'elseif' Expression 'then' Statements ElseBlock .
+
+	for terminal 'endif': Reduce(rule=51)
+

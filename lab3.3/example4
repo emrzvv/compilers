@@ -1,0 +1,3 @@
+proc example4(a -> char)
+	string = "We say \"Hello, World!\"\n" -> [char]
+endproc

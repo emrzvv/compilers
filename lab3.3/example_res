@@ -1,0 +1,126 @@
+{'SumVectors': FunctionHeader(name='SumVectors',
+                              sections=[Section(type=ArrayType(type=<PrimitiveType.Integer: 'int'>),
+                                                parameters=[Var(name='A',
+                                                                name_pos=Position(offset=16,
+                                                                                  line=1,
+                                                                                  col=17),
+                                                                type=None),
+                                                            Var(name='B',
+                                                                name_pos=Position(offset=19,
+                                                                                  line=1,
+                                                                                  col=20),
+                                                                type=None)]),
+                                        Section(type=<PrimitiveType.Boolean: 'bool'>,
+                                                parameters=[Var(name='E',
+                                                                name_pos=Position(offset=31,
+                                                                                  line=1,
+                                                                                  col=32),
+                                                                type=None),
+                                                            Var(name='F',
+                                                                name_pos=Position(offset=34,
+                                                                                  line=1,
+                                                                                  col=35),
+                                                                type=None)])],
+                              return_type=ArrayType(type=<PrimitiveType.Integer: 'int'>),
+                              name_pos=Position(offset=15, line=1, col=16)),
+ 'main': FunctionHeader(name='main',
+                        sections=[Section(type=ArrayType(type=<PrimitiveType.Integer: 'int'>),
+                                          parameters=[Var(name='a',
+                                                          name_pos=Position(offset=261,
+                                                                            line=12,
+                                                                            col=11),
+                                                          type=None),
+                                                      Var(name='b',
+                                                          name_pos=Position(offset=264,
+                                                                            line=12,
+                                                                            col=14),
+                                                          type=None)])],
+                        return_type=<PrimitiveType.Integer: 'int'>,
+                        name_pos=Position(offset=260, line=12, col=10))}
+
+checking function SumVectors
+{'A': ArrayType(type=<PrimitiveType.Integer: 'int'>),
+ 'B': ArrayType(type=<PrimitiveType.Integer: 'int'>),
+ 'E': <PrimitiveType.Boolean: 'bool'>,
+ 'F': <PrimitiveType.Boolean: 'bool'>,
+ 'SumVectors': ArrayType(type=<PrimitiveType.Integer: 'int'>)}
+<class 'model.DeclarationStatement'>
+{'A': ArrayType(type=<PrimitiveType.Integer: 'int'>),
+ 'B': ArrayType(type=<PrimitiveType.Integer: 'int'>),
+ 'E': <PrimitiveType.Boolean: 'bool'>,
+ 'F': <PrimitiveType.Boolean: 'bool'>,
+ 'SumVectors': ArrayType(type=<PrimitiveType.Integer: 'int'>),
+ 'size': <PrimitiveType.Integer: 'int'>}
+<class 'model.WarningStatement'>
+WARNING TODO
+{'A': ArrayType(type=<PrimitiveType.Integer: 'int'>),
+ 'B': ArrayType(type=<PrimitiveType.Integer: 'int'>),
+ 'E': <PrimitiveType.Boolean: 'bool'>,
+ 'F': <PrimitiveType.Boolean: 'bool'>,
+ 'SumVectors': ArrayType(type=<PrimitiveType.Integer: 'int'>),
+ 'size': <PrimitiveType.Integer: 'int'>}
+<class 'model.DeclarationStatement'>
+{'A': ArrayType(type=<PrimitiveType.Integer: 'int'>),
+ 'B': ArrayType(type=<PrimitiveType.Integer: 'int'>),
+ 'C': ArrayType(type=<PrimitiveType.Integer: 'int'>),
+ 'E': <PrimitiveType.Boolean: 'bool'>,
+ 'F': <PrimitiveType.Boolean: 'bool'>,
+ 'SumVectors': ArrayType(type=<PrimitiveType.Integer: 'int'>),
+ 'size': <PrimitiveType.Integer: 'int'>}
+<class 'model.ForDoStatement'>
+FOR DO TODO
+{'A': ArrayType(type=<PrimitiveType.Integer: 'int'>),
+ 'B': ArrayType(type=<PrimitiveType.Integer: 'int'>),
+ 'C': ArrayType(type=<PrimitiveType.Integer: 'int'>),
+ 'E': <PrimitiveType.Boolean: 'bool'>,
+ 'F': <PrimitiveType.Boolean: 'bool'>,
+ 'SumVectors': ArrayType(type=<PrimitiveType.Integer: 'int'>),
+ 'size': <PrimitiveType.Integer: 'int'>}
+<class 'model.AssignmentStatement'>
+ASSIGNMENT STATEMENT
+'SumVectors'
+Var(name='C', name_pos=Position(offset=240, line=9, col=15), type=None)
+---------------
+{'A': ArrayType(type=<PrimitiveType.Integer: 'int'>),
+ 'B': ArrayType(type=<PrimitiveType.Integer: 'int'>),
+ 'C': ArrayType(type=<PrimitiveType.Integer: 'int'>),
+ 'E': <PrimitiveType.Boolean: 'bool'>,
+ 'F': <PrimitiveType.Boolean: 'bool'>,
+ 'SumVectors': ArrayType(type=<PrimitiveType.Integer: 'int'>),
+ 'size': <PrimitiveType.Integer: 'int'>}
+
+checking function main
+{'a': ArrayType(type=<PrimitiveType.Integer: 'int'>),
+ 'b': ArrayType(type=<PrimitiveType.Integer: 'int'>),
+ 'main': <PrimitiveType.Integer: 'int'>}
+<class 'model.DeclarationStatement'>
+{'F': ArrayType(type=ArrayType(type=<PrimitiveType.Char: 'char'>)),
+ 'a': ArrayType(type=<PrimitiveType.Integer: 'int'>),
+ 'b': ArrayType(type=<PrimitiveType.Integer: 'int'>),
+ 'main': <PrimitiveType.Integer: 'int'>}
+<class 'model.DeclarationStatement'>
+{'F': ArrayType(type=ArrayType(type=<PrimitiveType.Char: 'char'>)),
+ 'a': ArrayType(type=<PrimitiveType.Integer: 'int'>),
+ 'b': ArrayType(type=<PrimitiveType.Integer: 'int'>),
+ 'c': <PrimitiveType.Boolean: 'bool'>,
+ 'd': <PrimitiveType.Boolean: 'bool'>,
+ 'main': <PrimitiveType.Integer: 'int'>}
+<class 'model.FunctionCallStatement'>
+checking function call SumVectors
+{'F': ArrayType(type=ArrayType(type=<PrimitiveType.Char: 'char'>)),
+ 'a': ArrayType(type=<PrimitiveType.Integer: 'int'>),
+ 'b': ArrayType(type=<PrimitiveType.Integer: 'int'>),
+ 'c': <PrimitiveType.Boolean: 'bool'>,
+ 'd': <PrimitiveType.Boolean: 'bool'>,
+ 'main': <PrimitiveType.Integer: 'int'>}
+<class 'model.AssignmentStatement'>
+ASSIGNMENT STATEMENT
+'main'
+Const(value='0', type=<PrimitiveType.Integer: 'int'>)
+---------------
+{'F': ArrayType(type=ArrayType(type=<PrimitiveType.Char: 'char'>)),
+ 'a': ArrayType(type=<PrimitiveType.Integer: 'int'>),
+ 'b': ArrayType(type=<PrimitiveType.Integer: 'int'>),
+ 'c': <PrimitiveType.Boolean: 'bool'>,
+ 'd': <PrimitiveType.Boolean: 'bool'>,
+ 'main': <PrimitiveType.Integer: 'int'>}

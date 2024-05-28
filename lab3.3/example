@@ -1,0 +1,44 @@
+func sumIntegers(a -> int; b -> int) -> int
+	c -> char;
+	c = 'A';
+	A = [int 5], B = [int 10] -> [int];
+	x, y = B[3], z = y -> int;
+	y = y % 10;
+	x = a * 2 + 10 / 5;
+	if a < b then
+		a = a + 1
+	else
+		b = b + 1
+	endif;
+	
+	if a < b then
+		a = a + 1
+	elseif a == b + 1 then
+		b = b + 1
+	elseif a > b + 1 then
+		a = a * 10
+	else
+		b = b * 10
+	endif
+
+endfunc
+
+proc example(a -> [int])
+	for letter = 'A' -> char to 'Z' do
+		print(letter)
+	endfor
+endproc
+
+func SumVectors(A, B -> [int]) -> [int]
+	size = length(A) -> int;
+	check size == length(B);
+	C = [int size] -> [int];
+	for i = 0 -> int to size - 1 do
+		C[i] = A[i] + B[i]
+	endfor;
+	SumVectors = C
+endfunc
+
+proc example4(a -> char)
+	string = "We say \"Hello, World!\"\n" -> [char]
+endproc

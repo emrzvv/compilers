@@ -1,0 +1,5 @@
+proc example(a -> [int])
+	for letter = 'A' -> char to 'Z' do
+		print(letter)
+	endfor
+endproc
