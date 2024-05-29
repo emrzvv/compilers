@@ -1,3 +1,4 @@
+import copy
 import enum
 import abc
 from dataclasses import dataclass
@@ -22,12 +23,12 @@ class ArrayType:
 
 class Statement(abc.ABC):
     @abc.abstractmethod
-    def check(self, funcs, ret_type, vars):
+    def check(self, funcs, vars):
         pass
 
 class Expression(abc.ABC):
     @abc.abstractmethod
-    def check(self, funcs, ret_type, vars):
+    def check(self, funcs, vars):
         pass
 
 @dataclass
@@ -37,9 +38,9 @@ class BinOperatorExpression(Expression):
         left, operator, right = attrs
         return BinOperatorExpression(left, operator, coords[1].start, right, None)
 
-    def check(self, funcs, ret_type, vars):
-        self.left.check(funcs, ret_type, vars)
-        self.right.check(funcs, ret_type, vars)
+    def check(self, funcs, vars):
+        self.left.check(funcs, vars)
+        self.right.check(funcs, vars)
 
         is_int = lambda a: a in (PrimitiveType.Integer, PrimitiveType.Char)
         lt = self.left.type
@@ -93,8 +94,8 @@ class UnaryOperatorExpression(Expression):
             return UnaryOperatorExpression(operator, expression, coords[0].start, None)
         return action
 
-    def check(self, funcs, ret_type, vars):
-        self.expression.check(funcs, ret_type, vars)
+    def check(self, funcs, vars):
+        self.expression.check(funcs, vars)
         if self.operator == '-':
             if self.expression.type not in (PrimitiveType.Integer, PrimitiveType.Char):
                 raise UnexpectedUnaryType(self.operator_coord, self.operator, self.expression.type)
@@ -112,7 +113,7 @@ class UnaryOperatorExpression(Expression):
 
 @dataclass
 class Var(Expression):
-    def check(self, funcs, ret_type, vars):
+    def check(self, funcs, vars):
         if self.name not in vars:
             raise UndefinedVar(self.name_pos, self.name)
         self.type = vars[self.name]
@@ -127,9 +128,10 @@ class Var(Expression):
 
 @dataclass
 class ArrayCall(Expression):
-    def check(self, funcs, ret_type, vars):
-        self.array.check(funcs, ret_type, vars)
-        self.ref.check(funcs, ret_type, vars)
+    def check(self, funcs, vars):
+        print('CHECKING ARRAY CALL')
+        self.array.check(funcs, vars)
+        self.ref.check(funcs, vars)
 
         if isinstance(self.array.type, ArrayType):
             self.type = self.array.type.type
@@ -161,7 +163,7 @@ class VarDeclaration:
 
 @dataclass
 class DeclarationStatement(Statement):
-    def check(self, funcs, return_type, vars):
+    def check(self, funcs, vars):
         for decl in self.var_declarations:
             if decl.name in vars:
                 raise AlreadyExists(None, decl.name) # TODO: pos
@@ -173,20 +175,30 @@ class DeclarationStatement(Statement):
 
 @dataclass
 class AssignmentStatement(Statement):
-    def check(self, funcs, return_type, vars):
+    def check(self, funcs, vars):
         print('ASSIGNMENT STATEMENT')
         pprint(self.left)
         pprint(self.right)
         print('---------------')
         if type(self.left) == str and self.left in funcs:
-            self.right.check(funcs, return_type, vars)
+            # print(f'{self.left} in funcs')
+            # print("left == str and left in funcs")
+            self.right.check(funcs, vars)
             if funcs[self.left].return_type != self.right.type:
                 raise AssignTypeMismatch(self.assign_coord, funcs[self.left].return_type, self.right.type)
-        elif self.left not in funcs:
-            raise Exception('Unknown')
+        elif type(self.left) == str and self.left in vars:
+            self.left = Var(self.left, self.assign_coord, vars[self.left])
+        elif type(self.left) == ArrayCall:
+            self.left.check(funcs, vars)
+            self.right.check(funcs, vars)
+            if self.left.type != self.right.type:
+                raise AssignTypeMismatch(self.assign_coord, self.left.type, self.right.type)
+        elif self.left not in funcs and self.left not in vars:
+            raise Exception('Unknown reference')
         else:
-            self.left.check(funcs, return_type, vars)
-            self.right.check(funcs, return_type, vars)
+            # print('CHECKED LEFT AND RIGHT')
+            self.left.check(funcs, vars)
+            self.right.check(funcs, vars)
             if self.left.type != self.right.type:
                 raise AssignTypeMismatch(self.assign_coord, self.left.type, self.right.type)
 
@@ -208,9 +220,9 @@ class FunctionCallStatement(Statement):
         # print(f'function call: {name} ')
         # pprint(coords)
         # print('--------')
-        return FunctionCallStatement(name, coords[0].start, args, coords[2].start)
+        return FunctionCallStatement(name, coords[0].start, args, coords[2].start, None)
 
-    def check(self, funcs, return_type, vars):
+    def check(self, funcs, vars):
         print(f'checking function call {self.name}')
         if self.name not in funcs:
             raise UndefinedFunction(self.name_coord, self.name)
@@ -219,12 +231,13 @@ class FunctionCallStatement(Statement):
                                        self.name,
                                        funcs[self.name].args_len(),
                                        len(self.args))
+        self.type = funcs[self.name].return_type
         # print('PARAMETERS')
         params_map_types = funcs[self.name].params_map_types()
         # pprint(params_map_types)
         # print('ARGUMENTS:')
         for arg in self.args:
-            arg.check(funcs, return_type, vars)
+            arg.check(funcs, vars)
         # pprint(self.args)
         for param, arg in zip(params_map_types, self.args):
             if param[1] != arg.type: # TODO: prettify array error output
@@ -235,66 +248,15 @@ class FunctionCallStatement(Statement):
     name_coord: pe.Position
     args: list[Expression]
     args_coord: pe.Position
-
-
-@dataclass
-class ElseBlock:
-    condition: Optional[Expression] # elseif
-    statements: list[Statement]
-
-@dataclass
-class IfStatement(Statement):
-    def check(self, funcs, return_type, vars):
-        print("IF TODO")
-
-    condition: Expression
-    statements: list[Statement]
-    elseblocks: list[ElseBlock]
+    type: Type or PrimitiveType
 
 
 @dataclass
 class WarningStatement(Statement):
-    def check(self, funcs, return_type, vars):
-        print("WARNING TODO")
+    def check(self, funcs, vars):
+        self.expr.check(funcs, vars)
 
     expr: Expression
-
-@dataclass
-class WhileDoStatement(Statement):
-    def check(self, funcs, return_type, vars):
-        print("WHILE TODO")
-
-    condition: Expression
-    statements: list[Statement]
-
-
-@dataclass
-class ForDoVarDeclaration:
-    name: Any
-    value: Any
-    type: Optional[Type]
-
-@dataclass
-class ForCycleHead:
-    var_declaration: ForDoVarDeclaration
-    to: Any
-    step: Optional[Any]
-
-@dataclass
-class ForDoStatement(Statement):
-    def check(self, funcs, return_type, vars):
-        print("FOR DO TODO")
-
-    head: ForCycleHead
-    statements: list[Statement]
-
-@dataclass
-class RepeatUntilStatement(Statement):
-    def check(self, funcs, return_type, vars):
-        print("REPEAT UNTIL TODO")
-
-    statements: list[Statement]
-    condition: Expression
 
 @dataclass
 class ArrayAllocation:
@@ -322,7 +284,7 @@ class Const(Expression):
     value: Any
     type: PrimitiveType or Type
 
-    def check(self, funcs, ret_type, vars):
+    def check(self, funcs, vars):
         pass
 
 @dataclass
@@ -372,16 +334,17 @@ class Body(abc.ABC):
 
     def check(self, funcs, return_type, vars):
         # last statement - assign statement funcname = expression
+        inner_vars = copy.deepcopy(vars)
         if return_type != "void":
             if not isinstance(self.statements[-1], AssignmentStatement):
                 raise MissingReturnStatement(None)
         for stmt in self.statements:
             print(type(stmt))
             if isinstance(stmt, VarDeclaration):
-                vars = stmt.check(funcs, return_type, vars)
+                inner_vars = stmt.check(funcs, inner_vars)
             else:
-                stmt.check(funcs, return_type, vars)
-            pprint(vars)
+                stmt.check(funcs, inner_vars)
+            pprint(inner_vars)
 
 @dataclass
 class Function:
@@ -420,8 +383,94 @@ class Procedure:
         self.body.check(funcs, "void", vars)
 
 @dataclass
+class ElseBlock:
+    condition: Optional[Expression] # elseif
+    statements: Body
+
+    def check(self, funcs, vars):
+        if self.condition is not None:
+            self.condition.check(funcs, vars)
+        inner_vars = copy.deepcopy(vars)
+        self.statements.check(funcs, inner_vars)
+
+@dataclass
+class IfStatement(Statement):
+    def check(self, funcs, vars):
+        self.condition.check(funcs, vars)
+        inner_vars = copy.deepcopy(vars)
+        self.statements.check(funcs, "void", inner_vars)
+        inner_vars_else = copy.deepcopy(vars)
+        self.elseblocks.check(funcs, inner_vars_else)
+
+    condition: Expression
+    statements: Body
+    elseblocks: list[ElseBlock]
+
+@dataclass
+class WhileDoStatement(Statement):
+    def check(self, funcs, vars):
+        self.condition.check(funcs, vars)
+        self.statements.check(funcs, "void", vars)
+
+    condition: Expression
+    statements: Body
+
+
+@dataclass
+class ForDoVarDeclaration:
+    name: str
+    value: Expression
+    type: Type or PrimitiveType
+
+    def check(self, funcs, vars):
+        if self.name in vars:
+            raise AlreadyExists(None, self.name)
+        self.value.check(funcs, vars)
+        if self.type is None:
+            self.type = self.value.type
+        vars[self.name] = self.type
+
+
+@dataclass
+class ForCycleHead:
+    var_declaration: ForDoVarDeclaration
+    to: Expression
+    step: Optional[Const]
+
+    def check(self, funcs, vars):
+        # pprint(vars)
+        self.var_declaration.check(funcs, vars)
+        self.to.check(funcs, vars)
+        if self.var_declaration.type != self.to.type:
+            raise TypeMismatch(None, self.var_declaration.type, self.to.type)
+        if self.step is not None and self.step.type != PrimitiveType.Integer:
+            raise TypeMismatch(None, PrimitiveType.Integer, self.step)
+        # pprint(vars)
+
+
+
+@dataclass
+class ForDoStatement(Statement):
+    def check(self, funcs, vars):
+        inner_vars = copy.deepcopy(vars)
+        self.head.check(funcs, inner_vars)
+        self.statements.check(funcs, "void", inner_vars)
+
+    head: ForCycleHead
+    statements: Body
+
+@dataclass
+class RepeatUntilStatement(Statement):
+    def check(self, funcs, vars):
+        self.condition.check(funcs, vars)
+        self.statements.check(funcs, "void", vars)
+
+    statements: Body
+    condition: Expression
+
+@dataclass
 class Program:
-    entities: list[Function or Procedure]
+    entities: list[Function | Procedure]
 
     def check(self):
         funcs = {}

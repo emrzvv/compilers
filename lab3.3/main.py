@@ -103,7 +103,7 @@ NVar |= VARNAME, Var.create
 NArrayCall |= NSpec, '[', NExpression, ']', ArrayCall.create
 
 NSpec |= NFunctionCallStatement
-NSpec |= '[', NType, VARNAME, ']', ArrayAllocation
+NSpec |= '[', NType, VARNAME, ']', ArrayAllocation # todo: allocate by expression?
 NSpec |= '[', NType, INT_CONST, ']', ArrayAllocation
 NSpec |= NVar
 NSpec |= NArrayCall
@@ -159,20 +159,20 @@ NFactor |= KW_NOT, NSpec, UnaryOperatorExpression.create('!')
 NFactor |= '-', NSpec, UnaryOperatorExpression.create('-')
 NFactor |= NSpec
 
-NIfStatement |= 'if', NExpression, 'then', NStatements, 'endif', lambda expr, stmts: IfStatement(condition=expr, statements=stmts, elseblocks=list())
-NIfStatement |= 'if', NExpression, 'then', NStatements, NElseBlock, 'endif', IfStatement
-NElseBlock |= 'else', NStatements, lambda stmts: [ElseBlock(condition=None, statements=stmts)]
-NElseBlock |= 'elseif', NExpression, 'then', NStatements, NElseBlock, lambda expr, stmts, block: [ElseBlock(condition=expr, statements=stmts)] + block
+NIfStatement |= 'if', NExpression, 'then', NBody, 'endif', lambda expr, stmts: IfStatement(condition=expr, statements=stmts, elseblocks=list())
+NIfStatement |= 'if', NExpression, 'then', NBody, NElseBlock, 'endif', IfStatement
+NElseBlock |= 'else', NBody, lambda stmts: [ElseBlock(condition=None, statements=stmts)]
+NElseBlock |= 'elseif', NExpression, 'then', NBody, NElseBlock, lambda expr, stmts, block: [ElseBlock(condition=expr, statements=stmts)] + block
 
-NLoopWithPreconditionStatements |= 'while', NExpression, 'do', NStatements, 'endwhile', WhileDoStatement
+NLoopWithPreconditionStatements |= 'while', NExpression, 'do', NBody, 'endwhile', WhileDoStatement
 
-NLoopWithPreconditionStatements |= NForCycleHead, 'do', NStatements, 'endfor', ForDoStatement
+NLoopWithPreconditionStatements |= NForCycleHead, 'do', NBody, 'endfor', ForDoStatement
 
 NForCycleHead |= 'for', NForCycleVarDeclaration, 'to', NForCycleTo, lambda decl, to: ForCycleHead(decl, to, step=None)
 NForCycleHead |= 'for', NForCycleVarDeclaration, 'to', NForCycleTo, 'step', INT_CONST, lambda decl, to, step: ForCycleHead(decl, to, step=step)
 
-NForCycleVarDeclaration |= VARNAME, '=', INT_CONST, '->', KW_INT, lambda name, expr: ForDoVarDeclaration(name=name, value=expr, type=PrimitiveType.Integer)
-NForCycleVarDeclaration |= VARNAME, '=', CHAR_CONST, '->', KW_CHAR, lambda name, expr: ForDoVarDeclaration(name=name, value=expr, type=PrimitiveType.Char)
+NForCycleVarDeclaration |= VARNAME, '=', INT_CONST, '->', KW_INT, lambda name, expr: ForDoVarDeclaration(name=name, value=Const(expr, type=PrimitiveType.Integer), type=PrimitiveType.Integer)
+NForCycleVarDeclaration |= VARNAME, '=', CHAR_CONST, '->', KW_CHAR, lambda name, expr: ForDoVarDeclaration(name=name, value=Const(expr, type=PrimitiveType.Char), type=PrimitiveType.Char)
 NForCycleVarDeclaration |= VARNAME, '=', NExpression, lambda name, expr: ForDoVarDeclaration(name=name, value=expr, type=None)
 
 
@@ -180,7 +180,7 @@ NForCycleTo |= NExpression
 # NForCycleTo |= INT_CONST, lambda i: i
 # NForCycleTo |= CHAR_CONST, lambda c: c
 
-NLoopWithPostconditionStatement |= 'repeat', NStatements, 'until', NExpression, RepeatUntilStatement
+NLoopWithPostconditionStatement |= 'repeat', NBody, 'until', NExpression, RepeatUntilStatement
 
 parser = pe.Parser(NProgram)
 # parser.print_table()
@@ -194,6 +194,7 @@ for filename in sys.argv[1:]:
             tree = parser.parse(f.read())
             # pprint(tree)
             tree.check()
+            print('Семантических ошибок не найдено')
     except pe.Error as e:
         print(f'Ошибка {e.pos}: {e.message}')
     except Exception as e:

@@ -5,8 +5,18 @@ func SumVectors(A, B -> [int]; E, F -> bool) -> [int]
 	for i = 0 -> int to size - 1 do
 		C[i] = A[i] + B[i]
 	endfor;
+    a = 0 -> int;
+	while a < 10 do
+	    test -> char;
+	    a = a + 1
+    endwhile;
+
 	(*e = 'A' -> char;C[0] = e;*)
 	SumVectors = C
+endfunc
+
+func length(v -> [int]) -> int
+    length = 10
 endfunc
 
 func main(a, b -> [int]) -> int

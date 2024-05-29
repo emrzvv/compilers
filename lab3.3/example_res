@@ -23,20 +23,29 @@
                                                                 type=None)])],
                               return_type=ArrayType(type=<PrimitiveType.Integer: 'int'>),
                               name_pos=Position(offset=15, line=1, col=16)),
+ 'length': FunctionHeader(name='length',
+                          sections=[Section(type=ArrayType(type=<PrimitiveType.Integer: 'int'>),
+                                            parameters=[Var(name='v',
+                                                            name_pos=Position(offset=347,
+                                                                              line=18,
+                                                                              col=13),
+                                                            type=None)])],
+                          return_type=<PrimitiveType.Integer: 'int'>,
+                          name_pos=Position(offset=346, line=18, col=12)),
  'main': FunctionHeader(name='main',
                         sections=[Section(type=ArrayType(type=<PrimitiveType.Integer: 'int'>),
                                           parameters=[Var(name='a',
-                                                          name_pos=Position(offset=261,
-                                                                            line=12,
+                                                          name_pos=Position(offset=401,
+                                                                            line=22,
                                                                             col=11),
                                                           type=None),
                                                       Var(name='b',
-                                                          name_pos=Position(offset=264,
-                                                                            line=12,
+                                                          name_pos=Position(offset=404,
+                                                                            line=22,
                                                                             col=14),
                                                           type=None)])],
                         return_type=<PrimitiveType.Integer: 'int'>,
-                        name_pos=Position(offset=260, line=12, col=10))}
+                        name_pos=Position(offset=400, line=22, col=10))}
 
 checking function SumVectors
 {'A': ArrayType(type=<PrimitiveType.Integer: 'int'>),
@@ -52,7 +61,7 @@ checking function SumVectors
  'SumVectors': ArrayType(type=<PrimitiveType.Integer: 'int'>),
  'size': <PrimitiveType.Integer: 'int'>}
 <class 'model.WarningStatement'>
-WARNING TODO
+checking function call length
 {'A': ArrayType(type=<PrimitiveType.Integer: 'int'>),
  'B': ArrayType(type=<PrimitiveType.Integer: 'int'>),
  'E': <PrimitiveType.Boolean: 'bool'>,
@@ -68,7 +77,66 @@ WARNING TODO
  'SumVectors': ArrayType(type=<PrimitiveType.Integer: 'int'>),
  'size': <PrimitiveType.Integer: 'int'>}
 <class 'model.ForDoStatement'>
-FOR DO TODO
+<class 'model.AssignmentStatement'>
+ASSIGNMENT STATEMENT
+ArrayCall(array=Var(name='C',
+                    name_pos=Position(offset=167, line=6, col=3),
+                    type=None),
+          ref=Var(name='i',
+                  name_pos=Position(offset=169, line=6, col=5),
+                  type=None),
+          array_coord=Position(offset=167, line=6, col=3),
+          ref_coord=Position(offset=169, line=6, col=5),
+          type=None)
+BinOperatorExpression(left=ArrayCall(array=Var(name='A',
+                                               name_pos=Position(offset=174,
+                                                                 line=6,
+                                                                 col=10),
+                                               type=None),
+                                     ref=Var(name='i',
+                                             name_pos=Position(offset=176,
+                                                               line=6,
+                                                               col=12),
+                                             type=None),
+                                     array_coord=Position(offset=174,
+                                                          line=6,
+                                                          col=10),
+                                     ref_coord=Position(offset=176,
+                                                        line=6,
+                                                        col=12),
+                                     type=None),
+                      operator='+',
+                      operator_coord=Position(offset=179, line=6, col=15),
+                      right=ArrayCall(array=Var(name='B',
+                                                name_pos=Position(offset=181,
+                                                                  line=6,
+                                                                  col=17),
+                                                type=None),
+                                      ref=Var(name='i',
+                                              name_pos=Position(offset=183,
+                                                                line=6,
+                                                                col=19),
+                                              type=None),
+                                      array_coord=Position(offset=181,
+                                                           line=6,
+                                                           col=17),
+                                      ref_coord=Position(offset=183,
+                                                         line=6,
+                                                         col=19),
+                                      type=None),
+                      type=None)
+---------------
+CHECKING ARRAY CALL
+CHECKING ARRAY CALL
+CHECKING ARRAY CALL
+{'A': ArrayType(type=<PrimitiveType.Integer: 'int'>),
+ 'B': ArrayType(type=<PrimitiveType.Integer: 'int'>),
+ 'C': ArrayType(type=<PrimitiveType.Integer: 'int'>),
+ 'E': <PrimitiveType.Boolean: 'bool'>,
+ 'F': <PrimitiveType.Boolean: 'bool'>,
+ 'SumVectors': ArrayType(type=<PrimitiveType.Integer: 'int'>),
+ 'i': <PrimitiveType.Integer: 'int'>,
+ 'size': <PrimitiveType.Integer: 'int'>}
 {'A': ArrayType(type=<PrimitiveType.Integer: 'int'>),
  'B': ArrayType(type=<PrimitiveType.Integer: 'int'>),
  'C': ArrayType(type=<PrimitiveType.Integer: 'int'>),
@@ -76,10 +144,37 @@ FOR DO TODO
  'F': <PrimitiveType.Boolean: 'bool'>,
  'SumVectors': ArrayType(type=<PrimitiveType.Integer: 'int'>),
  'size': <PrimitiveType.Integer: 'int'>}
+<class 'model.DeclarationStatement'>
+{'A': ArrayType(type=<PrimitiveType.Integer: 'int'>),
+ 'B': ArrayType(type=<PrimitiveType.Integer: 'int'>),
+ 'C': ArrayType(type=<PrimitiveType.Integer: 'int'>),
+ 'E': <PrimitiveType.Boolean: 'bool'>,
+ 'F': <PrimitiveType.Boolean: 'bool'>,
+ 'SumVectors': ArrayType(type=<PrimitiveType.Integer: 'int'>),
+ 'a': <PrimitiveType.Integer: 'int'>,
+ 'size': <PrimitiveType.Integer: 'int'>}
+<class 'model.WhileDoStatement'>
+<class 'model.DeclarationStatement'>
+{'A': ArrayType(type=<PrimitiveType.Integer: 'int'>),
+ 'B': ArrayType(type=<PrimitiveType.Integer: 'int'>),
+ 'C': ArrayType(type=<PrimitiveType.Integer: 'int'>),
+ 'E': <PrimitiveType.Boolean: 'bool'>,
+ 'F': <PrimitiveType.Boolean: 'bool'>,
+ 'SumVectors': ArrayType(type=<PrimitiveType.Integer: 'int'>),
+ 'a': <PrimitiveType.Integer: 'int'>,
+ 'size': <PrimitiveType.Integer: 'int'>,
+ 'test': <PrimitiveType.Char: 'char'>}
 <class 'model.AssignmentStatement'>
 ASSIGNMENT STATEMENT
-'SumVectors'
-Var(name='C', name_pos=Position(offset=240, line=9, col=15), type=None)
+'a'
+BinOperatorExpression(left=Var(name='a',
+                               name_pos=Position(offset=258, line=11, col=10),
+                               type=None),
+                      operator='+',
+                      operator_coord=Position(offset=260, line=11, col=12),
+                      right=Const(value='1',
+                                  type=<PrimitiveType.Integer: 'int'>),
+                      type=None)
 ---------------
 {'A': ArrayType(type=<PrimitiveType.Integer: 'int'>),
  'B': ArrayType(type=<PrimitiveType.Integer: 'int'>),
@@ -87,7 +182,41 @@ Var(name='C', name_pos=Position(offset=240, line=9, col=15), type=None)
  'E': <PrimitiveType.Boolean: 'bool'>,
  'F': <PrimitiveType.Boolean: 'bool'>,
  'SumVectors': ArrayType(type=<PrimitiveType.Integer: 'int'>),
+ 'a': <PrimitiveType.Integer: 'int'>,
+ 'size': <PrimitiveType.Integer: 'int'>,
+ 'test': <PrimitiveType.Char: 'char'>}
+{'A': ArrayType(type=<PrimitiveType.Integer: 'int'>),
+ 'B': ArrayType(type=<PrimitiveType.Integer: 'int'>),
+ 'C': ArrayType(type=<PrimitiveType.Integer: 'int'>),
+ 'E': <PrimitiveType.Boolean: 'bool'>,
+ 'F': <PrimitiveType.Boolean: 'bool'>,
+ 'SumVectors': ArrayType(type=<PrimitiveType.Integer: 'int'>),
+ 'a': <PrimitiveType.Integer: 'int'>,
  'size': <PrimitiveType.Integer: 'int'>}
+<class 'model.AssignmentStatement'>
+ASSIGNMENT STATEMENT
+'SumVectors'
+Var(name='C', name_pos=Position(offset=324, line=15, col=15), type=None)
+---------------
+{'A': ArrayType(type=<PrimitiveType.Integer: 'int'>),
+ 'B': ArrayType(type=<PrimitiveType.Integer: 'int'>),
+ 'C': ArrayType(type=<PrimitiveType.Integer: 'int'>),
+ 'E': <PrimitiveType.Boolean: 'bool'>,
+ 'F': <PrimitiveType.Boolean: 'bool'>,
+ 'SumVectors': ArrayType(type=<PrimitiveType.Integer: 'int'>),
+ 'a': <PrimitiveType.Integer: 'int'>,
+ 'size': <PrimitiveType.Integer: 'int'>}
+
+checking function length
+{'length': <PrimitiveType.Integer: 'int'>,
+ 'v': ArrayType(type=<PrimitiveType.Integer: 'int'>)}
+<class 'model.AssignmentStatement'>
+ASSIGNMENT STATEMENT
+'length'
+Const(value='10', type=<PrimitiveType.Integer: 'int'>)
+---------------
+{'length': <PrimitiveType.Integer: 'int'>,
+ 'v': ArrayType(type=<PrimitiveType.Integer: 'int'>)}
 
 checking function main
 {'a': ArrayType(type=<PrimitiveType.Integer: 'int'>),
@@ -124,3 +253,4 @@ Const(value='0', type=<PrimitiveType.Integer: 'int'>)
  'c': <PrimitiveType.Boolean: 'bool'>,
  'd': <PrimitiveType.Boolean: 'bool'>,
  'main': <PrimitiveType.Integer: 'int'>}
+Семантических ошибок не найдено

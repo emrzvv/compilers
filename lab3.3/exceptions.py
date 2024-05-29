@@ -114,3 +114,14 @@ class BinaryOperatorTypeMismatch(SemanticError):
     @property
     def message(self):
         return f'Неправильный тип бинарной операции {self.operator}: ожидалось {self.left}, получено {self.right}'
+
+
+class TypeMismatch(SemanticError):
+    def __init__(self, pos, left, right):
+        self.pos = pos
+        self.left = left
+        self.right = right
+
+    @property
+    def message(self):
+        return f'Неверный тип: ожидалось {self.left}, получено {self.right}'
