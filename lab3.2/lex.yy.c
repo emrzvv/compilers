@@ -1178,8 +1178,8 @@ case 50:
 YY_RULE_SETUP
 #line 100 "lexer.l"
 {
-    yylval->number = yytext;  // предполагая, что yylval.number это int
-    return NUMBER;
+    yylval->int_const = yytext;  // предполагая, что yylval.number это int
+    return INT_CONST;
 }
 	YY_BREAK
 case 51:

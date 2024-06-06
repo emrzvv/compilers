@@ -14,7 +14,7 @@
 %parse-param {bool need_tab}
 
 %union {
-    char* number;
+    char* int_const;
     char* char_const;
     char* string;
     char* varname;
@@ -45,7 +45,7 @@
 %token PASS
 
 %token <varname> VARNAME
-%token <number> NUMBER
+%token <int_const> INT_CONST
 %token <char_const> CHAR_CONST
 %token <string> STRING_CONST
 /* %token <ref_const> REF_CONST */
@@ -88,10 +88,10 @@ Program:
         Proc
         ;
 Func:
-        FuncHeader NewLineCheck {if (!need_tab) printf(" "); tab++;} CommentCheck Body
+        FuncHeader NewLineCheck {if (!need_tab) printf(" "); tab++;} CommentCheck Body ENDFUNC {printf("endfunc");}
         ;
 Proc:   
-        ProcHeader NewLineCheck {if (!need_tab) printf(" "); tab++;} CommentCheck Body
+        ProcHeader NewLineCheck {if (!need_tab) printf(" "); tab++;} CommentCheck Body ENDPROC {printf("endproc");}
 CommentCheck:
         | COMMENT {if (need_tab) { print_tabs(tab); need_tab = false;} printf("%s", $COMMENT);} NewLineCheck CommentCheck
         ;
@@ -120,9 +120,9 @@ Sections:
         | Section
         ;
 Section:
-        Var TYPE_DECL {if (need_tab) {tab=1; print_tabs(tab);} printf(" -> ");} Type
-        |
-        Parameters COMMA {printf(", ");} Var TYPE_DECL {if (need_tab) {tab=1; print_tabs(tab);} printf(" -> ");} Type
+        Parameters TYPE_DECL {if (need_tab) {tab=1; print_tabs(tab); tab=0;} printf(" -> ");} Type
+        /* | */
+        /* Parameters COMMA {printf(", ");} Var TYPE_DECL {if (need_tab) {tab=1; print_tabs(tab);tab=0;} printf(" -> ");} Type */
         ;
 Parameters:
         Var
@@ -141,9 +141,102 @@ PrimitiveType:
         INT {printf("int");} | CHAR {printf("char");} | BOOL {printf("bool");}
         ;
 Body:
-        PASS {printf("TODO BODY");}
+        Statements
         ;
-
+Statements:
+        {if (need_tab) {print_tabs(tab);}} Statement
+        |
+        Statements STATEMENT_END {printf(";");} NewLineCheck {if (!need_tab) {printf(" ");}} CommentCheck {if (!need_tab) {printf(" ");} else {print_tabs(tab);}} Statement
+        ;
+Statement:
+        DeclarationStatement |
+        /* AssignmentStatement | */
+        /* ArrayAssignmentStatement | */
+        /* FunctionCallStatement | */
+        /* IfStatement | */
+        /* LoopWithPreconditionStatement | */
+        /* LoopWithPostconditionStatement | */
+        CHECK {printf("check");} Expression
+        ;
+DeclarationStatement:
+        VarDeclarations TYPE_DECL {printf(" -> ");} Type
+        ;
+VarDeclarations:
+        VarDeclaration |
+        VarDeclarations COMMA {printf(", ");} VarDeclaration
+VarDeclaration:
+        Var |
+        Var ASSIGN {printf(" = ");} Expression
+        ;
+FunctionCallStatement:
+        VARNAME[FUNC] L_BRACKET_ROUND {printf("(");} Args R_BRACKET_ROUND {printf(")");}
+        ;
+Args:
+        Expression | 
+        Args COMMA {printf(", ");} Expression
+ArrayCall:
+        Spec L_BRACKET_SQUARE {printf("[");} Expression R_BRACKET_SQUARE {printf("]");}
+Spec:
+        FunctionCallStatement |
+        L_BRACKET_SQUARE {printf("[");} Type VARNAME[NAME] {printf(" %s", $NAME);} R_BRACKET_SQUARE {printf("]");} |
+        L_BRACKET_SQUARE {printf("[");} Type INT_CONST[INT] {printf(" %s", $INT);} R_BRACKET_SQUARE {printf("]");} |
+        Var |
+        ArrayCall |
+        Const
+        ;
+Expression:
+        LogicalExpression |
+        Expression OR {printf(" || ");} LogicalExpression |
+        Expression XOR {printf(" ^^ ");} LogicalExpression
+        ;
+LogicalExpression:
+        CompareExpression |
+        CompareExpression AND {printf(" && ");} CompareExpression
+CompareExpression:
+        ArithmeticExpression |
+        CompareExpression CompareOperator ArithmeticExpression
+        ;
+CompareOperator:
+        EQ {printf(" == ");} |
+        NE {printf(" != ");} |
+        LT {printf(" < ");} |
+        LE {printf(" <= ");} | 
+        GT {printf(" > ");} |
+        GE {printf(" >= ");}
+        ;
+ArithmeticExpression:
+        MultiplicativeExpression |
+        MultiplicativeExpression AdditiveOperator MultiplicativeExpression
+AdditiveOperator:
+        PLUS {printf(" + ");} |
+        MINUS {printf(" - ");}
+        ;
+MultiplicativeExpression:
+        Term |
+        MultiplicativeExpression MultiplicativeOperator Term
+        ;
+MultiplicativeOperator:
+        MUL {printf(" * ");}
+        DIV {printf(" / ");}
+        MOD {printf(" % ");}
+        ;
+Term:
+        Factor | 
+        Factor POW {printf(" ^ ");} Term
+        ;
+Factor:
+        NOT {printf("!");} Spec |
+        MINUS {printf("-");} Spec |
+        Spec
+        ;
+Const:
+        INT_CONST[INT] {printf("%s", $INT);} |
+        CHAR_CONST[CHAR] {printf("%s", $CHAR);} | 
+        STRING_CONST[STRING] {printf("%s", $STRING);} |
+        REF_CONST {printf("nil");} |
+        TRUE {printf("tt");} |
+        FALSE {printf("ff");}
+        ;
 %%
 
 

@@ -105,7 +105,7 @@ extern int yydebug;
     ENDFOR = 306,                  /* ENDFOR  */
     PASS = 307,                    /* PASS  */
     VARNAME = 308,                 /* VARNAME  */
-    NUMBER = 309,                  /* NUMBER  */
+    INT_CONST = 309,               /* INT_CONST  */
     CHAR_CONST = 310,              /* CHAR_CONST  */
     STRING_CONST = 311,            /* STRING_CONST  */
     COMMENT = 312                  /* COMMENT  */
@@ -119,7 +119,7 @@ union YYSTYPE
 {
 #line 16 "parser.y"
 
-    char* number;
+    char* int_const;
     char* char_const;
     char* string;
     char* varname;

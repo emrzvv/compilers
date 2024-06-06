@@ -98,8 +98,8 @@ void yyerror(YYLTYPE *loc, yyscan_t scanner, long env[26], int tab, bool need_ta
 "endfor" { return ENDFOR; }
 
 ((0x[0-9a-fA-F]{1,8})|[0-9]+) {
-    yylval->number = yytext;  // предполагая, что yylval.number это int
-    return NUMBER;
+    yylval->int_const = yytext;  // предполагая, что yylval.number это int
+    return INT_CONST;
 }
 
 ([A-Za-z_\?\$\@\.\#\~][A-Za-z_\?\$\@\.\#\~]*)  {

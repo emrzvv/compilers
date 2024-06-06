@@ -1,5 +1,4 @@
-func sumIntegers(a -> int; 
-b -> int) -> int
+func sumIntegers(a,b -> int) -> int
 	c -> char;
 	c = 'A';
 	A = [int 5], B = [int 10] -> [int];
