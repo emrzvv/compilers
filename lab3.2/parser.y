@@ -74,21 +74,22 @@ Program:
         NewLineCheck {
             printf("\n"); 
             tab=0;
-        } 
-        CommentCheck 
+        }
+        |
+        Program
+        CommentCheck
+        |
+        Program 
         Func
         | 
-        Program
-        NewLineCheck {
-            printf("\n"); 
-            tab=0;
-        } 
-        CommentCheck 
+        Program 
         Proc
         |
         Func
         |
         Proc
+        |
+        CommentCheck
         ;
 Func:
         FuncHeader NewLineCheck {if (!need_tab) printf(" "); tab++;} CommentCheck Body ENDFUNC {printf("endfunc\n");}
