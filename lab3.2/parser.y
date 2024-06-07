@@ -33,11 +33,14 @@
 %token INT CHAR BOOL
 /* %token IF ELSE STATEMENT_EXPR_END
 %token WHILE WARNING RETURN COLON TRUE FALSE NEW_LINE */
-%token STATEMENT_END CHECK ASSIGN COMMA NEW_LINE
+%token STATEMENT_END CHECK NEW_LINE
+%left COMMA
+%left ASSIGN
 %token TRUE FALSE REF_CONST TYPE_DECL
 
 %token FUNC ENDFUNC PROC ENDPROC
-%token IF ENDIF ELSE ELSEIF
+%token IF THEN ENDIF ELSEIF ELSE
+%left ELSE
 %token WHILE DO ENDWHILE
 %token REPEAT UNTIL
 %token FOR TO ENDFOR
@@ -88,10 +91,10 @@ Program:
         Proc
         ;
 Func:
-        FuncHeader NewLineCheck {if (!need_tab) printf(" "); tab++;} CommentCheck Body ENDFUNC {printf("endfunc");}
+        FuncHeader NewLineCheck {if (!need_tab) printf(" "); tab++;} CommentCheck Body ENDFUNC {printf("endfunc\n");}
         ;
 Proc:   
-        ProcHeader NewLineCheck {if (!need_tab) printf(" "); tab++;} CommentCheck Body ENDPROC {printf("endproc");}
+        ProcHeader NewLineCheck {if (!need_tab) printf(" "); tab++;} CommentCheck Body ENDPROC {printf("endproc\n");}
 CommentCheck:
         | COMMENT {if (need_tab) { print_tabs(tab); need_tab = false;} printf("%s", $COMMENT);} NewLineCheck CommentCheck
         ;
@@ -146,14 +149,14 @@ Body:
 Statements:
         {if (need_tab) {print_tabs(tab);}} Statement
         |
-        Statements STATEMENT_END {printf(";");} NewLineCheck {if (!need_tab) {printf(" ");}} CommentCheck {if (!need_tab) {printf(" ");} else {print_tabs(tab);}} Statement
+        Statements STATEMENT_END {printf(";");} NewLineCheck {if (!need_tab) {printf(" ");}} CommentCheck {if (!need_tab) {printf(" ");} else {print_tabs(tab);}} Statement NewLineCheck
         ;
 Statement:
         DeclarationStatement |
-        /* AssignmentStatement | */
-        /* ArrayAssignmentStatement | */
-        /* FunctionCallStatement | */
-        /* IfStatement | */
+        AssignmentStatement |
+        ArrayAssignmentStatement |
+        FunctionCallStatement |
+        IfStatement |
         /* LoopWithPreconditionStatement | */
         /* LoopWithPostconditionStatement | */
         CHECK {printf("check");} Expression
@@ -164,9 +167,34 @@ DeclarationStatement:
 VarDeclarations:
         VarDeclaration |
         VarDeclarations COMMA {printf(", ");} VarDeclaration
+        ;
 VarDeclaration:
         Var |
-        Var ASSIGN {printf(" = ");} Expression
+        AssignmentStatement
+        ;
+AssignmentStatement:
+        Var ASSIGN {printf(" = ");} Expression //{printf(" <- ASSIGNMENT");}
+        ;
+ArrayAssignmentStatement:
+        ArrayCall ASSIGN {printf(" = ");} Expression
+        ;
+IfStatement:
+        IF {printf("if ");} Expression THEN {printf(" then ");} NewLineCheck {if (!need_tab) printf(" "); tab++;} CommentCheck 
+        Body NewLineCheck {if (!need_tab) printf(" "); tab--;} CommentCheck IfStatementTail
+        NewLineCheck {if (!need_tab) printf(" ");} CommentCheck
+        ;
+IfStatementTail:
+        {if (!need_tab) printf(" "); else print_tabs(tab);} ENDIF {printf("endif");} |
+        ElseIfBlock |
+        ElseBlock {if (!need_tab) printf(" "); else print_tabs(tab);} ENDIF {printf("endif");} NewLineCheck CommentCheck
+        ;
+ElseBlock:
+        ELSE {if (need_tab) print_tabs(tab); printf("else");} NewLineCheck {if (!need_tab) printf(" "); tab++;} CommentCheck Body
+        NewLineCheck {if (!need_tab) printf(" "); tab--;} CommentCheck
+        ;
+ElseIfBlock:
+        ELSEIF {if (need_tab) print_tabs(tab); printf("elseif");} Expression THEN {printf(" then ");} NewLineCheck {if (!need_tab) printf(" "); tab++;} CommentCheck Body
+        NewLineCheck {if (!need_tab) printf(" "); tab--;} CommentCheck IfStatementTail
         ;
 FunctionCallStatement:
         VARNAME[FUNC] L_BRACKET_ROUND {printf("(");} Args R_BRACKET_ROUND {printf(")");}
@@ -178,12 +206,16 @@ ArrayCall:
         Spec L_BRACKET_SQUARE {printf("[");} Expression R_BRACKET_SQUARE {printf("]");}
 Spec:
         FunctionCallStatement |
-        L_BRACKET_SQUARE {printf("[");} Type VARNAME[NAME] {printf(" %s", $NAME);} R_BRACKET_SQUARE {printf("]");} |
-        L_BRACKET_SQUARE {printf("[");} Type INT_CONST[INT] {printf(" %s", $INT);} R_BRACKET_SQUARE {printf("]");} |
+        L_BRACKET_SQUARE {printf("[");} Type ArrayAllocationVar R_BRACKET_SQUARE {printf("]");} |
         Var |
         ArrayCall |
         Const
         ;
+ArrayAllocationVar:
+        VARNAME[NAME] {printf(" %s", $NAME);} |
+        INT_CONST[INT] {printf(" %s", $INT);}
+        ;
+
 Expression:
         LogicalExpression |
         Expression OR {printf(" || ");} LogicalExpression |
@@ -216,9 +248,9 @@ MultiplicativeExpression:
         MultiplicativeExpression MultiplicativeOperator Term
         ;
 MultiplicativeOperator:
-        MUL {printf(" * ");}
-        DIV {printf(" / ");}
-        MOD {printf(" % ");}
+        MUL {printf(" * ");} |
+        DIV {printf(" / ");} |
+        MOD {printf(" %% ");}
         ;
 Term:
         Factor | 

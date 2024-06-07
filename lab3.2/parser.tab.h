@@ -80,9 +80,9 @@ extern int yydebug;
     BOOL = 281,                    /* BOOL  */
     STATEMENT_END = 282,           /* STATEMENT_END  */
     CHECK = 283,                   /* CHECK  */
-    ASSIGN = 284,                  /* ASSIGN  */
+    NEW_LINE = 284,                /* NEW_LINE  */
     COMMA = 285,                   /* COMMA  */
-    NEW_LINE = 286,                /* NEW_LINE  */
+    ASSIGN = 286,                  /* ASSIGN  */
     TRUE = 287,                    /* TRUE  */
     FALSE = 288,                   /* FALSE  */
     REF_CONST = 289,               /* REF_CONST  */
@@ -92,23 +92,24 @@ extern int yydebug;
     PROC = 293,                    /* PROC  */
     ENDPROC = 294,                 /* ENDPROC  */
     IF = 295,                      /* IF  */
-    ENDIF = 296,                   /* ENDIF  */
-    ELSE = 297,                    /* ELSE  */
+    THEN = 296,                    /* THEN  */
+    ENDIF = 297,                   /* ENDIF  */
     ELSEIF = 298,                  /* ELSEIF  */
-    WHILE = 299,                   /* WHILE  */
-    DO = 300,                      /* DO  */
-    ENDWHILE = 301,                /* ENDWHILE  */
-    REPEAT = 302,                  /* REPEAT  */
-    UNTIL = 303,                   /* UNTIL  */
-    FOR = 304,                     /* FOR  */
-    TO = 305,                      /* TO  */
-    ENDFOR = 306,                  /* ENDFOR  */
-    PASS = 307,                    /* PASS  */
-    VARNAME = 308,                 /* VARNAME  */
-    INT_CONST = 309,               /* INT_CONST  */
-    CHAR_CONST = 310,              /* CHAR_CONST  */
-    STRING_CONST = 311,            /* STRING_CONST  */
-    COMMENT = 312                  /* COMMENT  */
+    ELSE = 299,                    /* ELSE  */
+    WHILE = 300,                   /* WHILE  */
+    DO = 301,                      /* DO  */
+    ENDWHILE = 302,                /* ENDWHILE  */
+    REPEAT = 303,                  /* REPEAT  */
+    UNTIL = 304,                   /* UNTIL  */
+    FOR = 305,                     /* FOR  */
+    TO = 306,                      /* TO  */
+    ENDFOR = 307,                  /* ENDFOR  */
+    PASS = 308,                    /* PASS  */
+    VARNAME = 309,                 /* VARNAME  */
+    INT_CONST = 310,               /* INT_CONST  */
+    CHAR_CONST = 311,              /* CHAR_CONST  */
+    STRING_CONST = 312,            /* STRING_CONST  */
+    COMMENT = 313                  /* COMMENT  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -125,7 +126,7 @@ union YYSTYPE
     char* varname;
     char* comment;
 
-#line 129 "parser.tab.h"
+#line 130 "parser.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

@@ -1,4 +1,4 @@
-func sumIntegers(a,b -> int) -> int
+func c(c,c -> int) -> int
 	c -> char;
 	c = 'A';
 	A = [int 5], B = [int 10] -> [int];
@@ -10,17 +10,12 @@ func sumIntegers(a,b -> int) -> int
 	else
 		b = b + 1
 	endif;
-	
 	if a < b then
 		a = a + 1
-	elseif a == b + 1 then
-		b = b + 1
-	elseif a > b + 1 then
-		a = a * 10
 	else
 		b = b * 10
-	endif
-
+	endif;
+	c = 10
 endfunc
 
 proc example(a -> [int])

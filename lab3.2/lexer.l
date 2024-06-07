@@ -39,7 +39,7 @@ void yyerror(YYLTYPE *loc, yyscan_t scanner, long env[26], int tab, bool need_ta
 
 %%
 
-[\t ]+    /* Пропуск пробелов и табуляций */
+[\t ]+ {}   /* Пропуск пробелов и табуляций */
 
 [\n]+ {
     printf("\n");
@@ -85,6 +85,7 @@ void yyerror(YYLTYPE *loc, yyscan_t scanner, long env[26], int tab, bool need_ta
 "proc" { return PROC; }
 "endproc" { return ENDPROC; }
 "if" { return IF; }
+"then" {return THEN;}
 "endif" { return ENDIF; }
 "else" { return ELSE; }
 "elseif" { return ELSEIF; }
@@ -98,30 +99,31 @@ void yyerror(YYLTYPE *loc, yyscan_t scanner, long env[26], int tab, bool need_ta
 "endfor" { return ENDFOR; }
 
 ((0x[0-9a-fA-F]{1,8})|[0-9]+) {
-    yylval->int_const = yytext;  // предполагая, что yylval.number это int
+    yylval->int_const = strndup(yytext, yyleng);  // предполагая, что yylval.number это int
     return INT_CONST;
 }
 
-([A-Za-z_\?\$\@\.\#\~][A-Za-z_\?\$\@\.\#\~]*)  {
-    yylval->varname = yytext;  // предполагая, что yylval.varname это char*
-    return VARNAME;
+([A-Za-z]+)  {
+    yylval->varname = strndup(yytext, yyleng);  // предполагая, что yylval.varname это char*
+    return VARNAME; 
+    //([A-Za-z_?$@.#~][A-Za-z_?$@.#~])
 }
 
 \".*\"   {
-    yylval->string = yytext;  // предполагая, что yylval.string это char*
+    yylval->string = strndup(yytext, yyleng);  // предполагая, что yylval.string это char*
     return STRING_CONST;
 }
 
 (\'.?\')|(\$.+\$)   {
-    yylval->char_const = yytext;  // предполагая, что yylval.char_const это char*
+    yylval->char_const = strndup(yytext, yyleng);  // предполагая, что yylval.char_const это char*
     return CHAR_CONST;
 }
 
 \(\*.*\*\) {
-    yylval->comment = yytext;  // предполагая, что yylval.comment это char*
+    yylval->comment = strndup(yytext, yyleng);  // предполагая, что yylval.comment это char*
     return COMMENT;
 }
-
+. {}
 %%
 
 void init_scanner(FILE *input, yyscan_t *scanner, struct Extra *extra) {
