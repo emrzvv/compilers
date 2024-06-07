@@ -103,10 +103,9 @@ void yyerror(YYLTYPE *loc, yyscan_t scanner, long env[26], int tab, bool need_ta
     return INT_CONST;
 }
 
-([A-Za-z]+)  {
+([A-Za-z_?$@.#~][A-Za-z_?$@.#~]*)  {
     yylval->varname = strndup(yytext, yyleng);  // предполагая, что yylval.varname это char*
     return VARNAME; 
-    //([A-Za-z_?$@.#~][A-Za-z_?$@.#~])
 }
 
 \".*\"   {

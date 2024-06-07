@@ -113,19 +113,12 @@ FuncHeader:
                 L_BRACKET_ROUND {printf("(");} Sections {if (need_tab) {tab=1; print_tabs(tab);}}
                 R_BRACKET_ROUND {printf(")");} TYPE_DECL {printf(" -> ");} Type
         ;
-
-/* FuncParams:
-        FuncParams {if (need_tab) print_tabs(tab); else printf(" ");} BasicVar
-        | {if (need_tab) {tab++; print_tabs(tab);}} BasicVar
-        ; */
 Sections:
         Sections STATEMENT_END {printf("; ");} NewLineCheck CommentCheck {if (need_tab) {tab=1; print_tabs(tab);}} Section
         | Section
         ;
 Section:
         Parameters TYPE_DECL {if (need_tab) {tab=1; print_tabs(tab); tab=0;} printf(" -> ");} Type
-        /* | */
-        /* Parameters COMMA {printf(", ");} Var TYPE_DECL {if (need_tab) {tab=1; print_tabs(tab);tab=0;} printf(" -> ");} Type */
         ;
 Parameters:
         Var
@@ -133,7 +126,7 @@ Parameters:
         Parameters COMMA {printf(", ");} Var
         ;
 Var:
-        VARNAME[NAME] {printf("%s", $NAME);} NewLineCheck CommentCheck
+        VARNAME[NAME] {printf("%s", $NAME);} //NewLineCheck CommentCheck
         ;
 Type:
         PrimitiveType
@@ -144,7 +137,7 @@ PrimitiveType:
         INT {printf("int");} | CHAR {printf("char");} | BOOL {printf("bool");}
         ;
 Body:
-        Statements
+        Statements NewLineCheck CommentCheck
         ;
 Statements:
         {if (need_tab) {print_tabs(tab);}} Statement
@@ -157,8 +150,8 @@ Statement:
         ArrayAssignmentStatement |
         FunctionCallStatement |
         IfStatement |
-        /* LoopWithPreconditionStatement | */
-        /* LoopWithPostconditionStatement | */
+        LoopWithPreconditionStatement |
+        LoopWithPostconditionStatement |
         CHECK {printf("check");} Expression
         ;
 DeclarationStatement:
@@ -180,24 +173,24 @@ ArrayAssignmentStatement:
         ;
 IfStatement:
         IF {printf("if ");} Expression THEN {printf(" then ");} NewLineCheck {if (!need_tab) printf(" "); tab++;} CommentCheck 
-        Body NewLineCheck {if (!need_tab) printf(" "); tab--;} CommentCheck IfStatementTail
-        NewLineCheck {if (!need_tab) printf(" ");} CommentCheck
+        Body /*NewLineCheck*/ {if (!need_tab) printf(" "); tab--;} /*CommentCheck*/ IfStatementTail
+        /* NewLineCheck {if (!need_tab) printf(" ");} CommentCheck */
         ;
 IfStatementTail:
         {if (!need_tab) printf(" "); else print_tabs(tab);} ENDIF {printf("endif");} |
         ElseIfBlock |
-        ElseBlock {if (!need_tab) printf(" "); else print_tabs(tab);} ENDIF {printf("endif");} NewLineCheck CommentCheck
+        ElseBlock {print_tabs(tab);} ENDIF {printf("endif");} NewLineCheck CommentCheck
         ;
 ElseBlock:
         ELSE {if (need_tab) print_tabs(tab); printf("else");} NewLineCheck {if (!need_tab) printf(" "); tab++;} CommentCheck Body
-        NewLineCheck {if (!need_tab) printf(" "); tab--;} CommentCheck
+        NewLineCheck {tab--;} CommentCheck
         ;
 ElseIfBlock:
         ELSEIF {if (need_tab) print_tabs(tab); printf("elseif");} Expression THEN {printf(" then ");} NewLineCheck {if (!need_tab) printf(" "); tab++;} CommentCheck Body
         NewLineCheck {if (!need_tab) printf(" "); tab--;} CommentCheck IfStatementTail
         ;
 FunctionCallStatement:
-        VARNAME[FUNC] L_BRACKET_ROUND {printf("(");} Args R_BRACKET_ROUND {printf(")");}
+        VARNAME[FUNC] L_BRACKET_ROUND {printf("%s(", $FUNC);} Args R_BRACKET_ROUND {printf(")");}
         ;
 Args:
         Expression | 
@@ -269,6 +262,24 @@ Const:
         TRUE {printf("tt");} |
         FALSE {printf("ff");}
         ;
+LoopWithPreconditionStatement:
+        WHILE {printf("while ");} Expression DO {printf(" do");} NewLineCheck {if (!need_tab) printf(" "); tab++;} CommentCheck  Body
+        NewLineCheck {tab--;} CommentCheck
+        {print_tabs(tab);} ENDWHILE {printf("endwhile");}
+        |
+        FOR {printf("for ");} Var ASSIGN {printf(" = ");} Expression ForHeadExt TO {printf(" to ");} Expression DO {printf(" do");} NewLineCheck {if (!need_tab) printf(" "); tab++;} CommentCheck  Body
+        NewLineCheck {tab--;} CommentCheck
+        {print_tabs(tab);} ENDFOR {printf("endfor");}
+        ;
+ForHeadExt:
+        TYPE_DECL {printf(" -> ");} Type
+        | {}
+        ;
+LoopWithPostconditionStatement:
+        REPEAT {printf("repeat ");} NewLineCheck {if (!need_tab) printf(" "); tab++;} CommentCheck Body
+        NewLineCheck {tab--;} CommentCheck
+        {print_tabs(tab);} UNTIL {printf("until ");} Expression
+
 %%
 
 
