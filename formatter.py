@@ -7,8 +7,13 @@ def replace_tabs_and_insert_newlines(input_file, output_file, lang=None):
         for line in infile:
             line = line.replace('\t', tab_replacement)  # Заменяем табуляции
             while len(line) > 110:
-                outfile.write(line[:110] + '\n')
-                line = line[110:]
+                # Найти последний пробел в пределах первых 110 символов
+                breakpoint = line.rfind(' ', 0, 110)
+                if breakpoint == -1:
+                    # Если пробела нет, просто обрезать по 110 символов
+                    breakpoint = 110
+                outfile.write(line[:breakpoint] + '\n')
+                line = line[breakpoint:].lstrip()  # Удалить ведущие пробелы на следующей строке
             outfile.write(line)
 
 if __name__ == "__main__":
@@ -19,3 +24,4 @@ if __name__ == "__main__":
         output_file = sys.argv[2]
         lang = sys.argv[3] if len(sys.argv) == 4 else None
         replace_tabs_and_insert_newlines(input_file, output_file, lang)
+ # type: ignore

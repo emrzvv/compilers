@@ -1,7 +1,6 @@
 %option reentrant noyywrap bison-bridge bison-locations
 %option extra-type="struct Extra *"
 
-/* Подавление предупреждений для -Wall */
 %option noinput nounput
 
 %{
@@ -9,7 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "lexer.h"
-#include "parser.tab.h"  /* файл генерируется Bison’ом */
+#include "parser.tab.h"
 
 #define YY_USER_ACTION \
   { \
@@ -39,7 +38,7 @@ void yyerror(YYLTYPE *loc, yyscan_t scanner, long env[26], int tab, bool need_ta
 
 %%
 
-[\t ]+ {}   /* Пропуск пробелов и табуляций */
+[\t ]+ {}
 
 [\n]+ {
     printf("\n");
@@ -99,27 +98,27 @@ void yyerror(YYLTYPE *loc, yyscan_t scanner, long env[26], int tab, bool need_ta
 "endfor" { return ENDFOR; }
 
 ((0x[0-9a-fA-F]{1,8})|[0-9]+) {
-    yylval->int_const = strndup(yytext, yyleng);  // предполагая, что yylval.number это int
+    yylval->int_const = strndup(yytext, yyleng);
     return INT_CONST;
 }
 
 ([A-Za-z_?$@.#~][A-Za-z_?$@.#~]*)  {
-    yylval->varname = strndup(yytext, yyleng);  // предполагая, что yylval.varname это char*
+    yylval->varname = strndup(yytext, yyleng);
     return VARNAME; 
 }
 
 \".*\"   {
-    yylval->string = strndup(yytext, yyleng);  // предполагая, что yylval.string это char*
+    yylval->string = strndup(yytext, yyleng);
     return STRING_CONST;
 }
 
 (\'.?\')|(\$.+\$)   {
-    yylval->char_const = strndup(yytext, yyleng);  // предполагая, что yylval.char_const это char*
+    yylval->char_const = strndup(yytext, yyleng);
     return CHAR_CONST;
 }
 
 \(\*.*\*\) {
-    yylval->comment = strndup(yytext, yyleng);  // предполагая, что yylval.comment это char*
+    yylval->comment = strndup(yytext, yyleng);
     return COMMENT;
 }
 . {}

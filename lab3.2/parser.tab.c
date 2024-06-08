@@ -161,13 +161,13 @@ enum yysymbol_kind_t
   YYSYMBOL_COMMENT = 58,                   /* COMMENT  */
   YYSYMBOL_YYACCEPT = 59,                  /* $accept  */
   YYSYMBOL_Program = 60,                   /* Program  */
-  YYSYMBOL_Func = 61,                      /* Func  */
+  YYSYMBOL_Function = 61,                  /* Function  */
   YYSYMBOL_62_1 = 62,                      /* $@1  */
-  YYSYMBOL_Proc = 63,                      /* Proc  */
+  YYSYMBOL_Procedure = 63,                 /* Procedure  */
   YYSYMBOL_64_2 = 64,                      /* $@2  */
-  YYSYMBOL_CommentCheck = 65,              /* CommentCheck  */
+  YYSYMBOL_CheckIfComment = 65,            /* CheckIfComment  */
   YYSYMBOL_66_3 = 66,                      /* $@3  */
-  YYSYMBOL_NewLineCheck = 67,              /* NewLineCheck  */
+  YYSYMBOL_CheckIfNewLine = 67,            /* CheckIfNewLine  */
   YYSYMBOL_ProcHeader = 68,                /* ProcHeader  */
   YYSYMBOL_69_4 = 69,                      /* $@4  */
   YYSYMBOL_70_5 = 70,                      /* $@5  */
@@ -276,11 +276,11 @@ typedef enum yysymbol_kind_t yysymbol_kind_t;
 
 
 /* Second part of user prologue.  */
-#line 57 "parser.y"
+#line 54 "parser.y"
 
 int yylex(YYSTYPE *yylval_param, YYLTYPE *yylloc_param, yyscan_t scanner);
 void yyerror(YYLTYPE *loc, yyscan_t scanner, long env[26], int tab, bool need_tab, const char *message);
-#line 62 "parser.y"
+#line 59 "parser.y"
 
 void print_tabs(int tab) {
     for(int i = 0; i < tab; i++) {
@@ -679,23 +679,23 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int16 yyrline[] =
 {
-       0,    73,    73,    79,    82,    85,    88,    90,    92,    95,
-      95,    98,    98,    99,   100,   100,   103,   104,   108,   109,
-     109,   108,   113,   114,   114,   115,   115,   113,   118,   118,
-     118,   119,   122,   122,   125,   127,   127,   130,   133,   135,
-     135,   138,   138,   138,   141,   144,   144,   146,   146,   146,
-     146,   149,   150,   151,   152,   153,   154,   155,   156,   156,
-     159,   159,   162,   163,   163,   166,   167,   170,   170,   173,
-     173,   176,   176,   176,   177,   176,   181,   181,   182,   183,
-     183,   183,   186,   186,   187,   186,   190,   190,   190,   191,
-     190,   194,   194,   197,   198,   198,   200,   200,   202,   203,
-     203,   204,   205,   206,   209,   210,   214,   215,   215,   216,
-     216,   219,   220,   220,   222,   223,   226,   227,   228,   229,
-     230,   231,   234,   235,   237,   238,   241,   242,   245,   246,
-     247,   250,   251,   251,   254,   254,   255,   255,   256,   259,
-     260,   261,   262,   263,   264,   267,   267,   267,   268,   269,
-     267,   271,   271,   271,   271,   271,   272,   273,   271,   276,
-     276,   277,   280,   280,   281,   282,   282,   280
+       0,    70,    70,    73,    76,    79,    82,    84,    86,    89,
+      89,    92,    92,    93,    94,    94,    97,    98,   102,   103,
+     103,   102,   107,   108,   108,   109,   109,   107,   112,   112,
+     112,   113,   116,   116,   119,   121,   121,   124,   127,   129,
+     129,   132,   132,   132,   135,   138,   138,   140,   140,   140,
+     140,   143,   144,   145,   146,   147,   148,   149,   150,   150,
+     153,   153,   156,   157,   157,   160,   161,   164,   164,   167,
+     167,   170,   170,   170,   171,   170,   175,   175,   176,   177,
+     177,   177,   180,   180,   181,   180,   184,   184,   184,   185,
+     184,   188,   188,   191,   192,   192,   194,   194,   196,   197,
+     197,   198,   199,   200,   203,   204,   208,   209,   209,   210,
+     210,   213,   214,   214,   216,   217,   220,   221,   222,   223,
+     224,   225,   228,   229,   231,   232,   235,   236,   239,   240,
+     241,   244,   245,   245,   248,   248,   249,   249,   250,   253,
+     254,   255,   256,   257,   258,   261,   261,   261,   262,   263,
+     261,   265,   265,   265,   265,   265,   266,   267,   265,   270,
+     270,   271,   274,   274,   275,   276,   276,   274
 };
 #endif
 
@@ -719,13 +719,13 @@ static const char *const yytname[] =
   "REF_CONST", "TYPE_DECL", "FUNC", "ENDFUNC", "PROC", "ENDPROC", "IF",
   "THEN", "ENDIF", "ELSEIF", "ELSE", "WHILE", "DO", "ENDWHILE", "REPEAT",
   "UNTIL", "FOR", "TO", "ENDFOR", "PASS", "VARNAME", "INT_CONST",
-  "CHAR_CONST", "STRING_CONST", "COMMENT", "$accept", "Program", "Func",
-  "$@1", "Proc", "$@2", "CommentCheck", "$@3", "NewLineCheck",
-  "ProcHeader", "$@4", "$@5", "$@6", "FuncHeader", "$@7", "$@8", "$@9",
-  "$@10", "$@11", "Sections", "$@12", "$@13", "Section", "$@14",
-  "Parameters", "$@15", "Var", "Type", "$@16", "PrimitiveType", "Body",
-  "Statements", "$@17", "$@18", "$@19", "$@20", "Statement", "$@21",
-  "DeclarationStatement", "$@22", "VarDeclarations", "$@23",
+  "CHAR_CONST", "STRING_CONST", "COMMENT", "$accept", "Program",
+  "Function", "$@1", "Procedure", "$@2", "CheckIfComment", "$@3",
+  "CheckIfNewLine", "ProcHeader", "$@4", "$@5", "$@6", "FuncHeader", "$@7",
+  "$@8", "$@9", "$@10", "$@11", "Sections", "$@12", "$@13", "Section",
+  "$@14", "Parameters", "$@15", "Var", "Type", "$@16", "PrimitiveType",
+  "Body", "Statements", "$@17", "$@18", "$@19", "$@20", "Statement",
+  "$@21", "DeclarationStatement", "$@22", "VarDeclarations", "$@23",
   "VarDeclaration", "AssignmentStatement", "$@24",
   "ArrayAssignmentStatement", "$@25", "IfStatement", "$@26", "$@27",
   "$@28", "$@29", "IfStatementTail", "$@30", "$@31", "$@32", "ElseBlock",
@@ -1869,635 +1869,632 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
-  case 2: /* Program: Program NewLineCheck  */
-#line 74 "parser.y"
-                     {
-            printf("\n"); 
-            tab=0;
-        }
-#line 1879 "parser.tab.c"
+  case 2: /* Program: Program CheckIfNewLine  */
+#line 71 "parser.y"
+                       {printf("\n");tab=0;}
+#line 1876 "parser.tab.c"
     break;
 
   case 9: /* $@1: %empty  */
-#line 95 "parser.y"
-                                {if (!need_tab) printf(" "); tab++;}
-#line 1885 "parser.tab.c"
+#line 89 "parser.y"
+                                  {if (!need_tab) printf(" "); tab++;}
+#line 1882 "parser.tab.c"
     break;
 
-  case 10: /* Func: FuncHeader NewLineCheck $@1 CommentCheck Body ENDFUNC  */
-#line 95 "parser.y"
-                                                                                               {printf("endfunc\n");}
-#line 1891 "parser.tab.c"
+  case 10: /* Function: FuncHeader CheckIfNewLine $@1 CheckIfComment Body ENDFUNC  */
+#line 89 "parser.y"
+                                                                                                   {printf("endfunc\n");}
+#line 1888 "parser.tab.c"
     break;
 
   case 11: /* $@2: %empty  */
-#line 98 "parser.y"
-                                {if (!need_tab) printf(" "); tab++;}
-#line 1897 "parser.tab.c"
+#line 92 "parser.y"
+                                  {if (!need_tab) printf(" "); tab++;}
+#line 1894 "parser.tab.c"
     break;
 
-  case 12: /* Proc: ProcHeader NewLineCheck $@2 CommentCheck Body ENDPROC  */
-#line 98 "parser.y"
-                                                                                               {printf("endproc\n");}
-#line 1903 "parser.tab.c"
+  case 12: /* Procedure: ProcHeader CheckIfNewLine $@2 CheckIfComment Body ENDPROC  */
+#line 92 "parser.y"
+                                                                                                   {printf("endproc\n");}
+#line 1900 "parser.tab.c"
     break;
 
   case 14: /* $@3: %empty  */
-#line 100 "parser.y"
+#line 94 "parser.y"
                   {if (need_tab) { print_tabs(tab); need_tab = false;} printf("%s", (yyvsp[0].comment));}
-#line 1909 "parser.tab.c"
+#line 1906 "parser.tab.c"
     break;
 
-  case 16: /* NewLineCheck: NEW_LINE  */
-#line 103 "parser.y"
+  case 16: /* CheckIfNewLine: NEW_LINE  */
+#line 97 "parser.y"
                  {need_tab=true; /*printf("\nneed tab: %d\n", need_tab);*/}
-#line 1915 "parser.tab.c"
+#line 1912 "parser.tab.c"
     break;
 
-  case 17: /* NewLineCheck: %empty  */
-#line 104 "parser.y"
+  case 17: /* CheckIfNewLine: %empty  */
+#line 98 "parser.y"
           {need_tab = false; /*printf("\nneed tab: %d\n", need_tab);*/}
-#line 1921 "parser.tab.c"
+#line 1918 "parser.tab.c"
     break;
 
   case 18: /* $@4: %empty  */
-#line 108 "parser.y"
+#line 102 "parser.y"
                            {printf("proc %s", (yyvsp[0].varname));}
-#line 1927 "parser.tab.c"
+#line 1924 "parser.tab.c"
     break;
 
   case 19: /* $@5: %empty  */
-#line 109 "parser.y"
+#line 103 "parser.y"
                                 {printf("(");}
-#line 1933 "parser.tab.c"
+#line 1930 "parser.tab.c"
     break;
 
   case 20: /* $@6: %empty  */
-#line 109 "parser.y"
+#line 103 "parser.y"
                                                         {if (need_tab) {tab=1; print_tabs(tab);}}
-#line 1939 "parser.tab.c"
+#line 1936 "parser.tab.c"
     break;
 
-  case 21: /* ProcHeader: PROC VARNAME $@4 NewLineCheck CommentCheck L_BRACKET_ROUND $@5 Sections $@6 R_BRACKET_ROUND  */
-#line 110 "parser.y"
+  case 21: /* ProcHeader: PROC VARNAME $@4 CheckIfNewLine CheckIfComment L_BRACKET_ROUND $@5 Sections $@6 R_BRACKET_ROUND  */
+#line 104 "parser.y"
                                 {printf(")");}
-#line 1945 "parser.tab.c"
+#line 1942 "parser.tab.c"
     break;
 
   case 22: /* $@7: %empty  */
-#line 113 "parser.y"
+#line 107 "parser.y"
                            {printf("func %s", (yyvsp[0].varname));}
-#line 1951 "parser.tab.c"
+#line 1948 "parser.tab.c"
     break;
 
   case 23: /* $@8: %empty  */
-#line 114 "parser.y"
+#line 108 "parser.y"
                                 {printf("(");}
-#line 1957 "parser.tab.c"
+#line 1954 "parser.tab.c"
     break;
 
   case 24: /* $@9: %empty  */
-#line 114 "parser.y"
+#line 108 "parser.y"
                                                         {if (need_tab) {tab=1; print_tabs(tab);}}
-#line 1963 "parser.tab.c"
+#line 1960 "parser.tab.c"
     break;
 
   case 25: /* $@10: %empty  */
-#line 115 "parser.y"
+#line 109 "parser.y"
                                 {printf(")");}
-#line 1969 "parser.tab.c"
+#line 1966 "parser.tab.c"
     break;
 
   case 26: /* $@11: %empty  */
-#line 115 "parser.y"
+#line 109 "parser.y"
                                                          {printf(" -> ");}
-#line 1975 "parser.tab.c"
+#line 1972 "parser.tab.c"
     break;
 
   case 28: /* $@12: %empty  */
-#line 118 "parser.y"
+#line 112 "parser.y"
                                {printf("; ");}
-#line 1981 "parser.tab.c"
+#line 1978 "parser.tab.c"
     break;
 
   case 29: /* $@13: %empty  */
-#line 118 "parser.y"
-                                                                         {if (need_tab) {tab=1; print_tabs(tab);}}
-#line 1987 "parser.tab.c"
+#line 112 "parser.y"
+                                                                             {if (need_tab) {tab=1; print_tabs(tab);}}
+#line 1984 "parser.tab.c"
     break;
 
   case 32: /* $@14: %empty  */
-#line 122 "parser.y"
+#line 116 "parser.y"
                              {if (need_tab) {tab=1; print_tabs(tab); tab=0;} printf(" -> ");}
-#line 1993 "parser.tab.c"
+#line 1990 "parser.tab.c"
     break;
 
   case 35: /* $@15: %empty  */
-#line 127 "parser.y"
+#line 121 "parser.y"
                          {printf(", ");}
-#line 1999 "parser.tab.c"
+#line 1996 "parser.tab.c"
     break;
 
   case 37: /* Var: VARNAME  */
-#line 130 "parser.y"
+#line 124 "parser.y"
                       {printf("%s", (yyvsp[0].varname));}
-#line 2005 "parser.tab.c"
+#line 2002 "parser.tab.c"
     break;
 
   case 39: /* $@16: %empty  */
-#line 135 "parser.y"
+#line 129 "parser.y"
                          {printf("[");}
-#line 2011 "parser.tab.c"
+#line 2008 "parser.tab.c"
     break;
 
   case 40: /* Type: L_BRACKET_SQUARE $@16 Type R_BRACKET_SQUARE  */
-#line 135 "parser.y"
+#line 129 "parser.y"
                                                               {printf("]");}
-#line 2017 "parser.tab.c"
+#line 2014 "parser.tab.c"
     break;
 
   case 41: /* PrimitiveType: INT  */
-#line 138 "parser.y"
+#line 132 "parser.y"
             {printf("int");}
-#line 2023 "parser.tab.c"
+#line 2020 "parser.tab.c"
     break;
 
   case 42: /* PrimitiveType: CHAR  */
-#line 138 "parser.y"
+#line 132 "parser.y"
                                     {printf("char");}
-#line 2029 "parser.tab.c"
+#line 2026 "parser.tab.c"
     break;
 
   case 43: /* PrimitiveType: BOOL  */
-#line 138 "parser.y"
+#line 132 "parser.y"
                                                              {printf("bool");}
-#line 2035 "parser.tab.c"
+#line 2032 "parser.tab.c"
     break;
 
   case 45: /* $@17: %empty  */
-#line 144 "parser.y"
+#line 138 "parser.y"
         {if (need_tab) {print_tabs(tab);}}
-#line 2041 "parser.tab.c"
+#line 2038 "parser.tab.c"
     break;
 
   case 47: /* $@18: %empty  */
-#line 146 "parser.y"
+#line 140 "parser.y"
                                  {printf(";");}
-#line 2047 "parser.tab.c"
+#line 2044 "parser.tab.c"
     break;
 
   case 48: /* $@19: %empty  */
-#line 146 "parser.y"
-                                                             {if (!need_tab) {printf(" ");}}
-#line 2053 "parser.tab.c"
+#line 140 "parser.y"
+                                                               {if (!need_tab) {printf(" ");}}
+#line 2050 "parser.tab.c"
     break;
 
   case 49: /* $@20: %empty  */
-#line 146 "parser.y"
-                                                                                                          {if (!need_tab) {printf(" ");} else {print_tabs(tab);}}
-#line 2059 "parser.tab.c"
+#line 140 "parser.y"
+                                                                                                              {if (!need_tab) {printf(" ");} else {print_tabs(tab);}}
+#line 2056 "parser.tab.c"
     break;
 
   case 58: /* $@21: %empty  */
-#line 156 "parser.y"
+#line 150 "parser.y"
               {printf("check");}
-#line 2065 "parser.tab.c"
+#line 2062 "parser.tab.c"
     break;
 
   case 60: /* $@22: %empty  */
-#line 159 "parser.y"
+#line 153 "parser.y"
                                   {printf(" -> ");}
-#line 2071 "parser.tab.c"
+#line 2068 "parser.tab.c"
     break;
 
   case 63: /* $@23: %empty  */
-#line 163 "parser.y"
+#line 157 "parser.y"
                               {printf(", ");}
-#line 2077 "parser.tab.c"
+#line 2074 "parser.tab.c"
     break;
 
   case 67: /* $@24: %empty  */
-#line 170 "parser.y"
+#line 164 "parser.y"
                    {printf(" = ");}
-#line 2083 "parser.tab.c"
+#line 2080 "parser.tab.c"
     break;
 
   case 69: /* $@25: %empty  */
-#line 173 "parser.y"
+#line 167 "parser.y"
                          {printf(" = ");}
-#line 2089 "parser.tab.c"
+#line 2086 "parser.tab.c"
     break;
 
   case 71: /* $@26: %empty  */
-#line 176 "parser.y"
+#line 170 "parser.y"
            {printf("if ");}
-#line 2095 "parser.tab.c"
+#line 2092 "parser.tab.c"
     break;
 
   case 72: /* $@27: %empty  */
-#line 176 "parser.y"
+#line 170 "parser.y"
                                             {printf(" then ");}
-#line 2101 "parser.tab.c"
+#line 2098 "parser.tab.c"
     break;
 
   case 73: /* $@28: %empty  */
-#line 176 "parser.y"
-                                                                             {if (!need_tab) printf(" "); tab++;}
-#line 2107 "parser.tab.c"
+#line 170 "parser.y"
+                                                                               {if (!need_tab) printf(" "); tab++;}
+#line 2104 "parser.tab.c"
     break;
 
   case 74: /* $@29: %empty  */
-#line 177 "parser.y"
-                              {if (!need_tab) printf(" "); tab--;}
-#line 2113 "parser.tab.c"
+#line 171 "parser.y"
+                                {if (!need_tab) printf(" "); tab--;}
+#line 2110 "parser.tab.c"
     break;
 
   case 76: /* $@30: %empty  */
-#line 181 "parser.y"
+#line 175 "parser.y"
         {if (!need_tab) printf(" "); else print_tabs(tab);}
-#line 2119 "parser.tab.c"
+#line 2116 "parser.tab.c"
     break;
 
   case 77: /* IfStatementTail: $@30 ENDIF  */
-#line 181 "parser.y"
+#line 175 "parser.y"
                                                                   {printf("endif");}
-#line 2125 "parser.tab.c"
+#line 2122 "parser.tab.c"
     break;
 
   case 79: /* $@31: %empty  */
-#line 183 "parser.y"
+#line 177 "parser.y"
                   {print_tabs(tab);}
-#line 2131 "parser.tab.c"
+#line 2128 "parser.tab.c"
     break;
 
   case 80: /* $@32: %empty  */
-#line 183 "parser.y"
+#line 177 "parser.y"
                                            {printf("endif");}
-#line 2137 "parser.tab.c"
+#line 2134 "parser.tab.c"
     break;
 
   case 82: /* $@33: %empty  */
-#line 186 "parser.y"
+#line 180 "parser.y"
              {if (need_tab) print_tabs(tab); printf("else");}
-#line 2143 "parser.tab.c"
+#line 2140 "parser.tab.c"
     break;
 
   case 83: /* $@34: %empty  */
-#line 186 "parser.y"
-                                                                           {if (!need_tab) printf(" "); tab++;}
-#line 2149 "parser.tab.c"
+#line 180 "parser.y"
+                                                                             {if (!need_tab) printf(" "); tab++;}
+#line 2146 "parser.tab.c"
     break;
 
   case 84: /* $@35: %empty  */
-#line 187 "parser.y"
-                     {tab--;}
-#line 2155 "parser.tab.c"
+#line 181 "parser.y"
+                       {tab--;}
+#line 2152 "parser.tab.c"
     break;
 
   case 86: /* $@36: %empty  */
-#line 190 "parser.y"
+#line 184 "parser.y"
                {if (need_tab) print_tabs(tab); printf("elseif");}
-#line 2161 "parser.tab.c"
+#line 2158 "parser.tab.c"
     break;
 
   case 87: /* $@37: %empty  */
-#line 190 "parser.y"
+#line 184 "parser.y"
                                                                                   {printf(" then ");}
-#line 2167 "parser.tab.c"
+#line 2164 "parser.tab.c"
     break;
 
   case 88: /* $@38: %empty  */
-#line 190 "parser.y"
-                                                                                                                   {if (!need_tab) printf(" "); tab++;}
-#line 2173 "parser.tab.c"
+#line 184 "parser.y"
+                                                                                                                     {if (!need_tab) printf(" "); tab++;}
+#line 2170 "parser.tab.c"
     break;
 
   case 89: /* $@39: %empty  */
-#line 191 "parser.y"
-                     {if (!need_tab) printf(" "); tab--;}
-#line 2179 "parser.tab.c"
+#line 185 "parser.y"
+                       {if (!need_tab) printf(" "); tab--;}
+#line 2176 "parser.tab.c"
     break;
 
   case 91: /* $@40: %empty  */
-#line 194 "parser.y"
+#line 188 "parser.y"
                                       {printf("%s(", (yyvsp[-1].varname));}
-#line 2185 "parser.tab.c"
+#line 2182 "parser.tab.c"
     break;
 
   case 92: /* FunctionCallStatement: VARNAME L_BRACKET_ROUND $@40 Args R_BRACKET_ROUND  */
-#line 194 "parser.y"
+#line 188 "parser.y"
                                                                                    {printf(")");}
-#line 2191 "parser.tab.c"
+#line 2188 "parser.tab.c"
     break;
 
   case 94: /* $@41: %empty  */
-#line 198 "parser.y"
+#line 192 "parser.y"
                    {printf(", ");}
-#line 2197 "parser.tab.c"
+#line 2194 "parser.tab.c"
     break;
 
   case 96: /* $@42: %empty  */
-#line 200 "parser.y"
+#line 194 "parser.y"
                               {printf("[");}
-#line 2203 "parser.tab.c"
+#line 2200 "parser.tab.c"
     break;
 
   case 97: /* ArrayCall: Spec L_BRACKET_SQUARE $@42 Expression R_BRACKET_SQUARE  */
-#line 200 "parser.y"
+#line 194 "parser.y"
                                                                          {printf("]");}
-#line 2209 "parser.tab.c"
+#line 2206 "parser.tab.c"
     break;
 
   case 99: /* $@43: %empty  */
-#line 203 "parser.y"
+#line 197 "parser.y"
                          {printf("[");}
-#line 2215 "parser.tab.c"
+#line 2212 "parser.tab.c"
     break;
 
   case 100: /* Spec: L_BRACKET_SQUARE $@43 Type ArrayAllocationVar R_BRACKET_SQUARE  */
-#line 203 "parser.y"
+#line 197 "parser.y"
                                                                                  {printf("]");}
-#line 2221 "parser.tab.c"
+#line 2218 "parser.tab.c"
     break;
 
   case 104: /* ArrayAllocationVar: VARNAME  */
-#line 209 "parser.y"
+#line 203 "parser.y"
                       {printf(" %s", (yyvsp[0].varname));}
-#line 2227 "parser.tab.c"
+#line 2224 "parser.tab.c"
     break;
 
   case 105: /* ArrayAllocationVar: INT_CONST  */
-#line 210 "parser.y"
+#line 204 "parser.y"
                        {printf(" %s", (yyvsp[0].int_const));}
-#line 2233 "parser.tab.c"
+#line 2230 "parser.tab.c"
     break;
 
   case 107: /* $@44: %empty  */
-#line 215 "parser.y"
+#line 209 "parser.y"
                       {printf(" || ");}
-#line 2239 "parser.tab.c"
+#line 2236 "parser.tab.c"
     break;
 
   case 109: /* $@45: %empty  */
-#line 216 "parser.y"
+#line 210 "parser.y"
                        {printf(" ^^ ");}
-#line 2245 "parser.tab.c"
+#line 2242 "parser.tab.c"
     break;
 
   case 112: /* $@46: %empty  */
-#line 220 "parser.y"
+#line 214 "parser.y"
                               {printf(" && ");}
-#line 2251 "parser.tab.c"
+#line 2248 "parser.tab.c"
     break;
 
   case 116: /* CompareOperator: EQ  */
-#line 226 "parser.y"
+#line 220 "parser.y"
            {printf(" == ");}
-#line 2257 "parser.tab.c"
+#line 2254 "parser.tab.c"
     break;
 
   case 117: /* CompareOperator: NE  */
-#line 227 "parser.y"
+#line 221 "parser.y"
            {printf(" != ");}
-#line 2263 "parser.tab.c"
+#line 2260 "parser.tab.c"
     break;
 
   case 118: /* CompareOperator: LT  */
-#line 228 "parser.y"
+#line 222 "parser.y"
            {printf(" < ");}
-#line 2269 "parser.tab.c"
+#line 2266 "parser.tab.c"
     break;
 
   case 119: /* CompareOperator: LE  */
-#line 229 "parser.y"
+#line 223 "parser.y"
            {printf(" <= ");}
-#line 2275 "parser.tab.c"
+#line 2272 "parser.tab.c"
     break;
 
   case 120: /* CompareOperator: GT  */
-#line 230 "parser.y"
+#line 224 "parser.y"
            {printf(" > ");}
-#line 2281 "parser.tab.c"
+#line 2278 "parser.tab.c"
     break;
 
   case 121: /* CompareOperator: GE  */
-#line 231 "parser.y"
+#line 225 "parser.y"
            {printf(" >= ");}
-#line 2287 "parser.tab.c"
+#line 2284 "parser.tab.c"
     break;
 
   case 124: /* AdditiveOperator: PLUS  */
-#line 237 "parser.y"
+#line 231 "parser.y"
              {printf(" + ");}
-#line 2293 "parser.tab.c"
+#line 2290 "parser.tab.c"
     break;
 
   case 125: /* AdditiveOperator: MINUS  */
-#line 238 "parser.y"
+#line 232 "parser.y"
               {printf(" - ");}
-#line 2299 "parser.tab.c"
+#line 2296 "parser.tab.c"
     break;
 
   case 128: /* MultiplicativeOperator: MUL  */
-#line 245 "parser.y"
+#line 239 "parser.y"
             {printf(" * ");}
-#line 2305 "parser.tab.c"
+#line 2302 "parser.tab.c"
     break;
 
   case 129: /* MultiplicativeOperator: DIV  */
-#line 246 "parser.y"
+#line 240 "parser.y"
             {printf(" / ");}
-#line 2311 "parser.tab.c"
+#line 2308 "parser.tab.c"
     break;
 
   case 130: /* MultiplicativeOperator: MOD  */
-#line 247 "parser.y"
+#line 241 "parser.y"
             {printf(" %% ");}
-#line 2317 "parser.tab.c"
+#line 2314 "parser.tab.c"
     break;
 
   case 132: /* $@47: %empty  */
-#line 251 "parser.y"
+#line 245 "parser.y"
                    {printf(" ^ ");}
-#line 2323 "parser.tab.c"
+#line 2320 "parser.tab.c"
     break;
 
   case 134: /* $@48: %empty  */
-#line 254 "parser.y"
+#line 248 "parser.y"
             {printf("!");}
-#line 2329 "parser.tab.c"
+#line 2326 "parser.tab.c"
     break;
 
   case 136: /* $@49: %empty  */
-#line 255 "parser.y"
+#line 249 "parser.y"
               {printf("-");}
-#line 2335 "parser.tab.c"
+#line 2332 "parser.tab.c"
     break;
 
   case 139: /* Const: INT_CONST  */
-#line 259 "parser.y"
+#line 253 "parser.y"
                        {printf("%s", (yyvsp[0].int_const));}
-#line 2341 "parser.tab.c"
+#line 2338 "parser.tab.c"
     break;
 
   case 140: /* Const: CHAR_CONST  */
-#line 260 "parser.y"
+#line 254 "parser.y"
                          {printf("%s", (yyvsp[0].char_const));}
-#line 2347 "parser.tab.c"
+#line 2344 "parser.tab.c"
     break;
 
   case 141: /* Const: STRING_CONST  */
-#line 261 "parser.y"
+#line 255 "parser.y"
                              {printf("%s", (yyvsp[0].string));}
-#line 2353 "parser.tab.c"
+#line 2350 "parser.tab.c"
     break;
 
   case 142: /* Const: REF_CONST  */
-#line 262 "parser.y"
+#line 256 "parser.y"
                   {printf("nil");}
-#line 2359 "parser.tab.c"
+#line 2356 "parser.tab.c"
     break;
 
   case 143: /* Const: TRUE  */
-#line 263 "parser.y"
+#line 257 "parser.y"
              {printf("tt");}
-#line 2365 "parser.tab.c"
+#line 2362 "parser.tab.c"
     break;
 
   case 144: /* Const: FALSE  */
-#line 264 "parser.y"
+#line 258 "parser.y"
               {printf("ff");}
-#line 2371 "parser.tab.c"
+#line 2368 "parser.tab.c"
     break;
 
   case 145: /* $@50: %empty  */
-#line 267 "parser.y"
+#line 261 "parser.y"
               {printf("while ");}
-#line 2377 "parser.tab.c"
+#line 2374 "parser.tab.c"
     break;
 
   case 146: /* $@51: %empty  */
-#line 267 "parser.y"
+#line 261 "parser.y"
                                                 {printf(" do");}
-#line 2383 "parser.tab.c"
+#line 2380 "parser.tab.c"
     break;
 
   case 147: /* $@52: %empty  */
-#line 267 "parser.y"
-                                                                              {if (!need_tab) printf(" "); tab++;}
-#line 2389 "parser.tab.c"
+#line 261 "parser.y"
+                                                                                {if (!need_tab) printf(" "); tab++;}
+#line 2386 "parser.tab.c"
     break;
 
   case 148: /* $@53: %empty  */
-#line 268 "parser.y"
-                     {tab--;}
-#line 2395 "parser.tab.c"
+#line 262 "parser.y"
+                       {tab--;}
+#line 2392 "parser.tab.c"
     break;
 
   case 149: /* $@54: %empty  */
-#line 269 "parser.y"
+#line 263 "parser.y"
         {print_tabs(tab);}
-#line 2401 "parser.tab.c"
+#line 2398 "parser.tab.c"
     break;
 
-  case 150: /* LoopWithPreconditionStatement: WHILE $@50 Expression DO $@51 NewLineCheck $@52 CommentCheck Body NewLineCheck $@53 CommentCheck $@54 ENDWHILE  */
-#line 269 "parser.y"
+  case 150: /* LoopWithPreconditionStatement: WHILE $@50 Expression DO $@51 CheckIfNewLine $@52 CheckIfComment Body CheckIfNewLine $@53 CheckIfComment $@54 ENDWHILE  */
+#line 263 "parser.y"
                                     {printf("endwhile");}
-#line 2407 "parser.tab.c"
+#line 2404 "parser.tab.c"
     break;
 
   case 151: /* $@55: %empty  */
-#line 271 "parser.y"
+#line 265 "parser.y"
             {printf("for ");}
-#line 2413 "parser.tab.c"
+#line 2410 "parser.tab.c"
     break;
 
   case 152: /* $@56: %empty  */
-#line 271 "parser.y"
+#line 265 "parser.y"
                                          {printf(" = ");}
-#line 2419 "parser.tab.c"
+#line 2416 "parser.tab.c"
     break;
 
   case 153: /* $@57: %empty  */
-#line 271 "parser.y"
+#line 265 "parser.y"
                                                                                    {printf(" to ");}
-#line 2425 "parser.tab.c"
+#line 2422 "parser.tab.c"
     break;
 
   case 154: /* $@58: %empty  */
-#line 271 "parser.y"
+#line 265 "parser.y"
                                                                                                                    {printf(" do");}
-#line 2431 "parser.tab.c"
+#line 2428 "parser.tab.c"
     break;
 
   case 155: /* $@59: %empty  */
-#line 271 "parser.y"
-                                                                                                                                                 {if (!need_tab) printf(" "); tab++;}
-#line 2437 "parser.tab.c"
+#line 265 "parser.y"
+                                                                                                                                                   {if (!need_tab) printf(" "); tab++;}
+#line 2434 "parser.tab.c"
     break;
 
   case 156: /* $@60: %empty  */
-#line 272 "parser.y"
-                     {tab--;}
-#line 2443 "parser.tab.c"
+#line 266 "parser.y"
+                       {tab--;}
+#line 2440 "parser.tab.c"
     break;
 
   case 157: /* $@61: %empty  */
-#line 273 "parser.y"
+#line 267 "parser.y"
         {print_tabs(tab);}
-#line 2449 "parser.tab.c"
+#line 2446 "parser.tab.c"
     break;
 
-  case 158: /* LoopWithPreconditionStatement: FOR $@55 Var ASSIGN $@56 Expression ForHeadExt TO $@57 Expression DO $@58 NewLineCheck $@59 CommentCheck Body NewLineCheck $@60 CommentCheck $@61 ENDFOR  */
-#line 273 "parser.y"
+  case 158: /* LoopWithPreconditionStatement: FOR $@55 Var ASSIGN $@56 Expression ForHeadExt TO $@57 Expression DO $@58 CheckIfNewLine $@59 CheckIfComment Body CheckIfNewLine $@60 CheckIfComment $@61 ENDFOR  */
+#line 267 "parser.y"
                                   {printf("endfor");}
-#line 2455 "parser.tab.c"
+#line 2452 "parser.tab.c"
     break;
 
   case 159: /* $@62: %empty  */
-#line 276 "parser.y"
+#line 270 "parser.y"
                   {printf(" -> ");}
-#line 2461 "parser.tab.c"
+#line 2458 "parser.tab.c"
     break;
 
   case 161: /* ForHeadExt: %empty  */
-#line 277 "parser.y"
+#line 271 "parser.y"
           {}
-#line 2467 "parser.tab.c"
+#line 2464 "parser.tab.c"
     break;
 
   case 162: /* $@63: %empty  */
-#line 280 "parser.y"
+#line 274 "parser.y"
                {printf("repeat ");}
-#line 2473 "parser.tab.c"
+#line 2470 "parser.tab.c"
     break;
 
   case 163: /* $@64: %empty  */
-#line 280 "parser.y"
-                                                 {if (!need_tab) printf(" "); tab++;}
-#line 2479 "parser.tab.c"
+#line 274 "parser.y"
+                                                   {if (!need_tab) printf(" "); tab++;}
+#line 2476 "parser.tab.c"
     break;
 
   case 164: /* $@65: %empty  */
-#line 281 "parser.y"
-                     {tab--;}
-#line 2485 "parser.tab.c"
+#line 275 "parser.y"
+                       {tab--;}
+#line 2482 "parser.tab.c"
     break;
 
   case 165: /* $@66: %empty  */
-#line 282 "parser.y"
+#line 276 "parser.y"
         {print_tabs(tab);}
-#line 2491 "parser.tab.c"
+#line 2488 "parser.tab.c"
     break;
 
   case 166: /* $@67: %empty  */
-#line 282 "parser.y"
+#line 276 "parser.y"
                                  {printf("until ");}
-#line 2497 "parser.tab.c"
+#line 2494 "parser.tab.c"
     break;
 
 
-#line 2501 "parser.tab.c"
+#line 2498 "parser.tab.c"
 
       default: break;
     }
@@ -2726,7 +2723,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 284 "parser.y"
+#line 278 "parser.y"
 
 
 

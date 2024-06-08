@@ -31,8 +31,6 @@
 
 %token L_BRACKET_ROUND R_BRACKET_ROUND L_BRACKET_SQUARE R_BRACKET_SQUARE
 %token INT CHAR BOOL
-/* %token IF ELSE STATEMENT_EXPR_END
-%token WHILE WARNING RETURN COLON TRUE FALSE NEW_LINE */
 %token STATEMENT_END CHECK NEW_LINE
 %left COMMA
 %left ASSIGN
@@ -51,7 +49,6 @@
 %token <int_const> INT_CONST
 %token <char_const> CHAR_CONST
 %token <string> STRING_CONST
-/* %token <ref_const> REF_CONST */
 %token <comment> COMMENT
 
 %{
@@ -71,51 +68,48 @@ void print_tabs(int tab) {
 %%
 Program:
         Program 
-        NewLineCheck {
-            printf("\n"); 
-            tab=0;
-        }
+        CheckIfNewLine {printf("\n");tab=0;}
         |
         Program
-        CommentCheck
+        CheckIfComment
         |
         Program 
-        Func
+        Function
         | 
         Program 
-        Proc
+        Procedure
         |
-        Func
+        Function
         |
-        Proc
+        Procedure
         |
-        CommentCheck
+        CheckIfComment
         ;
-Func:
-        FuncHeader NewLineCheck {if (!need_tab) printf(" "); tab++;} CommentCheck Body ENDFUNC {printf("endfunc\n");}
+Function:
+        FuncHeader CheckIfNewLine {if (!need_tab) printf(" "); tab++;} CheckIfComment Body ENDFUNC {printf("endfunc\n");}
         ;
-Proc:   
-        ProcHeader NewLineCheck {if (!need_tab) printf(" "); tab++;} CommentCheck Body ENDPROC {printf("endproc\n");}
-CommentCheck:
-        | COMMENT {if (need_tab) { print_tabs(tab); need_tab = false;} printf("%s", $COMMENT);} NewLineCheck CommentCheck
+Procedure:   
+        ProcHeader CheckIfNewLine {if (!need_tab) printf(" "); tab++;} CheckIfComment Body ENDPROC {printf("endproc\n");}
+CheckIfComment:
+        | COMMENT {if (need_tab) { print_tabs(tab); need_tab = false;} printf("%s", $COMMENT);} CheckIfNewLine CheckIfComment
         ;
-NewLineCheck:
+CheckIfNewLine:
         NEW_LINE {need_tab=true; /*printf("\nneed tab: %d\n", need_tab);*/}
         | {need_tab = false; /*printf("\nneed tab: %d\n", need_tab);*/}
         ;
 
 ProcHeader:
-        PROC VARNAME[NAME] {printf("proc %s", $NAME);} NewLineCheck CommentCheck 
+        PROC VARNAME[NAME] {printf("proc %s", $NAME);} CheckIfNewLine CheckIfComment 
                 L_BRACKET_ROUND {printf("(");} Sections {if (need_tab) {tab=1; print_tabs(tab);}}
                 R_BRACKET_ROUND {printf(")");}
         ;
 FuncHeader:
-        FUNC VARNAME[NAME] {printf("func %s", $NAME);} NewLineCheck CommentCheck 
+        FUNC VARNAME[NAME] {printf("func %s", $NAME);} CheckIfNewLine CheckIfComment 
                 L_BRACKET_ROUND {printf("(");} Sections {if (need_tab) {tab=1; print_tabs(tab);}}
                 R_BRACKET_ROUND {printf(")");} TYPE_DECL {printf(" -> ");} Type
         ;
 Sections:
-        Sections STATEMENT_END {printf("; ");} NewLineCheck CommentCheck {if (need_tab) {tab=1; print_tabs(tab);}} Section
+        Sections STATEMENT_END {printf("; ");} CheckIfNewLine CheckIfComment {if (need_tab) {tab=1; print_tabs(tab);}} Section
         | Section
         ;
 Section:
@@ -127,7 +121,7 @@ Parameters:
         Parameters COMMA {printf(", ");} Var
         ;
 Var:
-        VARNAME[NAME] {printf("%s", $NAME);} //NewLineCheck CommentCheck
+        VARNAME[NAME] {printf("%s", $NAME);} //CheckIfNewLine CheckIfComment
         ;
 Type:
         PrimitiveType
@@ -138,12 +132,12 @@ PrimitiveType:
         INT {printf("int");} | CHAR {printf("char");} | BOOL {printf("bool");}
         ;
 Body:
-        Statements NewLineCheck CommentCheck
+        Statements CheckIfNewLine CheckIfComment
         ;
 Statements:
         {if (need_tab) {print_tabs(tab);}} Statement
         |
-        Statements STATEMENT_END {printf(";");} NewLineCheck {if (!need_tab) {printf(" ");}} CommentCheck {if (!need_tab) {printf(" ");} else {print_tabs(tab);}} Statement NewLineCheck
+        Statements STATEMENT_END {printf(";");} CheckIfNewLine {if (!need_tab) {printf(" ");}} CheckIfComment {if (!need_tab) {printf(" ");} else {print_tabs(tab);}} Statement CheckIfNewLine
         ;
 Statement:
         DeclarationStatement |
@@ -173,22 +167,22 @@ ArrayAssignmentStatement:
         ArrayCall ASSIGN {printf(" = ");} Expression
         ;
 IfStatement:
-        IF {printf("if ");} Expression THEN {printf(" then ");} NewLineCheck {if (!need_tab) printf(" "); tab++;} CommentCheck 
-        Body /*NewLineCheck*/ {if (!need_tab) printf(" "); tab--;} /*CommentCheck*/ IfStatementTail
-        /* NewLineCheck {if (!need_tab) printf(" ");} CommentCheck */
+        IF {printf("if ");} Expression THEN {printf(" then ");} CheckIfNewLine {if (!need_tab) printf(" "); tab++;} CheckIfComment 
+        Body /*CheckIfNewLine*/ {if (!need_tab) printf(" "); tab--;} /*CheckIfComment*/ IfStatementTail
+        /* CheckIfNewLine {if (!need_tab) printf(" ");} CheckIfComment */
         ;
 IfStatementTail:
         {if (!need_tab) printf(" "); else print_tabs(tab);} ENDIF {printf("endif");} |
         ElseIfBlock |
-        ElseBlock {print_tabs(tab);} ENDIF {printf("endif");} NewLineCheck CommentCheck
+        ElseBlock {print_tabs(tab);} ENDIF {printf("endif");} CheckIfNewLine CheckIfComment
         ;
 ElseBlock:
-        ELSE {if (need_tab) print_tabs(tab); printf("else");} NewLineCheck {if (!need_tab) printf(" "); tab++;} CommentCheck Body
-        NewLineCheck {tab--;} CommentCheck
+        ELSE {if (need_tab) print_tabs(tab); printf("else");} CheckIfNewLine {if (!need_tab) printf(" "); tab++;} CheckIfComment Body
+        CheckIfNewLine {tab--;} CheckIfComment
         ;
 ElseIfBlock:
-        ELSEIF {if (need_tab) print_tabs(tab); printf("elseif");} Expression THEN {printf(" then ");} NewLineCheck {if (!need_tab) printf(" "); tab++;} CommentCheck Body
-        NewLineCheck {if (!need_tab) printf(" "); tab--;} CommentCheck IfStatementTail
+        ELSEIF {if (need_tab) print_tabs(tab); printf("elseif");} Expression THEN {printf(" then ");} CheckIfNewLine {if (!need_tab) printf(" "); tab++;} CheckIfComment Body
+        CheckIfNewLine {if (!need_tab) printf(" "); tab--;} CheckIfComment IfStatementTail
         ;
 FunctionCallStatement:
         VARNAME[FUNC] L_BRACKET_ROUND {printf("%s(", $FUNC);} Args R_BRACKET_ROUND {printf(")");}
@@ -264,12 +258,12 @@ Const:
         FALSE {printf("ff");}
         ;
 LoopWithPreconditionStatement:
-        WHILE {printf("while ");} Expression DO {printf(" do");} NewLineCheck {if (!need_tab) printf(" "); tab++;} CommentCheck  Body
-        NewLineCheck {tab--;} CommentCheck
+        WHILE {printf("while ");} Expression DO {printf(" do");} CheckIfNewLine {if (!need_tab) printf(" "); tab++;} CheckIfComment  Body
+        CheckIfNewLine {tab--;} CheckIfComment
         {print_tabs(tab);} ENDWHILE {printf("endwhile");}
         |
-        FOR {printf("for ");} Var ASSIGN {printf(" = ");} Expression ForHeadExt TO {printf(" to ");} Expression DO {printf(" do");} NewLineCheck {if (!need_tab) printf(" "); tab++;} CommentCheck  Body
-        NewLineCheck {tab--;} CommentCheck
+        FOR {printf("for ");} Var ASSIGN {printf(" = ");} Expression ForHeadExt TO {printf(" to ");} Expression DO {printf(" do");} CheckIfNewLine {if (!need_tab) printf(" "); tab++;} CheckIfComment  Body
+        CheckIfNewLine {tab--;} CheckIfComment
         {print_tabs(tab);} ENDFOR {printf("endfor");}
         ;
 ForHeadExt:
@@ -277,8 +271,8 @@ ForHeadExt:
         | {}
         ;
 LoopWithPostconditionStatement:
-        REPEAT {printf("repeat ");} NewLineCheck {if (!need_tab) printf(" "); tab++;} CommentCheck Body
-        NewLineCheck {tab--;} CommentCheck
+        REPEAT {printf("repeat ");} CheckIfNewLine {if (!need_tab) printf(" "); tab++;} CheckIfComment Body
+        CheckIfNewLine {tab--;} CheckIfComment
         {print_tabs(tab);} UNTIL {printf("until ");} Expression
 
 %%

@@ -42,8 +42,7 @@ SumVectors=C
 endfunc
 
 proc example(a -> char)
-	string = 
-	"We say \"Hello, World!\"\n" -> [char]
+	string = "We say \"Hello, World!\"\n" -> [char]
 endproc
 
 
