@@ -24,4 +24,3 @@ if __name__ == "__main__":
         output_file = sys.argv[2]
         lang = sys.argv[3] if len(sys.argv) == 4 else None
         replace_tabs_and_insert_newlines(input_file, output_file, lang)
- # type: ignore
