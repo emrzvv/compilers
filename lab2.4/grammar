@@ -1,19 +1,36 @@
-Program -> Definitions,
-Definitions -> Definition Definitions | ε,
-Definition -> FunctionDef | VariableDef,
-FunctionDef -> ( define ( identifier Parameters ) Expression ),
-VariableDef -> ( define identifier Expression ),
-Parameters -> ( ParameterList ),
-ParameterList -> identifier ParameterList | ε,
-Expression -> IfExpr | CondExpr | LetExpr | LambdaDef | SimpleExpr,
-IfExpr -> ( if ComparisonOp Expression Expression ),
-CondExpr -> ( cond CondClause CondClause ),
-CondClause -> ( ComparisonOp Expression ),
-LetExpr -> ( let ( LetBindings ) Expression ),
-LetBindings -> LetBinding LetBindings | ε,
-LetBinding -> ( identifier Expression ),
-LambdaDef -> ( lambda ( Parameters ) Expression ),
-SimpleExpr -> ( BinOp ExprList ) | identifier | number,
-ExprList -> Expression ExprList | ε,
-BinOp -> + | - | * | /,
-ComparisonOp -> > | < | >= | <= | =
+Program -> Definitions .
+Definitions -> Define Definitions | .
+Define -> "(" "define " DefinitionTail ")" .
+DefinitionTail -> FunctionDef | VariableDef .
+
+FunctionDef -> "(" identifier " " Parameters ")" ExpressionList .
+VariableDef -> identifier " " Expression .
+Parameters -> identifier ParametersTail .
+ParametersTail -> Parameters | .
+
+Expression -> "(" ExpressionExt ")" | SimpleExpr .
+ExpressionExt -> 
+    IfExpr | CondExpr | LetExpr | LambdaDef | BinOpExpr | ComparisonExpr .
+
+IfExpr -> "if" Expression Expression Expression .
+
+CondExpr -> "cond" CondBody .
+CondBody -> CondOnly CondBody | .
+CondOnly -> "(" Expression Expression ")" .
+
+LetExpr -> "let" "(" LetBindings ")" ExpressionList .
+
+LetBindings -> LetBinding LetBindings | .
+LetBinding -> "(" identifier " " Expression ")" .
+
+LambdaDef -> "lambda (" Parameters ")" ExpressionList .
+
+BinOpExpr -> BinOp ExpressionList .
+ExpressionList -> Expression ExpressionListTail .
+ExpressionListTail -> " " ExpressionList | .
+
+ComparisonExpr -> ComparisonOp ExpressionList .
+SimpleExpr -> identifier | number .
+
+BinOp -> "+" | "-" | "*" | "/" .
+ComparisonOp -> ">" | "<" | ">=" | "<=" | "=" .
