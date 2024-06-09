@@ -1,5 +1,6 @@
 import re
-from pprint import pprint
+import pprint
+import json
 
 class Lexer:
     def __init__(self, input_text):
@@ -59,13 +60,13 @@ class Parser:
 
     def Program(self): # Program -> Definitions
         definitions = self.Definitions()
-        return ('Program', definitions)
+        return {'Program': definitions}
 
     def Definitions(self): # Definitions -> Define Definitions | .
         if self.current_token() and self.current_token()[0] == 'LPAREN':
             define = self.Define()
             definitions = self.Definitions()
-            return ('Definitions', define, definitions)
+            return {'Definitions': [define, definitions]}
         return # TODO: узнать как обрабатывать eps
 
     def Define(self): # Define -> "(" "define" DefinitionTail ")"
@@ -73,15 +74,15 @@ class Parser:
         self.eat('DEFINE')
         definition_tail = self.DefinitionTail()
         self.eat('RPAREN')
-        return ('Define', definition_tail)
+        return {'Define': definition_tail}
 
     def DefinitionTail(self): # DefinitionTail -> FunctionDef | VariableDef
         if self.current_token() and self.current_token()[0] == 'LPAREN':
             function_def = self.FunctionDef()
-            return ('FunctionDef', function_def)
+            return {'FunctionDef': function_def}
         else:
             variable_def = self.VariableDef()
-            return ('VariableDef', variable_def)
+            return {'VariableDef': variable_def}
 
     def FunctionDef(self): # FunctionDef -> "(" identifier Parameters ")" ExpressionList
         self.eat('LPAREN')
@@ -89,33 +90,33 @@ class Parser:
         parameters = self.Parameters()
         self.eat('RPAREN')
         expression_list = self.ExpressionList()
-        return ('FunctionDef', identifier, parameters, expression_list)
+        return {'FunctionDef': [identifier, parameters, expression_list]}
 
     def VariableDef(self): # VariableDef -> identifier " " Expression
         identifier = self.Identifier()
         expression = self.Expression()
-        return ('VariableDef', identifier, expression)
+        return {'VariableDef': [identifier, expression]}
 
     def Parameters(self): # Parameters -> identifier ParametersTail
         identifier = self.Identifier()
         parameters_tail = self.ParametersTail()
-        return ('Parameters', identifier, parameters_tail)
+        return {'Parameters': [identifier, parameters_tail]}
 
     def ParametersTail(self): # ParametersTail -> Parameters | .
         if self.current_token() and self.current_token()[0] == 'ID':
             parameters = self.Parameters()
-            return ('ParametersTail', parameters)
-        return
+            return {'ParametersTail': parameters}
+        return 'EPS'
 
     def Expression(self): # Expression -> "(" ExpressionExt ")" | SimpleExpr
         if self.current_token() and self.current_token()[0] == 'LPAREN':
             self.eat('LPAREN')
             expression_ext = self.ExpressionExt()
             self.eat('RPAREN')
-            return ('Expression', expression_ext)
+            return {'Expression': expression_ext}
         else:
             simple_expr = self.SimpleExpr()
-            return ('Expression', simple_expr)
+            return {'Expression': simple_expr}
 
     def ExpressionExt(self): 
         '''
@@ -143,26 +144,26 @@ class Parser:
         cond = self.Expression()
         expr_t = self.Expression()
         expr_f = self.Expression()
-        return ('IfExpr', cond, expr_t, expr_f)
+        return {'IfExpr': [cond, expr_t, expr_f]}
 
     def CondExpr(self): # CondExpr -> "cond" CondBody
         self.eat('COND')
         cond_body = self.CondBody()
-        return ('CondExpr', cond_body)
+        return {'CondExpr': cond_body}
 
     def CondBody(self): # CondBody -> CondOnly CondBody | .
         if self.current_token() and self.current_token()[0] == 'LPAREN':
             cond_only = self.CondOnly()
             cond_body = self.CondBody()
-            return ('CondBody', cond_only, cond_body)
-        return ('CondBody',)
+            return {'CondBody': [cond_only, cond_body]}
+        return 'EPS'
 
     def CondOnly(self): # CondOnly -> "(" Expression Expression ")"
         self.eat('LPAREN')
         expr1 = self.Expression()
         expr2 = self.Expression()
         self.eat('RPAREN')
-        return ('CondOnly', expr1, expr2)
+        return {'CondOnly': [expr1, expr2]}
 
     def LetExpr(self): # LetExpr -> "let" "(" LetBindings ")" ExpressionList
         self.eat('LET')
@@ -170,21 +171,21 @@ class Parser:
         let_bindings = self.LetBindings()
         self.eat('RPAREN')
         expression_list = self.ExpressionList()
-        return ('LetExpr', let_bindings, expression_list)
+        return {'LetExpr': [let_bindings, expression_list]}
 
     def LetBindings(self): # LetBindings -> LetBinding LetBindings | .
         if self.current_token() and self.current_token()[0] == 'LPAREN':
             let_binding = self.LetBinding()
             let_bindings = self.LetBindings()
             return ('LetBindings', let_binding, let_bindings)
-        return ('LetBindings',)
+        return 'EPS'
 
     def LetBinding(self): # LetBinding -> "(" identifier Expression ")"
         self.eat('LPAREN')
         identifier = self.Identifier()
         expression = self.Expression()
         self.eat('RPAREN')
-        return ('LetBinding', identifier, expression)
+        return {'LetBinding': [identifier, expression]}
 
     def LambdaDef(self): # LambdaDef -> "lambda (" Parameters ")" ExpressionList
         self.eat('LAMBDA')
@@ -192,28 +193,28 @@ class Parser:
         parameters = self.Parameters()
         self.eat('RPAREN')
         expression_list = self.ExpressionList()
-        return ('LambdaDef', parameters, expression_list)
+        return {'LambdaDef': [parameters, expression_list]}
 
     def BinOpExpr(self): # BinOpExpr -> BinOp ExpressionList
         bin_op = self.BinOp()
         expression_list = self.ExpressionList()
-        return ('BinOpExpr', bin_op, expression_list)
+        return {'BinOpExpr': [bin_op, expression_list]}
 
     def ExpressionList(self): # ExpressionList -> Expression ExpressionListTail
         expression = self.Expression()
         expression_list_tail = self.ExpressionListTail()
-        return ('ExpressionList', expression, expression_list_tail)
+        return {'ExpressionList': [expression, expression_list_tail]}
 
     def ExpressionListTail(self): # ExpressionListTail -> ExpressionList |
         if self.current_token() and self.current_token()[0] in {'LPAREN', 'ID', 'NUMBER'}:
             expression_list = self.ExpressionList()
-            return ('ExpressionListTail', expression_list)
-        return ('ExpressionListTail',)
+            return {'ExpressionListTail': expression_list}
+        return 'EPS'
 
     def ComparisonExpr(self): # ComparisonExpr -> ComparisonOp ExpressionList
         comparison_op = self.ComparisonOp()
         expression_list = self.ExpressionList()
-        return ('ComparisonExpr', comparison_op, expression_list)
+        return {'ComparisonExpr': [comparison_op, expression_list]}
 
     def SimpleExpr(self): # SimpleExpr -> identifier | number
         token = self.current_token()
@@ -228,7 +229,7 @@ class Parser:
         token = self.current_token()
         if token[0] == 'BINOP':
             self.eat('BINOP')
-            return ('BinOp', token[1])
+            return {'BinOp': token[1]}
         else:
             raise SyntaxError(f"Unexpected token {token} in BinOp")
 
@@ -236,7 +237,7 @@ class Parser:
         token = self.current_token()
         if token[0] == 'COMP':
             self.eat('COMP')
-            return ('ComparisonOp', token[1])
+            return {'ComparisonOp': token[1]}
         else:
             raise SyntaxError(f"Unexpected token {token} in ComparisonOp")
 
@@ -244,7 +245,7 @@ class Parser:
         token = self.current_token()
         if token[0] == 'ID':
             self.eat('ID')
-            return ('Identifier', token[1])
+            return {'Identifier': token[1]}
         else:
             raise SyntaxError(f"Unexpected token {token} in Identifier")
 
@@ -252,7 +253,7 @@ class Parser:
         token = self.current_token()
         if token[0] == 'NUMBER':
             self.eat('NUMBER')
-            return ('Number', token[1])
+            return {'Number': token[1]}
         else:
             raise SyntaxError(f"Unexpected token {token} in Number")
 
@@ -278,7 +279,8 @@ input_text = '''
 '''
 lexer = Lexer(input_text)
 tokens = lexer.tokenize()
-pprint(tokens)
+pprint.pp(tokens)
 parser = Parser(tokens)
 parsed_program = parser.parse()
-pprint(parsed_program)
+# pprint.pprint(parsed_program, width=80)
+print(json.dumps(parsed_program, indent=2))
