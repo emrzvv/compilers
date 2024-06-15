@@ -1,10 +1,10 @@
 Program -> Definitions .
 Definitions -> Define Definitions | .
-Define -> "(" "define " DefinitionTail ")" .
+Define -> "(" "define" DefinitionTail ")" .
 DefinitionTail -> FunctionDef | VariableDef .
 
-FunctionDef -> "(" identifier " " Parameters ")" ExpressionList .
-VariableDef -> identifier " " Expression .
+FunctionDef -> "(" identifier Parameters ")" ExpressionList .
+VariableDef -> identifier Expression .
 Parameters -> identifier ParametersTail .
 ParametersTail -> Parameters | .
 
@@ -14,20 +14,20 @@ ExpressionExt ->
 
 IfExpr -> "if" Expression Expression Expression .
 
-CondExpr -> "cond" CondBody .
+CondExpr -> "cond" CondBody .   
 CondBody -> CondOnly CondBody | .
 CondOnly -> "(" Expression Expression ")" .
 
 LetExpr -> "let" "(" LetBindings ")" ExpressionList .
 
 LetBindings -> LetBinding LetBindings | .
-LetBinding -> "(" identifier " " Expression ")" .
+LetBinding -> "(" identifier Expression ")" .
 
 LambdaDef -> "lambda (" Parameters ")" ExpressionList .
 
 BinOpExpr -> BinOp ExpressionList .
 ExpressionList -> Expression ExpressionListTail .
-ExpressionListTail -> " " ExpressionList | .
+ExpressionListTail -> ExpressionList | .
 
 ComparisonExpr -> ComparisonOp ExpressionList .
 SimpleExpr -> identifier | number .

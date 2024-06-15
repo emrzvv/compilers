@@ -1,0 +1,32 @@
+
+Program -> (Definition)+
+Definition -> "(" "define" DefinitionTail ")"
+DefinitionTail -> FunctionDef | VariableDef
+
+FunctionDef -> "(" IDENTIFIER Parameters ")" ExpressionList
+VariableDef -> IDENTIFIER Expression
+
+Parameters -> (IDENTIFIER)+
+
+Expression -> "(" ExpressionExt ")" | SimpleExpression
+SimpleExpression -> IDENTIFIER | NUMBER 
+
+ExpressionExt -> 
+    IfExpr | CondExpr | LetExpr | LambdaDef | BinOpExpr | ComparisonExpr
+
+IfExpr -> "if" Expression Expression Expression
+CondExpr -> "cond" (CondOnly)+
+CondOnly -> "(" Expression Expression ")"
+
+LetExpr -> "let" "(" (LetBinding)+ ")" ExpressionList
+LetBinding -> "(" IDENTIFIER Expression ")"
+
+LambdaDef -> "lambda" "(" Parameters ")" ExpressionList
+
+BinOpExpr -> BinOp ExpressionList
+ExpressionList -> (Expression)+
+
+ComparisonExpr -> ComparisonOp ExpressionList
+
+BinOp -> "+" | "-" | "*" | "/"
+ComparisonOp -> ">" | "<" | ">=" | "<=" | "="

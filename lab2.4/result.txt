@@ -1,0 +1,295 @@
+[('LPAREN', '('),
+ ('DEFINE', 'define'),
+ ('LPAREN', '('),
+ ('ID', 'f'),
+ ('ID', 'x'),
+ ('ID', 'y'),
+ ('RPAREN', ')'),
+ ('LPAREN', '('),
+ ('IF', 'if'),
+ ('LPAREN', '('),
+ ('COMP', '>'),
+ ('ID', 'x'),
+ ('ID', 'y'),
+ ('RPAREN', ')'),
+ ('LPAREN', '('),
+ ('COND', 'cond'),
+ ('LPAREN', '('),
+ ('LPAREN', '('),
+ ('COMP', '>'),
+ ('ID', 'x'),
+ ('NUMBER', '0'),
+ ('RPAREN', ')'),
+ ('LPAREN', '('),
+ ('BINOP', '-'),
+ ('ID', 'x'),
+ ('RPAREN', ')'),
+ ('RPAREN', ')'),
+ ('LPAREN', '('),
+ ('LPAREN', '('),
+ ('COMP', '<'),
+ ('ID', 'y'),
+ ('NUMBER', '0'),
+ ('RPAREN', ')'),
+ ('LPAREN', '('),
+ ('BINOP', '/'),
+ ('ID', 'y'),
+ ('RPAREN', ')'),
+ ('RPAREN', ')'),
+ ('RPAREN', ')'),
+ ('LPAREN', '('),
+ ('LET', 'let'),
+ ('LPAREN', '('),
+ ('LPAREN', '('),
+ ('ID', 'a'),
+ ('NUMBER', '1'),
+ ('RPAREN', ')'),
+ ('LPAREN', '('),
+ ('ID', 'b'),
+ ('NUMBER', '2'),
+ ('RPAREN', ')'),
+ ('RPAREN', ')'),
+ ('LPAREN', '('),
+ ('BINOP', '*'),
+ ('ID', 'a'),
+ ('ID', 'b'),
+ ('RPAREN', ')'),
+ ('RPAREN', ')'),
+ ('RPAREN', ')'),
+ ('RPAREN', ')'),
+ ('LPAREN', '('),
+ ('DEFINE', 'define'),
+ ('ID', 'x'),
+ ('LPAREN', '('),
+ ('BINOP', '+'),
+ ('NUMBER', '100'),
+ ('NUMBER', '500'),
+ ('RPAREN', ')'),
+ ('RPAREN', ')'),
+ ('LPAREN', '('),
+ ('DEFINE', 'define'),
+ ('LPAREN', '('),
+ ('ID', 'f'),
+ ('ID', 'x'),
+ ('RPAREN', ')'),
+ ('LPAREN', '('),
+ ('LAMBDA', 'lambda'),
+ ('LPAREN', '('),
+ ('ID', 'y'),
+ ('RPAREN', ')'),
+ ('LPAREN', '('),
+ ('BINOP', '+'),
+ ('ID', 'x'),
+ ('ID', 'y'),
+ ('RPAREN', ')'),
+ ('RPAREN', ')'),
+ ('RPAREN', ')')]
+{
+  "Program": [
+    {
+      "Definition": {
+        "FunctionDef": {
+          "Identifier": "f",
+          "Parameters": [
+            "x",
+            "y"
+          ],
+          "ExpressionList": [
+            {
+              "IfExpr": {
+                "Condition": {
+                  "ComparisonExpr": {
+                    "CompOp": ">",
+                    "Expr1": {
+                      "SimpleExpression": {
+                        "Identifier": "x"
+                      }
+                    },
+                    "Expr2": {
+                      "SimpleExpression": {
+                        "Identifier": "y"
+                      }
+                    }
+                  }
+                },
+                "True": {
+                  "CondExpr": [
+                    {
+                      "CondOnly": {
+                        "Expr1": {
+                          "ComparisonExpr": {
+                            "CompOp": ">",
+                            "Expr1": {
+                              "SimpleExpression": {
+                                "Identifier": "x"
+                              }
+                            },
+                            "Expr2": {
+                              "SimpleExpression": {
+                                "Number": "0"
+                              }
+                            }
+                          }
+                        },
+                        "Expr2": {
+                          "BinOpExpr": {
+                            "BinOp": "-",
+                            "ExpressionList": [
+                              {
+                                "SimpleExpression": {
+                                  "Identifier": "x"
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "CondOnly": {
+                        "Expr1": {
+                          "ComparisonExpr": {
+                            "CompOp": "<",
+                            "Expr1": {
+                              "SimpleExpression": {
+                                "Identifier": "y"
+                              }
+                            },
+                            "Expr2": {
+                              "SimpleExpression": {
+                                "Number": "0"
+                              }
+                            }
+                          }
+                        },
+                        "Expr2": {
+                          "BinOpExpr": {
+                            "BinOp": "/",
+                            "ExpressionList": [
+                              {
+                                "SimpleExpression": {
+                                  "Identifier": "y"
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  ]
+                },
+                "False": {
+                  "LetExpr": {
+                    "LetBindings": [
+                      {
+                        "LetBinding": {
+                          "Identifier": "a",
+                          "Expression": {
+                            "SimpleExpression": {
+                              "Number": "1"
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "LetBinding": {
+                          "Identifier": "b",
+                          "Expression": {
+                            "SimpleExpression": {
+                              "Number": "2"
+                            }
+                          }
+                        }
+                      }
+                    ],
+                    "ExpressionList": [
+                      {
+                        "BinOpExpr": {
+                          "BinOp": "*",
+                          "ExpressionList": [
+                            {
+                              "SimpleExpression": {
+                                "Identifier": "a"
+                              }
+                            },
+                            {
+                              "SimpleExpression": {
+                                "Identifier": "b"
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "Definition": {
+        "VariableDef": {
+          "Identifier": "x",
+          "Expression": {
+            "BinOpExpr": {
+              "BinOp": "+",
+              "ExpressionList": [
+                {
+                  "SimpleExpression": {
+                    "Number": "100"
+                  }
+                },
+                {
+                  "SimpleExpression": {
+                    "Number": "500"
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "Definition": {
+        "FunctionDef": {
+          "Identifier": "f",
+          "Parameters": [
+            "x"
+          ],
+          "ExpressionList": [
+            {
+              "LambdaDef": {
+                "Parameters": [
+                  "y"
+                ],
+                "ExpressionList": [
+                  {
+                    "BinOpExpr": {
+                      "BinOp": "+",
+                      "ExpressionList": [
+                        {
+                          "SimpleExpression": {
+                            "Identifier": "x"
+                          }
+                        },
+                        {
+                          "SimpleExpression": {
+                            "Identifier": "y"
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

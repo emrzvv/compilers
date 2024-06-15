@@ -6,6 +6,6 @@ begin
     a := 1;
     b := 2;
     result := a + b;
-    writeln(result);
+    writeln(RESULT);
     writeln('Hello, world');
-end.
+END.

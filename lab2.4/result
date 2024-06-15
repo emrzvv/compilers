@@ -1,0 +1,475 @@
+[('LPAREN', '('),
+ ('DEFINE', 'define'),
+ ('LPAREN', '('),
+ ('ID', 'f'),
+ ('ID', 'x'),
+ ('ID', 'y'),
+ ('RPAREN', ')'),
+ ('LPAREN', '('),
+ ('IF', 'if'),
+ ('LPAREN', '('),
+ ('COMP', '>'),
+ ('ID', 'x'),
+ ('ID', 'y'),
+ ('RPAREN', ')'),
+ ('LPAREN', '('),
+ ('COND', 'cond'),
+ ('LPAREN', '('),
+ ('LPAREN', '('),
+ ('COMP', '>'),
+ ('ID', 'x'),
+ ('NUMBER', '0'),
+ ('RPAREN', ')'),
+ ('LPAREN', '('),
+ ('BINOP', '-'),
+ ('ID', 'x'),
+ ('RPAREN', ')'),
+ ('RPAREN', ')'),
+ ('LPAREN', '('),
+ ('LPAREN', '('),
+ ('COMP', '<'),
+ ('ID', 'y'),
+ ('NUMBER', '0'),
+ ('RPAREN', ')'),
+ ('LPAREN', '('),
+ ('BINOP', '/'),
+ ('ID', 'y'),
+ ('RPAREN', ')'),
+ ('RPAREN', ')'),
+ ('RPAREN', ')'),
+ ('LPAREN', '('),
+ ('LET', 'let'),
+ ('LPAREN', '('),
+ ('LPAREN', '('),
+ ('ID', 'a'),
+ ('NUMBER', '1'),
+ ('RPAREN', ')'),
+ ('LPAREN', '('),
+ ('ID', 'b'),
+ ('NUMBER', '2'),
+ ('RPAREN', ')'),
+ ('RPAREN', ')'),
+ ('LPAREN', '('),
+ ('BINOP', '*'),
+ ('ID', 'a'),
+ ('ID', 'b'),
+ ('RPAREN', ')'),
+ ('RPAREN', ')'),
+ ('RPAREN', ')'),
+ ('RPAREN', ')'),
+ ('LPAREN', '('),
+ ('DEFINE', 'define'),
+ ('ID', 'x'),
+ ('LPAREN', '('),
+ ('BINOP', '+'),
+ ('NUMBER', '100'),
+ ('NUMBER', '500'),
+ ('RPAREN', ')'),
+ ('RPAREN', ')'),
+ ('LPAREN', '('),
+ ('DEFINE', 'define'),
+ ('LPAREN', '('),
+ ('ID', 'f'),
+ ('ID', 'x'),
+ ('RPAREN', ')'),
+ ('LPAREN', '('),
+ ('LAMBDA', 'lambda'),
+ ('LPAREN', '('),
+ ('ID', 'y'),
+ ('RPAREN', ')'),
+ ('LPAREN', '('),
+ ('BINOP', '+'),
+ ('ID', 'x'),
+ ('ID', 'y'),
+ ('RPAREN', ')'),
+ ('RPAREN', ')'),
+ ('RPAREN', ')')]
+{
+  "Program": {
+    "Definitions": [
+      {
+        "Define": {
+          "FunctionDef": {
+            "FunctionDef": [
+              {
+                "Identifier": "f"
+              },
+              {
+                "Parameters": [
+                  {
+                    "Identifier": "x"
+                  },
+                  {
+                    "ParametersTail": {
+                      "Parameters": [
+                        {
+                          "Identifier": "y"
+                        },
+                        "EPS"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "ExpressionList": [
+                  {
+                    "Expression": {
+                      "IfExpr": [
+                        {
+                          "Expression": {
+                            "ComparisonExpr": [
+                              {
+                                "ComparisonOp": ">"
+                              },
+                              {
+                                "ExpressionList": [
+                                  {
+                                    "Expression": {
+                                      "Identifier": "x"
+                                    }
+                                  },
+                                  {
+                                    "ExpressionListTail": {
+                                      "ExpressionList": [
+                                        {
+                                          "Expression": {
+                                            "Identifier": "y"
+                                          }
+                                        },
+                                        "EPS"
+                                      ]
+                                    }
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "Expression": {
+                            "CondExpr": {
+                              "CondBody": [
+                                {
+                                  "CondOnly": [
+                                    {
+                                      "Expression": {
+                                        "ComparisonExpr": [
+                                          {
+                                            "ComparisonOp": ">"
+                                          },
+                                          {
+                                            "ExpressionList": [
+                                              {
+                                                "Expression": {
+                                                  "Identifier": "x"
+                                                }
+                                              },
+                                              {
+                                                "ExpressionListTail": {
+                                                  "ExpressionList": [
+                                                    {
+                                                      "Expression": {
+                                                        "Number": "0"
+                                                      }
+                                                    },
+                                                    "EPS"
+                                                  ]
+                                                }
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    },
+                                    {
+                                      "Expression": {
+                                        "BinOpExpr": [
+                                          {
+                                            "BinOp": "-"
+                                          },
+                                          {
+                                            "ExpressionList": [
+                                              {
+                                                "Expression": {
+                                                  "Identifier": "x"
+                                                }
+                                              },
+                                              "EPS"
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    }
+                                  ]
+                                },
+                                {
+                                  "CondBody": [
+                                    {
+                                      "CondOnly": [
+                                        {
+                                          "Expression": {
+                                            "ComparisonExpr": [
+                                              {
+                                                "ComparisonOp": "<"
+                                              },
+                                              {
+                                                "ExpressionList": [
+                                                  {
+                                                    "Expression": {
+                                                      "Identifier": "y"
+                                                    }
+                                                  },
+                                                  {
+                                                    "ExpressionListTail": {
+                                                      "ExpressionList": [
+                                                        {
+                                                          "Expression": {
+                                                            "Number": "0"
+                                                          }
+                                                        },
+                                                        "EPS"
+                                                      ]
+                                                    }
+                                                  }
+                                                ]
+                                              }
+                                            ]
+                                          }
+                                        },
+                                        {
+                                          "Expression": {
+                                            "BinOpExpr": [
+                                              {
+                                                "BinOp": "/"
+                                              },
+                                              {
+                                                "ExpressionList": [
+                                                  {
+                                                    "Expression": {
+                                                      "Identifier": "y"
+                                                    }
+                                                  },
+                                                  "EPS"
+                                                ]
+                                              }
+                                            ]
+                                          }
+                                        }
+                                      ]
+                                    },
+                                    "EPS"
+                                  ]
+                                }
+                              ]
+                            }
+                          }
+                        },
+                        {
+                          "Expression": {
+                            "LetExpr": [
+                              [
+                                "LetBindings",
+                                {
+                                  "LetBinding": [
+                                    {
+                                      "Identifier": "a"
+                                    },
+                                    {
+                                      "Expression": {
+                                        "Number": "1"
+                                      }
+                                    }
+                                  ]
+                                },
+                                [
+                                  "LetBindings",
+                                  {
+                                    "LetBinding": [
+                                      {
+                                        "Identifier": "b"
+                                      },
+                                      {
+                                        "Expression": {
+                                          "Number": "2"
+                                        }
+                                      }
+                                    ]
+                                  },
+                                  "EPS"
+                                ]
+                              ],
+                              {
+                                "ExpressionList": [
+                                  {
+                                    "Expression": {
+                                      "BinOpExpr": [
+                                        {
+                                          "BinOp": "*"
+                                        },
+                                        {
+                                          "ExpressionList": [
+                                            {
+                                              "Expression": {
+                                                "Identifier": "a"
+                                              }
+                                            },
+                                            {
+                                              "ExpressionListTail": {
+                                                "ExpressionList": [
+                                                  {
+                                                    "Expression": {
+                                                      "Identifier": "b"
+                                                    }
+                                                  },
+                                                  "EPS"
+                                                ]
+                                              }
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "EPS"
+                                ]
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  "EPS"
+                ]
+              }
+            ]
+          }
+        }
+      },
+      {
+        "Definitions": [
+          {
+            "Define": {
+              "VariableDef": {
+                "VariableDef": [
+                  {
+                    "Identifier": "x"
+                  },
+                  {
+                    "Expression": {
+                      "BinOpExpr": [
+                        {
+                          "BinOp": "+"
+                        },
+                        {
+                          "ExpressionList": [
+                            {
+                              "Expression": {
+                                "Number": "100"
+                              }
+                            },
+                            {
+                              "ExpressionListTail": {
+                                "ExpressionList": [
+                                  {
+                                    "Expression": {
+                                      "Number": "500"
+                                    }
+                                  },
+                                  "EPS"
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "Definitions": [
+              {
+                "Define": {
+                  "FunctionDef": {
+                    "FunctionDef": [
+                      {
+                        "Identifier": "f"
+                      },
+                      {
+                        "Parameters": [
+                          {
+                            "Identifier": "x"
+                          },
+                          "EPS"
+                        ]
+                      },
+                      {
+                        "ExpressionList": [
+                          {
+                            "Expression": {
+                              "LambdaDef": [
+                                {
+                                  "Parameters": [
+                                    {
+                                      "Identifier": "y"
+                                    },
+                                    "EPS"
+                                  ]
+                                },
+                                {
+                                  "ExpressionList": [
+                                    {
+                                      "Expression": {
+                                        "BinOpExpr": [
+                                          {
+                                            "BinOp": "+"
+                                          },
+                                          {
+                                            "ExpressionList": [
+                                              {
+                                                "Expression": {
+                                                  "Identifier": "x"
+                                                }
+                                              },
+                                              {
+                                                "ExpressionListTail": {
+                                                  "ExpressionList": [
+                                                    {
+                                                      "Expression": {
+                                                        "Identifier": "y"
+                                                      }
+                                                    },
+                                                    "EPS"
+                                                  ]
+                                                }
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    },
+                                    "EPS"
+                                  ]
+                                }
+                              ]
+                            }
+                          },
+                          "EPS"
+                        ]
+                      }
+                    ]
+                  }
+                }
+              },
+              null
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

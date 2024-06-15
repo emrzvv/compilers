@@ -52,211 +52,145 @@ class Parser:
         token = self.current_token()
         if token and token[0] == token_type:
             self.pos += 1
+            return token[1]
         else:
             raise SyntaxError(f"Expected {token_type}, got {token}")
 
-    def parse(self):
-        return self.Program()
-
-    def Program(self): # Program -> Definitions
-        definitions = self.Definitions()
+    def parse(self): # Program -> (Definition)+
+        definitions = []
+        while self.pos < len(self.tokens):
+            definitions.append(self.parse_definition())
         return {'Program': definitions}
 
-    def Definitions(self): # Definitions -> Define Definitions | .
-        if self.current_token() and self.current_token()[0] == 'LPAREN':
-            define = self.Define()
-            definitions = self.Definitions()
-            return {'Definitions': [define, definitions]}
-        return # TODO: узнать как обрабатывать eps
-
-    def Define(self): # Define -> "(" "define" DefinitionTail ")"
+    def parse_definition(self): # Definition -> "(" "define" DefinitionTail ")"
         self.eat('LPAREN')
         self.eat('DEFINE')
-        definition_tail = self.DefinitionTail()
+        definition_tail = self.parse_definition_tail()
         self.eat('RPAREN')
-        return {'Define': definition_tail}
+        return {'Definition': definition_tail}
 
-    def DefinitionTail(self): # DefinitionTail -> FunctionDef | VariableDef
-        if self.current_token() and self.current_token()[0] == 'LPAREN':
-            function_def = self.FunctionDef()
-            return {'FunctionDef': function_def}
+    def parse_definition_tail(self): # DefinitionTail -> FunctionDef | VariableDef
+        if self.current_token()[0] == 'LPAREN':
+            return self.parse_function_def()
         else:
-            variable_def = self.VariableDef()
-            return {'VariableDef': variable_def}
+            return self.parse_variable_def()
 
-    def FunctionDef(self): # FunctionDef -> "(" identifier Parameters ")" ExpressionList
+    def parse_function_def(self): # FunctionDef -> "(" IDENTIFIER Parameters ")" ExpressionList
         self.eat('LPAREN')
-        identifier = self.Identifier()
-        parameters = self.Parameters()
+        identifier = self.eat('ID')
+        parameters = self.parse_parameters()
         self.eat('RPAREN')
-        expression_list = self.ExpressionList()
-        return {'FunctionDef': [identifier, parameters, expression_list]}
+        expression_list = self.parse_expression_list()
+        return {'FunctionDef': {'Identifier': identifier, 'Parameters': parameters, 'ExpressionList': expression_list}}
 
-    def VariableDef(self): # VariableDef -> identifier " " Expression
-        identifier = self.Identifier()
-        expression = self.Expression()
-        return {'VariableDef': [identifier, expression]}
+    def parse_variable_def(self): # VariableDef -> IDENTIFIER Expression
+        identifier = self.eat('ID')
+        expression = self.parse_expression()
+        return {'VariableDef': {'Identifier': identifier, 'Expression': expression}}
 
-    def Parameters(self): # Parameters -> identifier ParametersTail
-        identifier = self.Identifier()
-        parameters_tail = self.ParametersTail()
-        return {'Parameters': [identifier, parameters_tail]}
+    def parse_parameters(self): # Parameters -> (IDENTIFIER)+
+        parameters = []
+        while self.current_token()[0] == 'ID':
+            parameters.append(self.eat('ID'))
+        return parameters
 
-    def ParametersTail(self): # ParametersTail -> Parameters | .
-        if self.current_token() and self.current_token()[0] == 'ID':
-            parameters = self.Parameters()
-            return {'ParametersTail': parameters}
-        return 'EPS'
-
-    def Expression(self): # Expression -> "(" ExpressionExt ")" | SimpleExpr
-        if self.current_token() and self.current_token()[0] == 'LPAREN':
+    def parse_expression(self): # Expression -> "(" ExpressionExt ")" | SimpleExpression
+        if self.current_token()[0] == 'LPAREN':
             self.eat('LPAREN')
-            expression_ext = self.ExpressionExt()
+            expression_ext = self.parse_expression_ext()
             self.eat('RPAREN')
-            return {'Expression': expression_ext}
+            return expression_ext
         else:
-            simple_expr = self.SimpleExpr()
-            return {'Expression': simple_expr}
+            return self.parse_simple_expression()
 
-    def ExpressionExt(self): 
-        '''
-        ExpressionExt -> 
-            IfExpr | CondExpr | LetExpr | LambdaDef | BinOpExpr | ComparisonExpr
-        '''
-        token = self.current_token()
-        if token[0] == 'IF':
-            return self.IfExpr()
-        elif token[0] == 'COND':
-            return self.CondExpr()
-        elif token[0] == 'LET':
-            return self.LetExpr()
-        elif token[0] == 'LAMBDA':
-            return self.LambdaDef()
-        elif token[0] == 'BINOP':
-            return self.BinOpExpr()
-        elif token[0] == 'COMP':
-            return self.ComparisonExpr()
+    def parse_simple_expression(self): # SimpleExpression -> IDENTIFIER | NUMBER 
+        if self.current_token()[0] == 'ID':
+            return {'SimpleExpression': {'Identifier': self.eat('ID')}}
+        elif self.current_token()[0] == 'NUMBER':
+            return {'SimpleExpression': {'Number': self.eat('NUMBER')}}
         else:
-            raise SyntaxError(f"Unexpected token {token} in ExpressionExt")
+            raise SyntaxError('Expected ID or NUMBER')
 
-    def IfExpr(self): # IfExpr -> "if" Expression Expression Expression
+    def parse_expression_ext(self): # ExpressionExt -> IfExpr | CondExpr | LetExpr | LambdaDef | BinOpExpr | ComparisonExpr
+        token_type = self.current_token()[0]
+        if token_type == 'IF':
+            return self.parse_if_expr()
+        elif token_type == 'COND':
+            return self.parse_cond_expr()
+        elif token_type == 'LET':
+            return self.parse_let_expr()
+        elif token_type == 'LAMBDA':
+            return self.parse_lambda_def()
+        elif token_type == 'BINOP':
+            return self.parse_bin_op_expr()
+        elif token_type == 'COMP':
+            return self.parse_comparison_expr()
+        else:
+            raise SyntaxError(f'Unexpected token: {token_type}')
+
+    def parse_if_expr(self): # IfExpr -> "if" Expression Expression Expression
         self.eat('IF')
-        cond = self.Expression()
-        expr_t = self.Expression()
-        expr_f = self.Expression()
-        return {'IfExpr': [cond, expr_t, expr_f]}
+        expr1 = self.parse_expression()
+        expr2 = self.parse_expression()
+        expr3 = self.parse_expression()
+        return {'IfExpr': {'Condition': expr1, 'True': expr2, 'False': expr3}}
 
-    def CondExpr(self): # CondExpr -> "cond" CondBody
+    def parse_cond_expr(self): # CondExpr -> "cond" (CondOnly)+
         self.eat('COND')
-        cond_body = self.CondBody()
-        return {'CondExpr': cond_body}
+        cond_only_list = []
+        while self.current_token()[0] == 'LPAREN':
+            cond_only_list.append(self.parse_cond_only())
+        return {'CondExpr': cond_only_list}
 
-    def CondBody(self): # CondBody -> CondOnly CondBody | .
-        if self.current_token() and self.current_token()[0] == 'LPAREN':
-            cond_only = self.CondOnly()
-            cond_body = self.CondBody()
-            return {'CondBody': [cond_only, cond_body]}
-        return 'EPS'
-
-    def CondOnly(self): # CondOnly -> "(" Expression Expression ")"
+    def parse_cond_only(self): # CondOnly -> "(" Expression Expression ")"
         self.eat('LPAREN')
-        expr1 = self.Expression()
-        expr2 = self.Expression()
+        expr1 = self.parse_expression()
+        expr2 = self.parse_expression()
         self.eat('RPAREN')
-        return {'CondOnly': [expr1, expr2]}
+        return {'CondOnly': {'Expr1': expr1, 'Expr2': expr2}}
 
-    def LetExpr(self): # LetExpr -> "let" "(" LetBindings ")" ExpressionList
+    def parse_let_expr(self): # LetExpr -> "let" "(" (LetBinding)+ ")" ExpressionList
         self.eat('LET')
         self.eat('LPAREN')
-        let_bindings = self.LetBindings()
+        let_bindings = []
+        while self.current_token()[0] == 'LPAREN':
+            let_bindings.append(self.parse_let_binding())
         self.eat('RPAREN')
-        expression_list = self.ExpressionList()
-        return {'LetExpr': [let_bindings, expression_list]}
+        expression_list = self.parse_expression_list()
+        return {'LetExpr': {'LetBindings': let_bindings, 'ExpressionList': expression_list}}
 
-    def LetBindings(self): # LetBindings -> LetBinding LetBindings | .
-        if self.current_token() and self.current_token()[0] == 'LPAREN':
-            let_binding = self.LetBinding()
-            let_bindings = self.LetBindings()
-            return ('LetBindings', let_binding, let_bindings)
-        return 'EPS'
-
-    def LetBinding(self): # LetBinding -> "(" identifier Expression ")"
+    def parse_let_binding(self): # LetBinding -> "(" IDENTIFIER Expression ")"
         self.eat('LPAREN')
-        identifier = self.Identifier()
-        expression = self.Expression()
+        identifier = self.eat('ID')
+        expression = self.parse_expression()
         self.eat('RPAREN')
-        return {'LetBinding': [identifier, expression]}
+        return {'LetBinding': {'Identifier': identifier, 'Expression': expression}}
 
-    def LambdaDef(self): # LambdaDef -> "lambda (" Parameters ")" ExpressionList
+    def parse_lambda_def(self): # LambdaDef -> "lambda" "(" Parameters ")" ExpressionList
         self.eat('LAMBDA')
         self.eat('LPAREN')
-        parameters = self.Parameters()
+        parameters = self.parse_parameters()
         self.eat('RPAREN')
-        expression_list = self.ExpressionList()
-        return {'LambdaDef': [parameters, expression_list]}
+        expression_list = self.parse_expression_list()
+        return {'LambdaDef': {'Parameters': parameters, 'ExpressionList': expression_list}}
 
-    def BinOpExpr(self): # BinOpExpr -> BinOp ExpressionList
-        bin_op = self.BinOp()
-        expression_list = self.ExpressionList()
-        return {'BinOpExpr': [bin_op, expression_list]}
+    def parse_bin_op_expr(self): # BinOpExpr -> BinOp ExpressionList
+        bin_op = self.eat('BINOP')
+        expression_list = self.parse_expression_list()
+        return {'BinOpExpr': {'BinOp': bin_op, 'ExpressionList': expression_list}}
 
-    def ExpressionList(self): # ExpressionList -> Expression ExpressionListTail
-        expression = self.Expression()
-        expression_list_tail = self.ExpressionListTail()
-        return {'ExpressionList': [expression, expression_list_tail]}
+    def parse_comparison_expr(self): # ComparisonExpr -> ComparisonOp ExpressionList
+        comp_op = self.eat('COMP')
+        expr1 = self.parse_expression()
+        expr2 = self.parse_expression()
+        # expression_list = self.parse_expression_list()
+        return {'ComparisonExpr': {'CompOp': comp_op, 'Expr1': expr1, 'Expr2': expr2}}
 
-    def ExpressionListTail(self): # ExpressionListTail -> ExpressionList |
-        if self.current_token() and self.current_token()[0] in {'LPAREN', 'ID', 'NUMBER'}:
-            expression_list = self.ExpressionList()
-            return {'ExpressionListTail': expression_list}
-        return 'EPS'
-
-    def ComparisonExpr(self): # ComparisonExpr -> ComparisonOp ExpressionList
-        comparison_op = self.ComparisonOp()
-        expression_list = self.ExpressionList()
-        return {'ComparisonExpr': [comparison_op, expression_list]}
-
-    def SimpleExpr(self): # SimpleExpr -> identifier | number
-        token = self.current_token()
-        if token[0] == 'ID':
-            return self.Identifier()
-        elif token[0] == 'NUMBER':
-            return self.Number()
-        else:
-            raise SyntaxError(f"Unexpected token {token} in SimpleExpr")
-
-    def BinOp(self): # BinOp -> "+" | "-" | "*" | "/"
-        token = self.current_token()
-        if token[0] == 'BINOP':
-            self.eat('BINOP')
-            return {'BinOp': token[1]}
-        else:
-            raise SyntaxError(f"Unexpected token {token} in BinOp")
-
-    def ComparisonOp(self): # ComparisonOp -> ">" | "<" | ">=" | "<=" | "="
-        token = self.current_token()
-        if token[0] == 'COMP':
-            self.eat('COMP')
-            return {'ComparisonOp': token[1]}
-        else:
-            raise SyntaxError(f"Unexpected token {token} in ComparisonOp")
-
-    def Identifier(self):
-        token = self.current_token()
-        if token[0] == 'ID':
-            self.eat('ID')
-            return {'Identifier': token[1]}
-        else:
-            raise SyntaxError(f"Unexpected token {token} in Identifier")
-
-    def Number(self):
-        token = self.current_token()
-        if token[0] == 'NUMBER':
-            self.eat('NUMBER')
-            return {'Number': token[1]}
-        else:
-            raise SyntaxError(f"Unexpected token {token} in Number")
-
+    def parse_expression_list(self): # ExpressionList -> (Expression)+
+        expressions = []
+        while self.current_token()[0] in ('LPAREN', 'ID', 'NUMBER'):
+            expressions.append(self.parse_expression())
+        return expressions
 
 input_text = '''
 (define (f x y)
