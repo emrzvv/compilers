@@ -3,10 +3,12 @@
 % Егор Поршенко, ИУ9-61Б
 
 # Цель работы
-Целью данной работы является изучение использования детерминированных конечных автоматов с размеченными заключительными состояниями (лексических распознавателей) для решения задачи лексического анализа.
+Целью данной работы является изучение использования детерминированных конечных автоматов с размеченными
+заключительными состояниями (лексических распознавателей) для решения задачи лексического анализа.
 
 # Индивидуальный вариант
-begin, end, {, }, строковые литералы ограничены знаками $, допустимы escape-последовательности вида \x, где x — любой символ, не могут пересекать границы строк текста.
+begin, end, {, }, строковые литералы ограничены знаками $, допустимы escape-последовательности 
+вида `\x`, где x — любой символ, не могут пересекать границы строк текста.
 
 # Реализация
 
@@ -132,7 +134,8 @@ class DFA(val currentState: State,
           val table: Map[State, Vector[(Acceptable, State)]]) {
   def next(symbol: Char): (Either[Unit, Boolean], DFA) = {
     table.getOrElse(currentState, Vector.empty).find(_._1.chars.contains(symbol)) match {
-      case Some(dest) => (Right(finalStates.contains(dest._2)), new DFA(dest._2, startState, finalStates, table))
+      case Some(dest) => (Right(finalStates.contains(dest._2)), new DFA(dest._2, startState, finalStates,
+table))
       case None => (Left(()), this)
     }
   }
@@ -298,7 +301,8 @@ class Lexer(text: String,
             Some(text.substring(startPosition.index, currentPosition.index + 1).backSlashNewLine))
         }
       case Right(true) =>
-        transit(updatedDFA, nextPosition, startPosition)(isCompleted = true, currentPosition, updatedDFA.currentState) // final
+        transit(updatedDFA, nextPosition, startPosition)(isCompleted = true, currentPosition,
+updatedDFA.currentState) // final
       case Right(false) =>
         transit(updatedDFA, nextPosition, startPosition)(isCompleted, completedPosition, completedState)
     }
@@ -310,7 +314,8 @@ class Lexer(text: String,
     if (currentPosition.index == text.length || isEOLAt(currentPosition)) {
       NextTokenResult(EndToken(), this)
     } else {
-      val token = transit(DFA.start(), startPosition, startPosition)(isCompleted = false, Position.empty, Trap)
+      val token = transit(DFA.start(), startPosition, startPosition)(isCompleted = false, Position.empty,
+Trap)
       NextTokenResult(token, new Lexer(text, DFA.start(), nextPositionFrom(token.fragment.follow)))
     }
   }
@@ -352,7 +357,8 @@ trait Token {
 }
 case class CommonToken(name: String, fragment: Fragment, value: Option[String] = None) extends Token
 case class ErrorToken(name: String, fragment: Fragment, value: Option[String] = None) extends Token
-case class EndToken(name: String = "End", fragment: Fragment = Fragment.empty(), value: Option[String] = None) extends Token
+case class EndToken(name: String = "End", fragment: Fragment = Fragment.empty(), value: Option[String] =
+None) extends Token
 case class NextTokenResult(token: Token, lexer: Lexer)
 ```
 
